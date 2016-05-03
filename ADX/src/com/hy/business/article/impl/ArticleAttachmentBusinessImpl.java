@@ -24,7 +24,7 @@ package com.hy.business.article.impl;
 //	private BusinessData<Boolean> date = null;
 //	private BusinessData<ArticleAttachmentEntity> dateEntity = null;
 //
-//	private BusinessData<ArticleAttachmentEntity> selectArticleAttachment(ArticleAttachmentEntityCriteria criteria, Integer pageIndex, Integer pageSize){
+//	private BusinessData<ArticleAttachmentEntity> selectArticleAttachment( criteria, Integer pageIndex, Integer pageSize){
 //		try {
 //			if (pageIndex != null && pageSize != null) {
 //				criteria.setLimitStart(PageUtil.getStart(pageIndex, pageSize));

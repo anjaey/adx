@@ -27,7 +27,6 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
  * <li>3.增加selectByExampleForOne方法,通用任何条件查询单个实体数据</li>
  * </ul>
  * 
- * @author 张强 2012年8月16日上午9:07:52
  * @version 1.0
  */
 public class MySQLForMybatis3Plugin extends PluginAdapter {  

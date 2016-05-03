@@ -7,6 +7,8 @@ package com.hy.util.common;
  * @version 0.0.1
  */
 public interface ConstantUtil {
+	
+	
 	/**
 	 * CookieUtil工具类,默认生命时间
 	 */

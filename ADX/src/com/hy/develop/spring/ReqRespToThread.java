@@ -16,7 +16,6 @@ import com.hy.util.common.ConstantUtil;
 /**
  * 请求,响应前置处理,将他们压入到管理栈中.
  *
- * @author 张强 2014年9月22日 下午3:55:22
  * @version 0.0.1
  */
 public class ReqRespToThread extends HandlerInterceptorAdapter {

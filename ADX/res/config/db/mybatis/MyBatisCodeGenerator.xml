@@ -22,7 +22,7 @@
 		</commentGenerator>
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
 			connectionURL="jdbc:mysql://localhost:3306/adx"
-			userId="root" password="Zy123456">
+			userId="myuser" password="mypassword">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
@@ -46,76 +46,15 @@
 			单次生成，对于已有表请勿重新生成，否则会重置
 		 -->
 		<!-- 
-		<table tableName="t_article" domainObjectName="ArticleEntity" />
-		<table tableName="t_article_attachment" domainObjectName="ArticleAttachmentEntity" />
-		<table tableName="t_article_class" domainObjectName="ArticleClassEntity" />
-		<table tableName="t_article_keywords" domainObjectName="ArticleKeywordsEntity" />
-		
-		<table tableName="t_log_login" domainObjectName="LogLoginEntity" />
-		
-		<table tableName="t_order" domainObjectName="OrderEntity" />
-		<table tableName="t_order_cart" domainObjectName="OrderCartEntity" />
-		<table tableName="t_order_detail" domainObjectName="OrderDetailEntity" />
-		<table tableName="t_order_print" domainObjectName="OrderPrintEntity" />
-		<table tableName="t_order_type" domainObjectName="OrderTypeEntity" />
-		
-		<table tableName="t_permission" domainObjectName="PermissionEntity" />
-		<table tableName="t_permission_group" domainObjectName="PermissionGroupEntity" />
-		<table tableName="t_permission_group_link" domainObjectName="PermissionGroupLinkEntity" />
-		<table tableName="t_permission_resource" domainObjectName="PermissionResourceEntity" />
-		
-		<table tableName="t_product" domainObjectName="ProductEntity" />
-		<table tableName="t_product_attachment" domainObjectName="ProductAttachmentEntity" />
-		<table tableName="t_product_attribute" domainObjectName="ProductAttributeEntity" />
-		<table tableName="t_product_attribute_value" domainObjectName="ProductAttributeValueEntity" />
-		<table tableName="t_product_brand" domainObjectName="ProductBrandEntity" />
-		<table tableName="t_product_category" domainObjectName="ProductCategoryEntity" />
-		<table tableName="t_product_class" domainObjectName="ProductClassEntity" />
-		<table tableName="t_product_comment" domainObjectName="ProductCommentEntity" />
-		<table tableName="t_product_detailed" domainObjectName="productDetailEntity" />
-		<table tableName="t_product_inquiries" domainObjectName="ProductInquiriesEntity" />
-		<table tableName="t_product_material" domainObjectName="ProductMaterialEntity" />
-		<table tableName="t_product_provider" domainObjectName="ProductProviderEntity" />
-		<table tableName="t_product_sku_value" domainObjectName="ProductSkuValueEntity" />
-		<table tableName="t_product_sku_name" domainObjectName="ProductSkuNameEntity" />
-		<table tableName="t_product_detailed" domainObjectName="ProductDetailEntity" />
-		<table tableName="t_product_solutions" domainObjectName="ProductSolutionsEntity" />  
-		<table tableName="t_product_solutionspro" domainObjectName="ProductSolutionsproEntity" />  
-		<table tableName="t_product_filter" domainObjectName="ProductFilterEntity" />  
-		
-		<table tableName="t_role" domainObjectName="RoleEntity" />
-		<table tableName="t_role_permission" domainObjectName="RolePermissionEntity" />
-		
-		<table tableName="t_survey" domainObjectName="SurveyEntity" />
-		<table tableName="t_survey_item" domainObjectName="SurveyItemEntity" />
-		
-		<table tableName="t_sys_attachment" domainObjectName="SysAttachmentEntity" />
-		<table tableName="t_sys_dict" domainObjectName="SysDictEntity" />
-		<table tableName="t_sys_link" domainObjectName="SysLinkEntity" />
-		<table tableName="t_sys_message" domainObjectName="SysMessageEntity" />
-		<table tableName="t_sys_resource" domainObjectName="SysResourceEntity" />
-		<table tableName="t_sys_carousel" domainObjectName="SysCarouselEntity" />
-		
-		<table tableName="t_template" domainObjectName="TemplateEntity" />
-		<table tableName="t_template_class" domainObjectName="TemplateClassEntity" />
-		
-		<table tableName="t_user" domainObjectName="UserEntity" />
-		<table tableName="t_user_address" domainObjectName="UserAddressEntity" />
-		<table tableName="t_user_detail" domainObjectName="UserDetailEntity" />
-		<table tableName="t_user_group" domainObjectName="UserGroupEntity" />
-		<table tableName="t_user_message" domainObjectName="UserMessageEntity" />
-		<table tableName="t_user_role" domainObjectName="UserRoleEntity" /> 
-		<table tableName="t_user_org" domainObjectName="UserOrgEntity" />  
-		
-		
-		<table tableName="t_product_inquiries" domainObjectName="ProductInquiriesEntity" />
-		<table tableName="t_user_customer" domainObjectName="UserCustomerEntity" />		
-		<table tableName="t_order" domainObjectName="OrderEntity" />
-		
+			<table tableName="adx_userbasic" domainObjectName="Userbasic" />
+			<table tableName="adx_userdetil" domainObjectName="UserDetil" />
+			<table tableName="adx_role" domainObjectName="Role" />
+			<table tableName="adx_user_role" domainObjectName="UserRole" />
+			<table tableName="adx_navigation" domainObjectName="Navigation" />
+			<table tableName="adx_nav_privilege" domainObjectName="NavPrivilege" />
 		 -->
 		<!-- 复制出来生成后在删除 -->
 		
-		<table tableName="t_product_search" domainObjectName="ProductSearchEntity" />
 		
 		
 		
