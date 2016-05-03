@@ -592,21 +592,6 @@ public class ListMapUtil {
 	}
     
     /**
-     * 提取listMap中的唯一值
-     * @param dataList 需要提取的listmpa
-     * @param params 提取的参数,即与map匹配的数目
-     * @return 返回Map, 则是唯一MAP, 如果多于1个或者没有则返回空
-     * @throws Exception
-     */
-    public static Map<String, Object> getMapOneFromListMap(List<Map<String, Object>> dataList, Map<String, Object> params) throws Exception {
-    	List<Map<String, Object>> reList = ListMapUtil.getListMapFromWithFixV(dataList, params);
-    	if (!CommonUtil.isEmpty(reList) && reList.size() == ConstantUtil.DIGITAL_ONE) {
-    		return reList.get(0);
-    	}
-    	return null;
-    }
-    
-    /**
      * 改变listmap中的时间格式 为时间格式 yyyy-MM-dd
      * 
      * @param dataList 原始数据

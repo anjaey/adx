@@ -64,31 +64,31 @@ public class FileController extends BaseController {
 				type = 0;
 			}
 			
-			switch (root) {
-			case 1:
-				dir = ConstantUtil.FTP_ARTICLEROOTDIR_NAME;
-				break;
-			case 2:
-				
-				dir = ConstantUtil.FTP_OTHERROOTDIR_NAME;
-				break;
-			case 3:
-				
-				dir = ConstantUtil.FTP_PRODUCTROOTDIR_NAME;
-				break;
-			case 4:
-				
-				dir = ConstantUtil.FTP_UEIDORROOTDIR_NAME;
-				break;
-			case 5:
-				
-				dir = ConstantUtil.FTP_USERROOTDIR_NAME;
-				break;
-			default:
-				
-				System.out.println("不存在当前根目录");
-				return;
-			}
+//			switch (root) {
+//			case 1:
+//				dir = ConstantUtil.FTP_ARTICLEROOTDIR_NAME;
+//				break;
+//			case 2:
+//				
+//				dir = ConstantUtil.FTP_OTHERROOTDIR_NAME;
+//				break;
+//			case 3:
+//				
+//				dir = ConstantUtil.FTP_PRODUCTROOTDIR_NAME;
+//				break;
+//			case 4:
+//				
+//				dir = ConstantUtil.FTP_UEIDORROOTDIR_NAME;
+//				break;
+//			case 5:
+//				
+//				dir = ConstantUtil.FTP_USERROOTDIR_NAME;
+//				break;
+//			default:
+//				
+//				System.out.println("不存在当前根目录");
+//				return;
+//			}
 			
 			//拼接路径
 			String url = null;

@@ -1,4 +1,36 @@
 package com.hy.controller.admin.user;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.hy.business.user.IUserBusiness;
+import com.hy.controller.common.BaseController;
+
+
+/**
+ * 用户相关控制器
+ * @author hy
+ *
+ */
+@Controller
+public class UserInfoController extends BaseController{
+	
+	@Autowired
+	IUserBusiness userBusiness;
+	
+	@RequestMapping("/view/user/login")
+	public void login(@RequestParam Map<String, Object> map) {
+		Map<String, Object> userMap = userBusiness.login(map, this.request);
+		this.writeJson(userMap);
+	}
+	
+}
+
+
 //package com.hy.controller.admin.user;
 //
 //import java.util.Date;

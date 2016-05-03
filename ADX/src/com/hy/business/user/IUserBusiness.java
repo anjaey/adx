@@ -3,6 +3,8 @@ package com.hy.business.user;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * 用户相关业务逻辑
@@ -19,7 +21,7 @@ public interface IUserBusiness {
 	 * @update
 	 * @date
 	 */
-	public Map<String, Object> login(Map<String, Object> map);
+	public Map<String, Object> login(Map<String, Object> map, HttpServletRequest reqeust);
 	
 	/**
 	 * 注册，  在此业务中表示ADX平台管理员 添加DSP用户。 
