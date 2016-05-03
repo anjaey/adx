@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bhe.dao.mybatis.mapper.ProductSkuNameEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.bhe.dao.mybatis.model.ProductSkuNameEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="categoryId" property="categoryid" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="inputType" property="inputtype" jdbcType="INTEGER" />
+    <result column="valueList" property="valuelist" jdbcType="VARCHAR" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, categoryId, name, inputType, valueList, rank
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bhe.dao.mybatis.model.ProductSkuNameEntityCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_product_sku_name
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_sku_name
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_product_sku_name
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bhe.dao.mybatis.model.ProductSkuNameEntityCriteria" >
+    delete from t_product_sku_name
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bhe.dao.mybatis.model.ProductSkuNameEntity" >
+    insert into t_product_sku_name (id, categoryId, name, 
+      inputType, valueList, rank
+      )
+    values (#{id,jdbcType=BIGINT}, #{categoryid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{inputtype,jdbcType=INTEGER}, #{valuelist,jdbcType=VARCHAR}, #{rank,jdbcType=INTEGER}
+      )
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.bhe.dao.mybatis.model.ProductSkuNameEntity" >
+    insert into t_product_sku_name
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="categoryid != null" >
+        categoryId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="inputtype != null" >
+        inputType,
+      </if>
+      <if test="valuelist != null" >
+        valueList,
+      </if>
+      <if test="rank != null" >
+        rank,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="categoryid != null" >
+        #{categoryid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="inputtype != null" >
+        #{inputtype,jdbcType=INTEGER},
+      </if>
+      <if test="valuelist != null" >
+        #{valuelist,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null" >
+        #{rank,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterType="com.bhe.dao.mybatis.model.ProductSkuNameEntityCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_product_sku_name
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_product_sku_name
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.categoryid != null" >
+        categoryId = #{record.categoryid,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputtype != null" >
+        inputType = #{record.inputtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.valuelist != null" >
+        valueList = #{record.valuelist,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rank != null" >
+        rank = #{record.rank,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_product_sku_name
+    set id = #{record.id,jdbcType=BIGINT},
+      categoryId = #{record.categoryid,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      inputType = #{record.inputtype,jdbcType=INTEGER},
+      valueList = #{record.valuelist,jdbcType=VARCHAR},
+      rank = #{record.rank,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bhe.dao.mybatis.model.ProductSkuNameEntity" >
+    update t_product_sku_name
+    <set >
+      <if test="categoryid != null" >
+        categoryId = #{categoryid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="inputtype != null" >
+        inputType = #{inputtype,jdbcType=INTEGER},
+      </if>
+      <if test="valuelist != null" >
+        valueList = #{valuelist,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null" >
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bhe.dao.mybatis.model.ProductSkuNameEntity" >
+    update t_product_sku_name
+    set categoryId = #{categoryid,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      inputType = #{inputtype,jdbcType=INTEGER},
+      valueList = #{valuelist,jdbcType=VARCHAR},
+      rank = #{rank,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_product_sku_name
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

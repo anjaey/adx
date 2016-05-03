@@ -1,0 +1,104 @@
+ <div class="menu">
+	<div class="article menus">
+		<div class="article_title">文章系统</div>
+		<div class="article_list">
+			<div class="list01 ">
+				<a href="${base}/admin/article/articleIndex.html" <@sets.setCurr currIndex 1 'test'/>>文章管理</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/article/classifyList.html" <@sets.setCurr currIndex 2 'test'/>>文章分类管理</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/article/recycleIndex.html" <@sets.setCurr currIndex 4 />>回收站</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="navigatebar menus">
+		<div class="article_title">内容管理</div>
+		<div class="article_list" >
+			<div class="list01">
+				<a href="${base}/admin/navigatebar/toNavigateBarIndex.html">导航栏管理</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/navigatebar/toNavigateBarImg.html">图片管理</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/user/toUserCustomer.html">客服名录</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/link/tolinklist.html">友情链接</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/product/tosolutionsManager.html">解决方案</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/navigatebar/toProductSearchManage.html">商品关键字管理</a>
+			</div>	
+		</div>
+	</div>
+	<div class="product menus">
+		<div class="article_title">商品管理</div>
+		<div class="article_list">
+			<div class="list01">
+				<a href="${base}/admin/product/productManage.html">商品列表</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/product/productBrandManage.html">商品品牌</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/product/productCategory.html">商品分类</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/product/tobatchprice.html">批量调价</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/product/toProductFilter.html">条件筛选</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/product/toInquiriesManager.html">商品询价</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="order menus">
+		<div class="article_title">订单管理</div>
+		<div class="article_list">
+			<div class="list01">
+				<a href="${base}/admin/order/orderIndex.html">订购订单</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/order/leaseOrderIndex.html">租赁订单</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="user menus">
+		<div class="article_title">用户管理</div>
+		<div class="article_list">
+			<div class="list01">
+				<a href="${base}/admin/user/userIndex.html">会员管理</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/user/adminList.html">管理员管理</a>
+			</div>
+		</div>
+	</div>
+	<div class="system menus">
+		<div class="article_title">系统设置</div>
+		<div class="article_list">
+			<div class="list01">
+				<a href="${base}/admin/system/systemIndex.html">站点配置</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/system/globalSetIndex.html">全局配置</a>
+			</div>
+			<div class="list01">
+				<a href="${base}/admin/system/logManage.html">登陆日志</a>
+			</div>
+<!-- 			<div class="list01">
+				<a href="${base}/admin/system/logManage.html">操作日志</a>
+			</div>
+ -->		</div> 
+	</div>
+</div>

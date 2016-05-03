@@ -1,0 +1,209 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/articleManage.css">
+<link rel="stylesheet" type="text/css"	href="${base}/res/bhecms/css/admin/productManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+<@frame> 
+
+ <div class="artLocation">您当前的位置：内容管理>分类管理>企业概况>新增信息</div>
+ <div class="wel_content"> 		
+    	<div class="art_list">        	
+            <div class="art_list_all">
+            	 
+            	<div class="artListAll001">
+            		<div class="fieldDiv">
+            			<fieldset  class="fieldProduct">
+             			<legend>内容设置</legend>
+             			<p>
+								<label>标题：</label> <input type="text"
+									class="txtAddproduct" />
+						</p>
+						<div class="clear"></div>
+						<p>
+							<label>排序：</label> <input type="text"
+								class="txtAddproduct txtAddproduct2" />（数字越小在前端展示越靠前）
+						</p>
+             			
+             		</fieldset>
+             		<fieldset class="fieldProduct">
+             			<legend> 正文内容 </legend>
+             			<!-- 这里放那个附件 -->
+             			正文内容
+             			
+             		</fieldset>
+             		<fieldset class="fieldProduct">
+             			<legend> 内容设置 </legend>
+             			<p>
+								<label>标题：</label> <input type="text"
+									class="txtAddproduct" />（描述字数在30字以内）
+						</p>
+						<p>
+								<label>主要客户：</label> <input type="text"
+									class="txtAddproduct txtAddproduct4" />
+								<input  type="button" value="..." />
+						</p>
+						<p>
+								<label>适用环境：</label> <input type="text"
+									class="txtAddproduct" />（描述字数在100字以内）
+						</p>
+						<p>
+								<label>销售冠军商品选择：</label> <input type="text"
+									class="txtAddproduct txtAddproduct4" />
+									<input  type="button" value="..."/>（可输入商品型号/名称搜索）
+						</p>
+						<p>
+								<label>推荐机型：</label> <input type="text"
+									class="txtAddproduct txtAddproduct4" />
+									<input  type="button" value="..." />（可输入商品型号/名称搜索）
+						</p>
+             			
+             		</fieldset>
+             		<div class="right marr10">
+             					<input type="submit" value="保存" class="btnsub"/> <input type="reset" value="取消"/>
+             				</div>
+            		</div>
+            		<!-- 这是弹出层 -->
+            		<div class="popUpDiv">
+            			<div class="artTitle">
+            				指定价格设置
+            				<a class="closeaa"><img  src="${base}/res/bhecms/images/closeimg.png" width="15" height="13"/></a>
+            			</div>
+            			<div class="artTitleSearch">
+            				<select>
+	            				<option>全部类型</option>
+	            				<option>清洁用品</option>
+	            				<option>安全防护</option>
+            				</select>
+	            			搜索商品：
+	            			<input  type="text" class="txtAddproduct txtAddproduct5"/>
+	            			<input  type="button" value="搜索"/>
+            			</div>
+            			
+            			 <table width="98%" border="1"  cellspacing="0" cellpadding="0" class="art_table marl5">
+				             	<tr>
+				                 	 <th width="5%" ><input  type="checkbox" class="js-chooseAll"/></th>
+				                     <th>行号</th>
+				                     <th>型号</th>
+				                     <th>商品名称</th>
+				                 </tr>
+				                 
+					                 <tr>
+					                 	<td><input  type="checkbox" class="js-chooseInput" uid="${entity.uuid}"/></td>
+					                     <td><a href="#">1</a></td>
+					                     
+					                     <td>JG758</td>	                     
+					                     <td>
+				                     		韬光机
+					                     </td>					                    
+					                 </tr>
+				                 		
+             				</table>
+             				<div class="right marr10 mart15">共有4条，每页展示5条，第1页</div>
+             				<div class="divsub">             					
+             					<input type="submit" value="提交" class="btnsub"/> <input type="reset" value="取消"/>
+             				</div>
+             				
+            		</div>
+            		
+            		
+             		
+             
+             	</div>
+             </div>
+             
+              <#if (pageInfoMap.count>0)>
+	             <div class="pagination right mart15">
+				    <a href="#" class="first" data-action="first">&laquo;</a>
+				    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				    <input type="text" readonly="readonly" data-max-page="${pageInfoMap.countpage}" />
+				    <a href="#" class="next" data-action="next">&rsaquo;</a>
+				    <a href="#" class="last" data-action="last">&raquo;</a>
+				</div> 
+			 </#if>	
+      </div> 
+</div>       
+            
+             
+       
+  </@frame>      
+        <script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+        <script>
+        
+	$(document).ready(function(){
+		 <#if (pageInfoMap.count>0)>
+			$('div.pagination').jqPagination({
+				current_page:'${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+				max_page:'${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+			    paged: function(page) {
+				        window.location.href="articleIndex.html?pageindex="+page;
+			    }
+			});
+		</#if>	
+	
+		   //给标题加上背景色以及鼠标移动到某一行的事加上背景色
+		   $("table.art_table tr:first-child").css("background-color","#f3f7fb");
+		   $("table.art_table tr:not(:first-child)").hover(function(){
+										 $(this).css("background-color","#f3f7fb");
+										 },function(){
+											 $(this).css("background-color","#fff");
+										 });
+		   
+		   $("a.js-updateStatus").click(function(){
+			   if(confirm("是否删除到垃圾箱？")){
+			    var uuid=$(this).attr("uid");
+				$.post("updateArtiStatus.html", {"uuid":uuid,"status":1},
+					function(data){
+						if(data.result){
+							alert("删除成功");
+							window.location.reload(true);
+						}else{
+							alert("删除失败");
+						}
+					},"json");
+			   }
+		   })
+		   
+		   
+		   $("a.js-delete").click(function(){
+			   if(confirm("是否删除该文章？将不可恢复！")){
+			    var uuid=$(this).attr("uid");
+				$.post("deleteArticle.html", {"uuid":uuid},
+					function(data){
+						if(data.result){
+							alert("删除成功");
+							window.location.reload(true);
+						}else{
+							alert("删除失败");
+						}
+					},"json");
+			   }
+		   });
+		   
+		  
+		   
+		   $("button.js-deleteAll").click(function(){
+			   if($("input:checked.js-chooseInput").length>0){
+				   if(confirm("是否删除到垃圾箱？")){
+					   var uuids="";
+					   $("input:checked.js-chooseInput").each(function (k,v) {
+						   uuids=$(v).attr("uid")+","+uuids;
+					   })
+					   uuids=uuids.substring(0,uuids.length-1);
+						$.post("updateArtiStatus.html", {"uuids":uuids,"status":1},
+							function(data){
+								if(data.result){
+									alert("删除成功");
+									window.location.reload(true);
+								}else{
+									alert("共有："+data.count+"条数据,删除失败");
+								}
+							},"json");
+					   }
+				}
+		   });
+		  
+
+	
+	
+	
+	});
+</script>

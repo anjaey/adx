@@ -1,0 +1,403 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/articleManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/admin/productManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/js/treetable/vsStyle/jquery.treeTable.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/js/sobox/popbox-style.css">
+
+
+
+<@frame>
+
+<div class="artLocation">
+	<div class="left">您当前的位置：文章系统>文章分类管理</div>
+	<div class="right">
+		<input type="button" value="添加分类" class="btnsearch js_toadd_top_articleclass" />
+	</div>
+</div>
+<div class="clear"></div>
+<div class="wel_content mart15">
+	<table width="98%" id="treeTable" border="1" cellspacing="0" cellpadding="0" class="art_table">
+		<tr>
+			<th width="10%">名称</th>
+			<th>类型</th>
+			<th>栏目</th>
+			<th>操作</th>
+		</tr>
+		<#list data as entity>
+		<tr hasChild="true" id='${entity.id}' pid='${entity.parentid}'>
+			<td style="text-align: left;">${entity.namecn}</td>
+			<td><#if entity.type == 1 > 单页 <#else> 列表 </#if></td>
+			<td>${entity.resource}</td>
+			<td><a href="javascript:void(0);" class="js_toaddsub_articleclass" parentid="${entity.id}">添加子级</a>&nbsp;|&nbsp; <a href="javascript:void(0);" class="js_toupd_articleclass" id="${entity.id}">编辑</a>&nbsp;|&nbsp; <a href="javascript:void(0);" class="js_dodel_articleclass" id="${entity.id}">删除</a></td>
+		</tr>
+		</#list>
+
+	</table>
+
+
+</div>
+<div class="so-popbox">
+	<div class="h2-sopop">
+		<span class="s-sopop-title">添加分类</span>
+		<span class="ss-close s-sopop-close">[关闭]</span>
+	</div>
+	<div class="so-popbox-cont">
+		<form id="js_articleclass">
+			<input type="hidden" class="js_article_class_id" name="id" /> <input type="hidden" name="parentid" />
+			<p>
+				<label>分类名称：</label><input type="text" name="namecn" class="txtAddproduct txtAddproduct5" id="js_art_namecn">
+			</p>
+			<p>
+				<label>英文名称：</label><input value="" type="text" name="nameen" class="txtAddproduct txtAddproduct5" style = "width:100px">  <font color = "red"> *勿随便更改 </font>
+			</p>
+			<p>
+				<label>栏目：</label> <select style="width: 100px;" name="resoureceid" class="js_article_class_resoureceid"></select>
+			</p>
+			<p>
+				<label>是否在菜单中显示：</label> <input value="1" type="radio" checked="checked" name="showinnav">是 <input value="0" type="radio" name="showinnav">否
+			</p>
+			<div class="clear"></div>
+			<p>
+				<label>类型：</label> <input value="1" type="radio" checked="checked" name="type">单页 <input value="0" type="radio" name="type">列表
+			</p>
+			<div class="clear"></div>
+			<p>
+				<label>说明：</label><input value="" type="text" name="description" class="txtAddproduct txtAddproduct5">
+			</p>
+		</form>
+		<p class="p-so-popBtn js_doadd_articleclass">
+			<input type="button" value="确定">
+		</p>
+	</div>
+</div>
+
+
+
+</@frame>
+<script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+<script type="text/javascript" src="${base}/res/common/js/treetable/jquery.treeTable.js"></script>
+<script type="text/javascript" src="${base}/res/common/js/sobox/jquery.sobox.js"></script>
+<script type="text/javascript" src="${base}/res/bhecms/js/tree_tab.js"></script>
+<script>
+	$(this).tree({
+		url: 	'${base}/admin/article/getAllArticleSection.html',
+		top:	'0',
+		select:	'js_article_class_resoureceid',
+	});
+
+	$(".js_toadd_top_articleclass").click(function(){
+		$("#js_articleclass")[0].reset();
+		$("input[name=parentid]").val(0);
+		$(".js_article_class_resoureceid option:not(:disabled):first").attr("selected",true);
+		$.sobox.pop({
+			popTarget:'div.so-popbox',
+			wrapTarget:false,
+			maskClick : false,
+			title:"添加顶级分类",
+		});
+	});
+	
+	$(document).on("click",".js_doadd_articleclass",function(){
+		if($("#js_articleclass input[name=namecn]").val() == null || $("#js_articleclass input[name=namecn]").val() == ""){
+			alert("名称不能为空");
+		}else{
+			var  nameCn = $("#js_art_namecn").val();
+			var id=$(".js_article_class_id").val();
+			$.ajax({
+				type : "post",
+				url : "${base}/admin/article/checkNameCn.html",
+				data : {namecn:nameCn,
+						id:id},
+				dataType : 'json',
+				success : function(result){
+					if(result.status == 1){
+						var data = ajaxAddArticleClass();
+						if(data){
+							window.location.reload();
+						}else{
+							alert("添加失败");
+						}
+					}else{
+						alert("当前商品名称已存在，请换一个!");
+						return false;
+					}
+				}
+			});
+
+		}
+	});
+	
+	$(document).on("click",".js_toaddsub_articleclass",function(){
+		$("#js_articleclass")[0].reset();
+		$("input[name=parentid]").val($(this).attr("parentid"));
+		$(".js_article_class_resoureceid option:not(:disabled):first").attr("selected",true);
+		$.sobox.pop({
+			popTarget:'div.so-popbox',
+			wrapTarget:false,
+			maskClick : false,
+			title:"添加子级分类",
+		});
+	});
+	
+	$(document).on("click",".js_dodel_articleclass",function(){
+		if(confirm("是否删除改分类")){
+			var data = ajaxDelArticleClass($(this).attr("id"));
+			if(data.rst){
+				alert("删除成功");
+				window.location.reload(true);
+			}else{
+				alert(data.msg == null ? "删除失败" : data.msg);
+			}
+		}
+	});
+	
+	$(document).on("click",".js_toupd_articleclass",function(){
+		$("#js_articleclass")[0].reset();
+		var dataDetail = ajaxArcilceClassDetail($(this).attr("id"));
+		$.each(dataDetail.data,function(k,v){
+			if($.trim(v) != ""){
+				$("#js_articleclass input[name="+k+"][type=radio][value='"+v+"']").click();
+				$("#js_articleclass input[name="+k+"][type=text]").val(v);
+				$("#js_articleclass input[name="+k+"][type=hidden]").val(v);
+				$("#js_articleclass select[name="+k+"] option[value='"+v+"']").attr("selected",true);
+			}
+		});
+		$.sobox.pop({
+			popTarget:'div.so-popbox',
+			wrapTarget:false,
+			maskClick : false,
+			title:"修改分类",
+		});
+	});
+</script>
+
+<script>
+	/* ajax */
+	
+	/* 删除文章类型操作 */
+	function ajaxDelArticleClass(id){
+		var data;
+		$.ajax({
+			type:"post",
+			url:"${base}/admin/article/doDelArticleClass.html",
+			data:{
+				id:id,
+			},
+			dataType:"json",
+			async:false,
+			success:function(json){
+				data = json;
+			},
+			error:function(){
+				alert("删除失败");
+			}
+		});
+		return data;
+	}
+	
+	/* 查询所有栏目 */
+	function ajaxAllArticleSection(){
+		var data;
+		$.ajax({
+			type:"post",
+			url:"${base}/admin/article/getAllArticleSection.html",
+			dataType: "json",
+			async:false,
+			success:function(json){
+				data = json;
+			},
+			error:function(){
+				alert("获取数据失败");
+			}
+		});
+		return data;
+	}
+	
+	/* 添加文章类型 */
+	function ajaxAddArticleClass(){
+		var data;
+		$.ajax({
+			type:"post",
+			url:"${base}/admin/article/doAddArticleClass.html",
+			data:$("#js_articleclass").serialize(),
+			async:false,
+			success:function(json){
+				data = json;
+			},
+			error:function(){
+				alert("添加失败");
+			}
+		});
+		return data;
+	}
+	
+	/* 单个文章类型详情 */
+	function ajaxArcilceClassDetail(id) {
+		var data;
+		$.ajax({
+			type:"post",
+			url:"${base}/admin/article/getArcilceClassDetail.html",
+			data:{
+				id:id,
+			},
+			dataType:"json",
+			async:false,
+			success:function(json){
+				data = json
+			},
+			error:function(){
+				alert("查询失败");
+			}
+		});
+		return data;
+	}
+	
+</script>
+
+<script>
+    
+	$(function(){
+	    var option = {
+	        theme:'vsStyle',
+	        expandLevel : 1,
+	        beforeExpand : function($treeTable, id) {
+	
+	            //判断id是否已经有了孩子节点，如果有了就不再加载，这样就可以起到缓存的作用
+	          	if ($('.' + id, $treeTable).length) {
+	          		return; 
+	          	}
+	            
+	        	//获取数据
+	        	$.ajax({ 
+	        		type: 'POST', 
+	        		url: "${base}/admin/article/classifyListSub.html" , 
+	        		data: "parentid="+id+"" , 
+	        		dataType: "json",
+	        		async:false,
+	        		success:function(data) {
+			            	var datas = data.data;
+			            	if ($('.' + id, $treeTable).length) {
+			            		return;
+			            	}
+				            var html = '';
+		        			for(var i = 0 ; i < datas.length ; i++){
+		        				if(ajaxSub(datas[i].id)){
+			        				html += '<tr hasChild = "true" id='+datas[i].id+' pId="'+id+'">';
+		        				}else{
+			        				html += '<tr id='+datas[i].id+' pId="'+id+'">';
+		        				}
+		        				html += '<td style="text-align: left;">'+datas[i].namecn+'</td>'+
+					        				'<td>'+(datas[i].type == 0 ? "列表" : "单页")+'</td>'+
+					        				'<td>'+datas[i].resource+'</td>'+
+					        				'<td>'+
+					        					'<a href="javascript:void(0);" class="js_toaddsub_articleclass" parentid="'+datas[i].id+'">添加子级</a>&nbsp;|&nbsp;'+
+					        					'<a href="javascript:void(0);" class="js_toupd_articleclass" id="'+datas[i].id+'">编辑</a>&nbsp;|&nbsp;'+
+					        					'<a href="javascript:void(0);" class="js_dodel_articleclass" id="'+datas[i].id+'">删除</a>'+
+				        					'</td>'+
+			        					'</tr>';
+		        			}
+	                    	$treeTable.addChilds(html);
+	        		},    
+	        		error : function(e) {
+	        			alert(e.status);    
+	        		}   
+	        	});  
+	        },
+	        onSelect : function($treeTable, id) {
+	            window.console && console.log('onSelect:' + id);
+	        }
+	    	}
+	    	$('#treeTable').treeTable(option);
+	});
+    
+	function ajaxSub(id){
+		var flag = false;
+		$.ajax({
+			type: 'POST', 
+    		url: "${base}/admin/article/classifyListSub.html" , 
+    		data: "parentid="+id+"" , 
+    		dataType: "json",
+    		async:false,
+    		success:function(data) {
+    			if(data.data == '' ){
+	    			flag = false;
+    			}else{
+    				flag = true;
+    			}
+    		}
+		});
+		return flag;
+	}
+	
+	$(document).ready(function(){
+		<#if (pageInfoMap.count>0)>
+		$('div.pagination').jqPagination({
+			current_page:'${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+			max_page:'${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+		    paged: function(page) {
+		    	window.location.href="articleIndex.html?pageindex="+page;
+		    }
+		});
+	</#if>	
+	
+	   //给标题加上背景色以及鼠标移动到某一行的事加上背景色
+	   $("table.art_table tr:first-child").css("background-color","#f3f7fb");
+	   $("table.art_table tr:not(:first-child)").hover(function(){
+		   $(this).css("background-color","#f3f7fb");
+		   },function(){
+			   $(this).css("background-color","#fff");
+		});
+		   
+	   $("a.js-updateStatus").click(function(){
+		   if(confirm("是否删除到垃圾箱？")){
+		    var uuid=$(this).attr("uid");
+			$.post("updateArtiStatus.html", {"uuid":uuid,"status":1},
+				function(data){
+					if(data.result){
+						alert("删除成功");
+						window.location.reload(true);
+					}else{
+						alert("删除失败");
+					}
+				},"json");
+		   }
+	   });
+		   
+	   $("a.js-delete").click(function(){
+		   if(confirm("是否删除该文章？将不可恢复！")){
+		    var uuid=$(this).attr("uid");
+			$.post("deleteArticle.html", {"uuid":uuid},
+				function(data){
+					if(data.result){
+						alert("删除成功");
+						window.location.reload(true);
+					}else{
+						alert("删除失败");
+					}
+				},"json");
+		   }
+	   });
+		   
+	   $("button.js-deleteAll").click(function(){
+		   if($("input:checked.js-chooseInput").length>0){
+			   if(confirm("是否删除到垃圾箱？")){
+				   var uuids="";
+				   $("input:checked.js-chooseInput").each(function (k,v) {
+					   uuids=$(v).attr("uid")+","+uuids;
+				   })
+				   uuids=uuids.substring(0,uuids.length-1);
+					$.post("updateArtiStatus.html", {"uuids":uuids,"status":1},
+						function(data){
+							if(data.result){
+								alert("删除成功");
+								window.location.reload(true);
+							}else{
+								alert("共有："+data.count+"条数据,删除失败");
+							}
+						},"json");
+				   }
+			}
+	   });
+	});
+</script>

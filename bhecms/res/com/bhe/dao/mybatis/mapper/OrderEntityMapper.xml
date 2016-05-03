@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bhe.dao.mybatis.mapper.OrderEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.bhe.dao.mybatis.model.OrderEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="orderNo" property="orderno" jdbcType="VARCHAR" />
+    <result column="typeid" property="typeid" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="pricePer" property="priceper" jdbcType="CHAR" />
+    <result column="totalPrice" property="totalprice" jdbcType="DECIMAL" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="preferentialPrice" property="preferentialprice" jdbcType="DECIMAL" />
+    <result column="preferentialId" property="preferentialid" jdbcType="INTEGER" />
+    <result column="payPrice" property="payprice" jdbcType="DECIMAL" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="payStatus" property="paystatus" jdbcType="INTEGER" />
+    <result column="payment" property="payment" jdbcType="INTEGER" />
+    <result column="payTime" property="paytime" jdbcType="TIMESTAMP" />
+    <result column="cancelTime" property="canceltime" jdbcType="TIMESTAMP" />
+    <result column="buyerName" property="buyername" jdbcType="VARCHAR" />
+    <result column="buyerPhone" property="buyerphone" jdbcType="VARCHAR" />
+    <result column="buyerMobile" property="buyermobile" jdbcType="VARCHAR" />
+    <result column="leaveMsg" property="leavemsg" jdbcType="VARCHAR" />
+    <result column="conuntry" property="conuntry" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="districts" property="districts" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="cityLevel" property="citylevel" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="orderType" property="ordertype" jdbcType="INTEGER" />
+    <result column="auditStatus" property="auditstatus" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.bhe.dao.mybatis.model.OrderEntity" extends="BaseResultMap" >
+    <result column="cancelReason" property="cancelreason" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, orderNo, typeid, userid, pricePer, totalPrice, count, preferentialPrice, preferentialId, 
+    payPrice, createTime, payStatus, payment, payTime, cancelTime, buyerName, buyerPhone, 
+    buyerMobile, leaveMsg, conuntry, province, city, districts, address, cityLevel, level, 
+    orderType, auditStatus
+  </sql>
+  <sql id="Blob_Column_List" >
+    cancelReason
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.bhe.dao.mybatis.model.OrderEntityCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bhe.dao.mybatis.model.OrderEntityCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bhe.dao.mybatis.model.OrderEntityCriteria" >
+    delete from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bhe.dao.mybatis.model.OrderEntity" >
+    insert into t_order (id, orderNo, typeid, 
+      userid, pricePer, totalPrice, 
+      count, preferentialPrice, preferentialId, 
+      payPrice, createTime, payStatus, 
+      payment, payTime, cancelTime, 
+      buyerName, buyerPhone, buyerMobile, 
+      leaveMsg, conuntry, province, 
+      city, districts, address, 
+      cityLevel, level, orderType, 
+      auditStatus, cancelReason)
+    values (#{id,jdbcType=BIGINT}, #{orderno,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
+      #{userid,jdbcType=VARCHAR}, #{priceper,jdbcType=CHAR}, #{totalprice,jdbcType=DECIMAL}, 
+      #{count,jdbcType=INTEGER}, #{preferentialprice,jdbcType=DECIMAL}, #{preferentialid,jdbcType=INTEGER}, 
+      #{payprice,jdbcType=DECIMAL}, #{createtime,jdbcType=TIMESTAMP}, #{paystatus,jdbcType=INTEGER}, 
+      #{payment,jdbcType=INTEGER}, #{paytime,jdbcType=TIMESTAMP}, #{canceltime,jdbcType=TIMESTAMP}, 
+      #{buyername,jdbcType=VARCHAR}, #{buyerphone,jdbcType=VARCHAR}, #{buyermobile,jdbcType=VARCHAR}, 
+      #{leavemsg,jdbcType=VARCHAR}, #{conuntry,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{districts,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{citylevel,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{ordertype,jdbcType=INTEGER}, 
+      #{auditstatus,jdbcType=INTEGER}, #{cancelreason,jdbcType=LONGVARCHAR})
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.bhe.dao.mybatis.model.OrderEntity" >
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderno != null" >
+        orderNo,
+      </if>
+      <if test="typeid != null" >
+        typeid,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="priceper != null" >
+        pricePer,
+      </if>
+      <if test="totalprice != null" >
+        totalPrice,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="preferentialprice != null" >
+        preferentialPrice,
+      </if>
+      <if test="preferentialid != null" >
+        preferentialId,
+      </if>
+      <if test="payprice != null" >
+        payPrice,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="paystatus != null" >
+        payStatus,
+      </if>
+      <if test="payment != null" >
+        payment,
+      </if>
+      <if test="paytime != null" >
+        payTime,
+      </if>
+      <if test="canceltime != null" >
+        cancelTime,
+      </if>
+      <if test="buyername != null" >
+        buyerName,
+      </if>
+      <if test="buyerphone != null" >
+        buyerPhone,
+      </if>
+      <if test="buyermobile != null" >
+        buyerMobile,
+      </if>
+      <if test="leavemsg != null" >
+        leaveMsg,
+      </if>
+      <if test="conuntry != null" >
+        conuntry,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="districts != null" >
+        districts,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="citylevel != null" >
+        cityLevel,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="ordertype != null" >
+        orderType,
+      </if>
+      <if test="auditstatus != null" >
+        auditStatus,
+      </if>
+      <if test="cancelreason != null" >
+        cancelReason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderno != null" >
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="priceper != null" >
+        #{priceper,jdbcType=CHAR},
+      </if>
+      <if test="totalprice != null" >
+        #{totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="preferentialprice != null" >
+        #{preferentialprice,jdbcType=DECIMAL},
+      </if>
+      <if test="preferentialid != null" >
+        #{preferentialid,jdbcType=INTEGER},
+      </if>
+      <if test="payprice != null" >
+        #{payprice,jdbcType=DECIMAL},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paystatus != null" >
+        #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=INTEGER},
+      </if>
+      <if test="paytime != null" >
+        #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="canceltime != null" >
+        #{canceltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyername != null" >
+        #{buyername,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerphone != null" >
+        #{buyerphone,jdbcType=VARCHAR},
+      </if>
+      <if test="buyermobile != null" >
+        #{buyermobile,jdbcType=VARCHAR},
+      </if>
+      <if test="leavemsg != null" >
+        #{leavemsg,jdbcType=VARCHAR},
+      </if>
+      <if test="conuntry != null" >
+        #{conuntry,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="districts != null" >
+        #{districts,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="citylevel != null" >
+        #{citylevel,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="ordertype != null" >
+        #{ordertype,jdbcType=INTEGER},
+      </if>
+      <if test="auditstatus != null" >
+        #{auditstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cancelreason != null" >
+        #{cancelreason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterType="com.bhe.dao.mybatis.model.OrderEntityCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderno != null" >
+        orderNo = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeid != null" >
+        typeid = #{record.typeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceper != null" >
+        pricePer = #{record.priceper,jdbcType=CHAR},
+      </if>
+      <if test="record.totalprice != null" >
+        totalPrice = #{record.totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.preferentialprice != null" >
+        preferentialPrice = #{record.preferentialprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.preferentialid != null" >
+        preferentialId = #{record.preferentialid,jdbcType=INTEGER},
+      </if>
+      <if test="record.payprice != null" >
+        payPrice = #{record.payprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paystatus != null" >
+        payStatus = #{record.paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.payment != null" >
+        payment = #{record.payment,jdbcType=INTEGER},
+      </if>
+      <if test="record.paytime != null" >
+        payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.canceltime != null" >
+        cancelTime = #{record.canceltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.buyername != null" >
+        buyerName = #{record.buyername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyerphone != null" >
+        buyerPhone = #{record.buyerphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyermobile != null" >
+        buyerMobile = #{record.buyermobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leavemsg != null" >
+        leaveMsg = #{record.leavemsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conuntry != null" >
+        conuntry = #{record.conuntry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.districts != null" >
+        districts = #{record.districts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.citylevel != null" >
+        cityLevel = #{record.citylevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.ordertype != null" >
+        orderType = #{record.ordertype,jdbcType=INTEGER},
+      </if>
+      <if test="record.auditstatus != null" >
+        auditStatus = #{record.auditstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.cancelreason != null" >
+        cancelReason = #{record.cancelreason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_order
+    set id = #{record.id,jdbcType=BIGINT},
+      orderNo = #{record.orderno,jdbcType=VARCHAR},
+      typeid = #{record.typeid,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      pricePer = #{record.priceper,jdbcType=CHAR},
+      totalPrice = #{record.totalprice,jdbcType=DECIMAL},
+      count = #{record.count,jdbcType=INTEGER},
+      preferentialPrice = #{record.preferentialprice,jdbcType=DECIMAL},
+      preferentialId = #{record.preferentialid,jdbcType=INTEGER},
+      payPrice = #{record.payprice,jdbcType=DECIMAL},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      payStatus = #{record.paystatus,jdbcType=INTEGER},
+      payment = #{record.payment,jdbcType=INTEGER},
+      payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      cancelTime = #{record.canceltime,jdbcType=TIMESTAMP},
+      buyerName = #{record.buyername,jdbcType=VARCHAR},
+      buyerPhone = #{record.buyerphone,jdbcType=VARCHAR},
+      buyerMobile = #{record.buyermobile,jdbcType=VARCHAR},
+      leaveMsg = #{record.leavemsg,jdbcType=VARCHAR},
+      conuntry = #{record.conuntry,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      districts = #{record.districts,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      cityLevel = #{record.citylevel,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=INTEGER},
+      orderType = #{record.ordertype,jdbcType=INTEGER},
+      auditStatus = #{record.auditstatus,jdbcType=INTEGER},
+      cancelReason = #{record.cancelreason,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_order
+    set id = #{record.id,jdbcType=BIGINT},
+      orderNo = #{record.orderno,jdbcType=VARCHAR},
+      typeid = #{record.typeid,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      pricePer = #{record.priceper,jdbcType=CHAR},
+      totalPrice = #{record.totalprice,jdbcType=DECIMAL},
+      count = #{record.count,jdbcType=INTEGER},
+      preferentialPrice = #{record.preferentialprice,jdbcType=DECIMAL},
+      preferentialId = #{record.preferentialid,jdbcType=INTEGER},
+      payPrice = #{record.payprice,jdbcType=DECIMAL},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      payStatus = #{record.paystatus,jdbcType=INTEGER},
+      payment = #{record.payment,jdbcType=INTEGER},
+      payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      cancelTime = #{record.canceltime,jdbcType=TIMESTAMP},
+      buyerName = #{record.buyername,jdbcType=VARCHAR},
+      buyerPhone = #{record.buyerphone,jdbcType=VARCHAR},
+      buyerMobile = #{record.buyermobile,jdbcType=VARCHAR},
+      leaveMsg = #{record.leavemsg,jdbcType=VARCHAR},
+      conuntry = #{record.conuntry,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      districts = #{record.districts,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      cityLevel = #{record.citylevel,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=INTEGER},
+      orderType = #{record.ordertype,jdbcType=INTEGER},
+      auditStatus = #{record.auditstatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bhe.dao.mybatis.model.OrderEntity" >
+    update t_order
+    <set >
+      <if test="orderno != null" >
+        orderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        typeid = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="priceper != null" >
+        pricePer = #{priceper,jdbcType=CHAR},
+      </if>
+      <if test="totalprice != null" >
+        totalPrice = #{totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="preferentialprice != null" >
+        preferentialPrice = #{preferentialprice,jdbcType=DECIMAL},
+      </if>
+      <if test="preferentialid != null" >
+        preferentialId = #{preferentialid,jdbcType=INTEGER},
+      </if>
+      <if test="payprice != null" >
+        payPrice = #{payprice,jdbcType=DECIMAL},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paystatus != null" >
+        payStatus = #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="payment != null" >
+        payment = #{payment,jdbcType=INTEGER},
+      </if>
+      <if test="paytime != null" >
+        payTime = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="canceltime != null" >
+        cancelTime = #{canceltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyername != null" >
+        buyerName = #{buyername,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerphone != null" >
+        buyerPhone = #{buyerphone,jdbcType=VARCHAR},
+      </if>
+      <if test="buyermobile != null" >
+        buyerMobile = #{buyermobile,jdbcType=VARCHAR},
+      </if>
+      <if test="leavemsg != null" >
+        leaveMsg = #{leavemsg,jdbcType=VARCHAR},
+      </if>
+      <if test="conuntry != null" >
+        conuntry = #{conuntry,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="districts != null" >
+        districts = #{districts,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="citylevel != null" >
+        cityLevel = #{citylevel,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="ordertype != null" >
+        orderType = #{ordertype,jdbcType=INTEGER},
+      </if>
+      <if test="auditstatus != null" >
+        auditStatus = #{auditstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cancelreason != null" >
+        cancelReason = #{cancelreason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bhe.dao.mybatis.model.OrderEntity" >
+    update t_order
+    set orderNo = #{orderno,jdbcType=VARCHAR},
+      typeid = #{typeid,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=VARCHAR},
+      pricePer = #{priceper,jdbcType=CHAR},
+      totalPrice = #{totalprice,jdbcType=DECIMAL},
+      count = #{count,jdbcType=INTEGER},
+      preferentialPrice = #{preferentialprice,jdbcType=DECIMAL},
+      preferentialId = #{preferentialid,jdbcType=INTEGER},
+      payPrice = #{payprice,jdbcType=DECIMAL},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      payStatus = #{paystatus,jdbcType=INTEGER},
+      payment = #{payment,jdbcType=INTEGER},
+      payTime = #{paytime,jdbcType=TIMESTAMP},
+      cancelTime = #{canceltime,jdbcType=TIMESTAMP},
+      buyerName = #{buyername,jdbcType=VARCHAR},
+      buyerPhone = #{buyerphone,jdbcType=VARCHAR},
+      buyerMobile = #{buyermobile,jdbcType=VARCHAR},
+      leaveMsg = #{leavemsg,jdbcType=VARCHAR},
+      conuntry = #{conuntry,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      districts = #{districts,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      cityLevel = #{citylevel,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      orderType = #{ordertype,jdbcType=INTEGER},
+      auditStatus = #{auditstatus,jdbcType=INTEGER},
+      cancelReason = #{cancelreason,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bhe.dao.mybatis.model.OrderEntity" >
+    update t_order
+    set orderNo = #{orderno,jdbcType=VARCHAR},
+      typeid = #{typeid,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=VARCHAR},
+      pricePer = #{priceper,jdbcType=CHAR},
+      totalPrice = #{totalprice,jdbcType=DECIMAL},
+      count = #{count,jdbcType=INTEGER},
+      preferentialPrice = #{preferentialprice,jdbcType=DECIMAL},
+      preferentialId = #{preferentialid,jdbcType=INTEGER},
+      payPrice = #{payprice,jdbcType=DECIMAL},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      payStatus = #{paystatus,jdbcType=INTEGER},
+      payment = #{payment,jdbcType=INTEGER},
+      payTime = #{paytime,jdbcType=TIMESTAMP},
+      cancelTime = #{canceltime,jdbcType=TIMESTAMP},
+      buyerName = #{buyername,jdbcType=VARCHAR},
+      buyerPhone = #{buyerphone,jdbcType=VARCHAR},
+      buyerMobile = #{buyermobile,jdbcType=VARCHAR},
+      leaveMsg = #{leavemsg,jdbcType=VARCHAR},
+      conuntry = #{conuntry,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      districts = #{districts,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      cityLevel = #{citylevel,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      orderType = #{ordertype,jdbcType=INTEGER},
+      auditStatus = #{auditstatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,94 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemOrder.css">
+<@frame> 
+
+
+	<div class="wel_content">
+		<div class="check_top">
+    		<span>订单号：${order.orderno}</span>
+    		<span>订单状态：
+    		<#switch order.auditstatus>
+   				<#case 0>
+   				待审核
+   				<#break>
+   				<#case 1>
+   				已通过
+   				<#break>
+   				<#default>
+   				已退回
+   			</#switch>
+    		</span>
+    		<span>下单时间：${order.createtime?datetime}</span>
+    	</div>        
+        <form class="js-form">
+        <div class="change_order">
+     		<p>买家信息：</p>
+     		<div class="order_value">
+     			<span>账号：${userInfo.username}</span>
+     			<span>姓名/公司名称：${userDetailInfo.namecn}</span>
+     			<span>联系电话：${userInfo.phone}</span>
+     		</div>
+     		<p>收货信息：</p>
+     		<div class="order_value">
+     			<span>收货人：</span><input type="text" value="${order.buyername}" name="buyername">
+     			<span>联系电话：</span><input type="text" value="${order.buyerphone}" name="buyerphone"><input type="text" value="${order.buyermobile}" name="buyermobile">
+     			<span>收货地址：</span><input type="text" value="${order.conuntry+order.province+order.city+order.districts+order.address}" name="address">
+     		</div>
+     		<#if orderType=="buy">
+	     		<p>支付信息：</p>
+	     		<div class="order_value">
+	     			<span>支付状态：
+	     			<#switch order.paystatus>
+		   				<#case 0>
+		   				未付款
+		   				<#break>
+		   				<#case 1>
+		   				已付款
+		   				<#break>
+		   				<#default>
+	
+		   			</#switch>
+	     			</span>
+	     			<span>应付金额：</span><input type="text" value="${order.payprice}" name="payprice">
+	     		</div>
+     		</#if>
+     		<p>备注信息：</p>
+     		<div class="order_value">
+     			<span>买家留言：</span><input type="text" value="${order.leavemsg}" name="leavemsg">
+     		</div>
+     		<div class="check_title">订单信息</div>
+     	</div>
+     	</form>
+        <div class="check_btn01"><a href="javascript:void(0)" class="js-save">保存</a><a href="javascript:void(0)" class="js-back">返回订单审核</a></div>
+        
+    </div>
+
+</@frame>
+<script>
+	$(function(){
+		$("a.js-back").click(function(){
+			window.history.back()
+		});
+		
+		$("a.js-save").click(function(){
+			if(confirm("是否保存？")){
+				$.post("updateBasicInfo.html", $("form.js-form").serialize()+"&orderId=${order.id}",
+						function(data){
+							if(data.result){
+								alert("操作成功");
+								window.location.reload(true);
+							}else{
+								alert("操作失败");
+							}
+						},"json");
+			}
+		});
+		
+		
+		
+	})
+
+
+</script>

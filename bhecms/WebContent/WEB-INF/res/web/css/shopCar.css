@@ -1,0 +1,73 @@
+@charset "utf-8";
+/* CSS Document */
+/*提交订单*/
+.shopUser,.shopOrder{border:solid 1px #878787; font-size:14px;border-radius:5px;width:94px;line-height:34px;text-align:center;font-weight:bold;background-repeat:
+no-repeat;background-position:left center; 
+color:#878787;margin:10px 14px;}
+.shopUser{background-image:url(../images/order_01.png);}
+.shopOrder{background-image:url(../images/order_02.png);}
+.orderSearch{position:relative;margin-top:180px;width:480px;}
+.orderSearch img{position:absolute;top:8px;left:20px;}
+.orderSearch input{width:310px;height:32px;border:solid 1px #4292dc;color:#7f7f7f;padding-left:52px;}
+.orderSearch button{width:70px;height:32px;background-color:#4292dc;border-radius:5px 5px;margin-left:10px;}
+.orderTitle{border-bottom:solid 4px #c5c5c5;}
+.changeBtn{width:106px;line-height:44px;border:none;}
+.colorBtn{background-color:#4292dc;}
+.noneBtn{color:#5e5d5d;background-color:white;}
+.palceOder{border:solid 1px #f1f1f1;}
+.checkBtn{padding:35px 15px;}
+.describeText01{margin-left:33px;}
+.detailDes01{margin:36px 15px;}
+.palceTitle{height:78px;}
+.tdPadding{width:100px;}
+.placeShow{height:136px;background-color:#fcfcfc;}
+.palceOder table td{border-bottom:solid 1px #f1f1f1;}
+/*购物商品购物车*/
+.palceOder a,.colorGary{color:#7a7979;}
+.topLetter{color:red;margin-top:20px;}
+.goodsInformation{width:1200px;border:solid 1px #e3e3e3;margin:35px 0;}
+.conTitle,.conTitle01{width:186px;border-right:solid 1px #e3e3e3;background-color:#fcfcfc;padding-top:16px;text-align:center;}
+.conTitle01,.goodsSure{min-height:600px;}
+.conTitle{height:459px;}
+.conDetail{padding-top:16px;color:#7a7979;padding-left:40px;width:960px;}
+.conDetail p{display:inline-block;line-height:55px;margin:0 0;margin-bottom:15px;}
+.conInformation{height:475px;border-bottom:solid 1px #e3e3e3;}
+.smallDistance{margin-right:50px;}
+.middleInput,.addressSelect{width:108px;height:26px;text-align:center;}
+.addressSelect{margin-right:10px;}
+.detailAddress{width:340px;height:80px; vertical-align:top;}
+.longInput{width:270px;height:26px;text-align:center;}
+.shortInput{width:70px;height:26px;text-align:center;}
+.tdInput{width:56px;height:22px;border:solid 1px #d2d2d2;}
+.letterDistance{letter-spacing:4px;}
+.letterDistance01{letter-spacing:11px;}
+.sureBtn{width:158px;height:40px;background-color:#ff8400;}
+.red{color:red;}
+.orderImg{position:relative;top:-20px;}
+.bigMar{margin-right:195px;margin-left:105px;}
+.smallMar{margin-right:188px;}
+.middleMar{margin-right:225px}
+.lestMar{margin-right:40px;}
+.conDescribe{margin-left:45px;}
+.describeMar01{margin-left:55px;}
+.describeMar02{margin-left:120px;}
+.increseBtn,.decreseBtn{width:14px;height:24px;border:solid 1px #868686;text-align:center;}
+.lestinput{width:38px;height:22px;text-align:center;}
+.promationRed{color:red;}
+.detailDescribe{margin-bottom:20px;}
+.allPrice{color:red;font-size:48px;}
+.commitBtn{width:120px;height:40px;font-size:16px;background-color:#eb6877;margin:30px 5px;}
+.blue{background:#4292DC;}
+.mostMar{margin-top:40px;margin-bottom:300px;}
+.displayBlock{margin-left:55px;}
+.positionTop{position:relative;top:12px;left:-5px;}
+.margin16{margin-top:16px;}
+.positionLeft{position:relative;}
+.margin160{margin-right:160px;}
+.marginLeft200{margin-left:200px;}
+.returnBtn{display:block;width:50px;height:20px;border:1px solid #CCC;text-align:center;}
+.confirmTable{text-align:center;color:#7a7979;font-size:14px;}
+.confirmTable td:first-child{width:300px;}
+/* 图片 手势 */
+.js-detail:hover{cursor: pointer;}
+.numberDetail{ width:38px; height:24px; border:1px solid #ccc; text-align:center;}

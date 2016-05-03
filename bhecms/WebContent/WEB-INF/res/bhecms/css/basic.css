@@ -1,0 +1,31 @@
+@charset "utf-8";
+/* CSS Document */
+html{color:#000;background:#FFF;}
+html,body{height:100%;}
+body{font:12px/1.231 "arial,helvetica,clean,sans-serif","Microsoft Yahei"; }
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,blockquote,th,td{margin:0;padding:0}
+table{border-collapse:collapse;border-spacing:0}
+fieldset,img{border:0}
+li{list-style:none}
+em{font-style:normal;}
+img{vertical-align:middle;}
+h6,h5,h4,h3,h2,h1{font-weight:bold;}
+h6{	font-size:22px;}
+h5{	font-size:20px;}
+h4{	font-size:18px;}
+h3{	font-size:16px;}
+h2{	font-size:14px;}
+h1{	font-size:12px;}
+a{color:#000;text-decoration:none}
+a:hover{text-decoration:none;cursor:pointer;}
+
+button{border:none;}
+.left{float:left;}
+.right{float:right;}
+.clear{clear:both;}
+.btnsearch{ width:60px; height:34px; background-color:#00baad !important; text-align:center; border-radius:4px; border:none; color:#fff; font-size:14px; font-weight:bold;}
+.js-hideed{display: none;}
+/*顶部位置通用样式*/
+.artLocation{ margin:24px 31px; width:93%;}
+/*顶部位置通用样式结束*/
+.red{color: red;}

@@ -1,0 +1,224 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/shopCar.css">
+
+<@frame>
+
+
+<div class="wind1200">
+	<div class="orderSearch right">
+    </div>
+    <div class="clear"></div>
+  	<div class="palceOder wind1200 font14">
+    <table width="1200" cellpadding-right="0" cellspacing="0" border="0">
+	    <tr class="palceTitle">
+	    	<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="sex" class="js-chooseAll-A"><span class="describeMar02">全选</span><span>商品信息</span></td>
+	        <td><span>单价（元）</span></td>
+	        <td ><span>数量</span></td>
+	        <td class="tdPadding"><span>金额（元）</span></td>
+	        <td class="tdPadding"><span>操作</span></td>
+	    </tr>
+	    <#if productListMap?has_content>
+	    	<#list productListMap as entity>
+				     <tr class="placeShow">
+				    	<td>
+				        	<div class="left checkBtn"><input type="checkbox" name="sex" class="js-chooseInput-A" value="${entity.productid}"></div>
+				        	<div class="left js-detail" data-uuid="${entity.productid}"><img src="${entity.productImgurl}" width="85" height="85"></div>  
+				            <div class="left describeText01 js-detail" data-uuid="${entity.productid}"><div class="detailDes01">${entity.productName}</div>
+				            <#--<div class="detailDes01 red">促销：五一特惠</div>-->
+				            </div>
+				        </td>
+				        <td><span>${entity.price?string('###.00')}</span></td>
+				        <td><span><img src="${base}/res/web/images/decrese_btn.png" class="js-reduce left" alt="减少"/><input type="text" value="${entity.count}" class="lestinput js-countInput numberDetail "><img src="${base}/res/web/images/increase_btn.png" class="js-add" alt="增加" max="${entity.productMaxCount}"/></span></td>
+				        <td><span class="red js-moneny-A">${(entity.price*entity.count)?string('###.00')}</span></td>
+				        <td><a href="javascript:void(0)" class="js-delcar" uuid="${entity.productid}">删除</a></td>
+				    </tr>
+		    </#list>
+	    </#if>
+    </table>
+    
+    </div>
+</div>
+<div class="wind1200 font14 mostMar js-countAll ">
+	<div class="right"><span class="lestMar js-countSpan">已选商品0件</span><span>合计（不含运费）：</span><span class="allPrice font22 js-allMoneny">￥0.00</span></div>
+    <div class="clear"></div>
+    <div class="right"><button class="commitBtn blue white js-subOrder" data-type="rent" msg="租赁选择产品？">我要租赁</button>&nbsp;<button class="commitBtn white js-subOrder"  data-type="buy" msg="购买选择产品？">我要购买</button></div>
+</div>
+
+
+</@frame>
+
+<script type="text/javascript" src="${base}/res/common/js/jquery.json-2.4.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("a.js-delcar").click(function(){
+			if(confirm("确定删除？")){
+				$.ajax({type:"post",
+					url:"delBuyCarPro.html",
+					async:false,
+					data:{"uuid":$(this).attr("uuid")},
+					dataType:"json",
+					success:function(data){
+						if(data.result==0){
+								alert("登陆身份失效，请重新登陆");
+						}else if(data.result==1){
+							location.reload(true);
+						}else{
+							alert("删除失败");
+						}
+					}
+					});
+				
+			}
+		});
+		
+		
+		$("input.js-chooseAll-A").click(function(){
+			/* 全选/反选 */
+			if ($(this).prop("checked")) {
+				$(this).next("span").text("取消");
+				$("input.js-chooseInput-A").each(function() {
+					$(this).prop("checked", true);
+				})
+			} else {
+				$(this).next("span").text("全选");
+				$("input.js-chooseInput-A").each(function() {
+					$(this).prop("checked", false);
+				})
+			}
+			//价格变化
+			var count=$("input.js-chooseInput-A:checked").length;
+			$("div.js-countAll").eq(0).find("span.js-countSpan").text("已选商品"+count+"件");
+			
+			var all=0;//
+			$("input.js-chooseInput-A:checked").each(function(k,v){
+				all=parseInt($(this).parents("tr").find("td:eq(3)").find("span").text())+all;
+			});
+			$("div.js-countAll").eq(0).find("span.js-allMoneny").text("￥"+all.toFixed(2));
+			
+		});
+		
+		
+		$("input.js-chooseInput-A").click(function(){
+			var count=$("input.js-chooseInput-A:checked").length;
+			$("div.js-countAll").eq(0).find("span.js-countSpan").text("已选商品"+count+"件");
+			if(count==0){
+				$("input.js-chooseAll-A").next("span").text("全选");
+				$("input.js-chooseAll-A").prop("checked", false);
+			}
+			
+			var all=0;//
+			$("input.js-chooseInput-A:checked").each(function(k,v){
+				all=parseInt($(this).parents("tr").find("td:eq(3)").find("span").text())+all;
+			});
+			$("div.js-countAll").eq(0).find("span.js-allMoneny").text("￥"+all.toFixed(2));
+		});
+			
+
+		
+		
+		
+		<!-------数量加减--------->
+			
+		function countBuy(){
+			 var allCount=0;
+			 $("input.js-chooseInput-A:checked").each(function(){
+				 var litleCount = $(this).parents("tr").find("td:eq(3) span").text();
+				 allCount=allCount+parseInt(litleCount);
+			 });
+			 $("div.js-countAll:eq(0)").find("span.js-allMoneny").text("￥"+allCount.toFixed(2));
+		}
+
+		//增加数量
+		$("img.js-add").click(function(){
+			 var t = $(this).prev("input");
+			 var max = parseInt($(this).attr("max"));
+			 if(isNaN(parseInt(t.val()))||t.val()>=max){
+				 return;
+			 }else{
+				 t.val(parseInt(t.val())+1)
+				 $(this).parents("td").next("td").find("span").html((parseInt(t.val())*$(this).parents("td").prev("td").find("span").text()).toFixed(2));//toFixed()是保留小数点的函数很实用哦
+			 }
+			 countBuy();
+		});
+		
+		//减速数量
+		$("img.js-reduce").click(function(){
+			var t = $(this).next("input");
+			if(isNaN(parseInt(t.val()))||parseInt(t.val())<=1){
+				return;
+			}else{
+				t.val(parseInt(t.val())-1);
+				if (parseInt(t.val())>0){
+				 $(this).parents("td").next("td").find("span").html((parseInt(t.val())*$(this).parents("td").prev("td").find("span").text()).toFixed(2));//toFixed()是保留小数点的函数很实用哦
+				 countBuy();
+				}
+			}
+		});
+		
+		//自己输入数量
+		$("input.js-countInput").keyup(function(){
+			var t = $(this);
+			var max = parseInt($(this).next("img").attr("max"));
+			if(isNaN(parseInt(t.val()))||parseInt(t.val())<=0||t.val()>=max){
+				return;
+			}else{
+				$(this).parents("td").next("td").find("span").html((parseInt(t.val())*$(this).parents("td").prev("td").find("span").text()).toFixed(2));
+				 countBuy();
+			}
+		}).blur(function(){
+			var t = $(this);
+			var max = parseInt($(this).next("img").attr("max"));
+			if(isNaN(parseInt(t.val()))||parseInt(t.val())<=0||t.val()>=max){
+				t.val(1);
+				$(this).parents("td").next("td").find("span").html((parseInt(t.val())*$(this).parents("td").prev("td").find("span").text()).toFixed(2));
+				 countBuy();
+			}
+			
+		});
+		
+		
+		
+		
+		$("button.js-subOrder").click(function(){
+			var _this=$(this);
+			var subObj=new Array();
+			var subStr="";
+			$("input.js-chooseInput-A:checked").each(function(){
+				var obj={};
+				obj.uuid=$(this).val();
+				obj.count=$(this).parents("tr").find("td:eq(2)").find("input").val();
+				subObj.push(obj);
+			});
+			subStr=$.toJSON(subObj);
+			if(subObj.length){
+			if(confirm($(this).attr("msg"))){
+			 var turnForm = document.createElement("form");   
+				    //一定要加入到body中！！   
+				    document.body.appendChild(turnForm);
+				    turnForm.method = 'post';
+					 turnForm.action = 'confirm_order.html';
+					// turnForm.target = '_blank';
+					//创建隐藏表单
+					var newElement = document.createElement("input");
+				    newElement.setAttribute("name","valueMap");
+				    newElement.setAttribute("type","hidden");
+				    newElement.setAttribute("value",subStr);
+				    turnForm.appendChild(newElement);
+				    newElement = document.createElement("input");
+				    newElement.setAttribute("name","rentOrBuy");
+				    newElement.setAttribute("type","hidden");
+				    newElement.setAttribute("value",_this.attr("data-type"));
+				    turnForm.appendChild(newElement);
+				    turnForm.submit();
+				}
+			}
+		});
+		
+		$(".js-detail").click(function(){
+			location.href="${base}/web/product/productDetail.html?uuid="+$(this).attr("data-uuid");
+		})
+	})
+
+
+</script>

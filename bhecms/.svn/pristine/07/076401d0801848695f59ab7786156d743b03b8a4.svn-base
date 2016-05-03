@@ -1,0 +1,37 @@
+<div class="menu">
+	<div class="manage">
+		<div class="article_title">系统设置</div>
+		<div class="article_list" >
+			<div class="list01">
+				<a href="${base}/admin/system/systemIndex.html " <@sets.setCurr currIndex 1 />>站点配置</a>
+			</div>
+			<!-- <div class="list01">
+				<a href="${base}/admin/system/globalSetIndex.html" <@sets.setCurr currIndex 2 />>全局配置</a>
+			</div> -->
+			<!-- <div class="list01">
+				<a href="${base}/admin/system/navigaIndex.html" <@sets.setCurr currIndex 3 />>导航管理</a>
+			</div>
+			<div class="list01">
+				<a href="">模型管理</a>
+			</div>
+			<div class="list01">
+				<a href="">模板管理</a>
+			</div>
+			<div class="list01">
+				<a href="">友情链接</a>
+			</div>
+			<div class="list01">
+				<a href="">其它设置</a>
+			</div>
+			<div class="list01">
+				<a href="">调查</a>
+			</div> -->
+			<div class="list01">
+				<a href="${base}/admin/system/logManage.html" <@sets.setCurr currIndex 3 />>登陆日志</a>
+			</div>
+			<!-- <div class="list01">
+				<a href="${base}/admin/system/logManage.html" <@sets.setCurr currIndex 4 />>操作日志</a>
+			</div> -->
+		</div>
+	</div>
+</div>

@@ -1,0 +1,111 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<@frame> 
+<#if (states == 0)>
+	<div class="nav_position">您当前位置：<a href="${base}/admin/user/userIndex.html">用户管理</a>><a href="${base}/admin/user/adminList.html">管理员管理</a>>添加管理员</div>                                                   
+</#if>
+<#if (states == 1)>
+	<div class="nav_position">您当前位置：<a href="${base}/admin/user/userIndex.html">用户管理</a>><a href="${base}/admin/user/adminList.html">管理员管理</a>>修改</div>                                                   
+</#if>
+<div class="wel_content" style="overflow-y:auto">
+                                                        
+	<div class="basic">
+        <p class="edit_title">添加管理员</p>
+        <input type="hidden" value="${uemap.uuid}" name="uuid" class="js-userInfo"> 
+        <input type="hidden" value="${uemap.uuid}" name="userkey" class="js-detailInfo"> 
+        <div class="name">
+        	<p class="sys_title01"><span>管理员账号：</span>
+        		<input type="text" value="${uemap.username}" name="username" class="sys_input01 js-userInfo"><span style = "color: red">&nbsp;&nbsp;&nbsp;默认密码为[a123456]</span>
+        	</p>
+        </div>
+       <!--  <div class="name">
+        	<p class="sys_title01"><span>所属角色：</span><input type="text" value="" name="" class="sys_input01 js-userInfo"></p>
+        </div> -->
+        <div class="name">
+        	<p class="sys_title01"><span>真实姓名：</span><input type="text" value="${uedetaimap.nameen}" name="nameen" class="sys_input01 js-detailInfo"></p>
+        </div>
+        <div class="name">
+        	<p class="sys_title01 ">性别：
+        	<input type="radio" class="js-detailInfo" name="gender" value="0" <@sets.setRadio uedetaimap.gender  0/>><span>&nbsp;&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        	<input type="radio" class="js-detailInfo" name="gender" value="1" <@sets.setRadio uedetaimap.gender  1/>><span>&nbsp;&nbsp;女</span>
+        	</p>
+        </div>
+        <div class="name">
+        	<p class="sys_title01"><span>联系电话：</span><input type="text" value="${uemap.phone}" name="phone" class="sys_input01 js-userInfo"></p>
+        </div>
+         <div class="name">
+        	<p class="sys_title01"><span>电子邮箱：</span><input type="text" value="${uemap.email}" name="email" class="sys_input01 js-userInfo"></p>
+        </div>
+   </div>
+
+
+     <div class="save">
+		<button class="js-save-form save_btn">保存</button>
+	</div>   
+
+
+</div>
+
+</@frame>
+
+<script>
+
+	$(function(){
+		$("button.js-save-form").click(function(){
+			var userName=$("input[name=username]");
+			if($.trim(userName.val())==""){
+				userName.focus();
+				userName.next("span").text("帐号不能为空！");
+				return;
+			}
+			
+			var userEntity={};
+			userEntity.isadmin=1;
+			var detailEntity={};
+			$("input.js-userInfo").each(function(k,v){
+				var name=$(this).attr("name");
+				var val=$(this).val();
+				if(val!=""){
+					userEntity[name]=val;
+				}
+			});
+			$("input.js-detailInfo").each(function(k,v){
+				var name=$(this).attr("name");
+				var type=$(this).attr("type");
+				if(type=="radio"){
+					detailEntity[name]=$("input[name="+name+"]:checked").val();
+				}else{
+					var val=$(this).val();
+					if(val!=""){
+						detailEntity[name]=val;
+					}
+				}
+			});
+
+			$.post("${base}/admin/user/saveUserInfo.html", {"userEntityStr": JSON.stringify(userEntity),"detailEntityStr":JSON.stringify(detailEntity)},
+					function(data){
+						if(data.result==1){
+							alert("操作成功！");
+							location.href="userIndex.html";
+						}else if(data.result==0){
+							alert("操作失败！");
+						}else if(data.result==2){
+							alert("用户名重复！");
+						}else if(data.result==2004){
+							alert("参数错误！");
+						}else if(data.result==2007){
+							alert("缺少参数！");
+						}
+				
+					},"json");
+			
+		});
+
+		
+		
+		
+	})
+
+
+</script>

@@ -1,0 +1,130 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<@frame> 
+<div class="artLocation left">
+	您当前的位置：系统设置>站内信>发送记录
+</div>
+<div class="clear"></div>
+<div class="wel_content">
+		<div class="mail_top">
+        	<span>状态：</span> <select id="statusselect" class="js-select">
+				<option value="-1">查看状态</option>
+				<option value="1">已查看</option>
+				<option value="0">未查看</option>
+			</select> <span>标题：</span> <input type="text" value="${title}" class="js_title txtAddproduct txtAddproduct5" >  
+			<input  type="button" value="查询" class="js_search btnsearch"/>
+        </div>
+        <div class="basic">
+	        <div class="vip_title">
+	        <table border="0" cellspadding="0px" cellspcing="0px" class="user_list">
+            	<tr class="user_list_nav">
+            		<td><input type="checkbox" class="js-chooseAll"></td>
+            		<td>序号</td>
+            		<td>标题</td>
+            		<td>发件时间</td>
+            		<td>收件人</td>
+            	    <td>状态</td>
+            	    <td>操作</td>
+            	</tr>
+            	<#if (count>0)>
+	            	<#list listMap as map>
+		            	<tr class="user_list_content">
+		            		<td><input type="checkbox" msgId="${map['id']}" class="js-chooseInput"></td>
+		            		<td>${map_index}</td>
+		            		<td>${map['title']}</td>
+		            		<td>
+			        			${map['createtime']}
+					        </td>
+		            		<td>${map['toUserName']}</td>
+		            		<td>
+		            			<#switch map['issee']>
+									<#case 1>
+									已查看
+									<#break>
+									<#default>
+									未查看
+								</#switch>
+		            		</td>
+		            		<td><span class="top_title02"><a class="operate js-show"  msgId="${map['id']}">查看</a><a class="operate js-delete" msgId="${map['id']}">删除</a></span></td>
+		            	</tr>
+            		</#list>
+           	 	</#if>	
+            	
+            	
+            </table>
+	        </div>
+	        <div class="suffix01">
+	        	<p class="user_content">操作:
+	        	<a class="operate js-deleteAll">&nbsp;&nbsp;删除</a>
+	       		</p>
+	        </div>
+    
+    </div>
+</@frame> 
+
+<script>
+//条件查询
+$('s.js-select').val('${issee}' == '' ? -1 : '${issee}');
+$('.js_search').click(function(){
+	var issee = $('#statusselect option:selected').val();
+	var title = $('.js_title').val();
+	
+	window.location.href = '${base}/admin/personalCenter/mySendMsges.html?status=' + issee + '&title=' + title;
+});
+
+
+
+$(function(){
+	
+	 $("input.js-chooseInput").each(function () {
+		 $(this).click(function(){
+			$("input.js-chooseAll").prop("checked",false); 
+		 });
+	 });
+		 
+	 $(".js-delete").click(function(){
+		   if(confirm("是否删除该信息?")){
+		    var id=$(this).attr("msgId");
+			$.post("deleteUserMsg.html", {"id":id},
+				function(data){
+					if(data.result){
+						alert("删除成功");
+						window.location.reload(true);
+					}else{
+						alert("删除失败");
+					}
+				},"json");
+		   }
+	   });	
+	   
+	   $(".js-deleteAll").click(function(){
+		   if($("input:checked.js-chooseInput").length>0){
+			   if(confirm("是否删除到垃圾箱？")){
+				   var ids="";
+				   $("input:checked.js-chooseInput").each(function (k,v) {
+					   ids=$(v).attr("msgId")+","+ids;
+				   })
+				   ids=ids.substring(0,ids.length-1);
+					$.post("deleteUserMsg.html", {"ids":ids},
+						function(data){
+							if(data.result){
+								alert("删除成功");
+								window.location.reload(true);
+							}else{
+								alert("共有："+data.count+"条数据,删除失败");
+							}
+						},"json");
+				   }
+			}
+	   });
+	
+	$(".js-show").click(function(){
+		location.href="showSendMsg.html?msgId="+$(this).attr("msgId");
+	});
+	
+	
+});
+
+
+</script>

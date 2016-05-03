@@ -1,0 +1,113 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<@frame> 
+<#if (states == 0)>
+    	<div class="artLocation">您当前位置：<a href="${base}/admin/user/userIndex.html">用户管理</a>><a href="${base}/admin/user/userIndex.html">会员管理</a>>新增用户</div>                                                 
+    </#if>
+	<#if (states == 1)>
+    	<div class="artLocation">您当前位置：<a href="${base}/admin/user/userIndex.html">用户管理</a>><a href="${base}/admin/user/userIndex.html">会员管理</a>>修改</div>                                                 
+    </#if>	
+<div class="wel_content" style="overflow-y:auto">
+                                                        <!--添加用户-->
+	<div class="basic">	
+        
+        <#if (states == 0)>
+    		 <p class="edit_title">添加新用户</p>                                
+    </#if>
+	<#if (states == 1)>
+    	 <p class="edit_title">修改用户</p>                           
+    </#if>
+        <input type="hidden" value="${uemap.uuid}" name="uuid" class="js-userInfo"> 
+        <input type="hidden" value="${uemap.uuid}" name="userkey" class="js-detailInfo"> 
+        <div class="name">
+        	<p class="sys_title01"><label>用户名：</label>
+        		<input type="text" value="${uemap.username}" name="username" class="sys_input01 js-userInfo txtAddproduct"><span style = "color: red">&nbsp;&nbsp;&nbsp;默认密码为[a123456]</span>
+        	</p>
+        	
+        </div>
+         <div class="name">
+        	<p class="sys_title01"><label>手机号：</label><input type="text" value="${uemap.phone}" name="phone" class="sys_input01 js-userInfo txtAddproduct"></p>
+        </div>
+        <div class="name">
+        	<p class="sys_title01"><label>邮箱：</label><input type="text" value="${uemap.email}" name="email" class="sys_input01 js-userInfo txtAddproduct"></p>
+        </div>
+        <div class="name">
+        	<p class="sys_title01"><label>姓名：</label><input type="text" value="${uedetaimap.nameen}" name="nameen" class="sys_input01 js-detailInfo txtAddproduct"></p>
+        </div>
+   </div>
+
+
+     <div class="save">
+		<button class="js-save-form save_btn">保存</button>
+	</div>   
+
+
+</div>
+
+</@frame>
+
+<script type="text/javascript" src="${base}/res/common/js/My97DatePicker/WdatePicker.js"></script>
+<script>
+
+	$(function(){
+		$("button.js-save-form").click(function(){
+			var userName=$("input[name=username]");
+			if($.trim(userName.val())==""){
+				userName.focus();
+				userName.next("span").text("帐号不能为空！");
+				return;
+			}
+			
+			var userEntity={};
+			var detailEntity={};
+			userEntity.isadmin=0;
+			$("input.js-userInfo").each(function(k,v){
+				var name=$(this).attr("name");
+				var val=$(this).val();
+				if(val!=""){
+					userEntity[name]=val;
+				}
+			});
+			$("input.js-detailInfo").each(function(k,v){
+				var name=$(this).attr("name");
+				var type=$(this).attr("type");
+				if(type=="radio"){
+					detailEntity[name]=$("input[name="+name+"]:checked").val();
+				}else{
+					var val=$(this).val();
+					if(val!=""){
+						detailEntity[name]=val;
+					}
+				}
+			});
+
+			$.post("${base}/admin/user/saveUserInfo.html", {"userEntityStr": JSON.stringify(userEntity),"detailEntityStr":JSON.stringify(detailEntity)},
+					function(data){
+						if(data.result==1){
+							alert("操作成功！");
+							location.href="userIndex.html";
+						}else if(data.result==0){
+							alert("操作失败！");
+						}else if(data.result==2){
+							alert("用户名重复！");
+						}else if(data.result==2004){
+							alert("参数错误！");
+						}else if(data.result==2007){
+							alert("缺少参数！");
+						}
+				
+					},"json");
+			
+		});
+
+		
+		$("input[name=bith]").click(function(){
+			WdatePicker({skin:'twoer',maxDate:'%y-%M-%d'})
+		});
+		
+		
+	})
+
+
+</script>

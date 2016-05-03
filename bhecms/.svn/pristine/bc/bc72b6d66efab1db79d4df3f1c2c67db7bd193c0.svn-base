@@ -1,0 +1,251 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css"	href="${base}/res/bhecms/css/admin/productManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/articleManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+<@frame>
+<div class="welcom">
+	<div class="artLocation">您当前的位置：商品管理>商品列表</div>
+	<div class="wel_content">	
+		<div class="art_list">
+			<div class="art_list_all">
+			
+				<div class="artListAll001">					
+					<div class="prompt">
+						提示：在此栏目下可对商品进行上下架操作，已上架商品在前台展示
+					</div>
+					<div class="productSearchall">
+						<div class="left">
+							筛选： 
+						<select id="statusselect">
+							<option value = "-1">全部状态</option>
+							<option value = "1">上架</option>
+							<option value = "0">下架</option>
+						</select> 
+						全部类别：
+						 <select id="customerSelect" >
+							<option value = "-1">全部类别</option>
+						</select>
+						<!-- 属性：
+						 <select>
+							<option>默认</option>
+							<option>推荐</option>
+							<option>特价</option>
+							<option>新款</option>
+							<option>热销</option>
+							<option>赠品</option>
+							<option>缺货</option>
+						</select> -->
+						商品名称
+						<input type="text" class="txtsearch" value = "${content}"/><input type="button" class="btnsearch search" value="搜索"/>
+						</div>						
+						<div class="right marr10">
+							<input onclick="toaddProInfo()" type="button" value="发布商品" class="btnsearch"/>
+						</div>
+						
+					</div>
+					<div class="clear"></div>
+					<table width="98%" border="0" cellspacing="0" cellpadding="0"
+						class="art_table productTable">
+						<tr>
+							<th width="35px"><input type="checkbox" class="js-chooseAll"/></th>
+							<th>行号</th>
+<!-- 							<th>商品编号</th> -->
+							<th>商品名称</th>
+							<th>商品类别</th>
+							<th>单价（元）</th>
+							<th>商品缩略图</th>
+							<th>库存</th>
+							<th>创建时间</th>
+							<th>状态</th> 
+							<th>操作</th>
+						</tr>
+						<#assign entityList=pageInfoMap.list />  
+						<#list entityList as entity>
+							<tr>
+								<td width="35px;"><input class="js-chooseInput" uuid="${entity.uuid}" type="checkbox" /></td>
+								<td>${entity.rowno}</td>
+<!-- 								<td>${entity.productno}</td> -->
+								<td>${entity.namecn}</td>
+								<td>${entity.clazzname}</td>
+								<td>${entity.price}</td>
+								<td>
+									<img src="${entity.imgurl}" width="50" height="50"/>
+								</td>
+								<td>${entity.count}</td>
+								<td>${entity.createtime}</td>
+								<td>${entity.status}</td>
+								<td><a href='javascript:Ground("${entity.uuid}")'>上架</a> | <a href='javascript:Undercarriage("${entity.uuid}")'>下架</a> | <a href="${base}/admin/product/toselectProAndToProView.html?uuid=${entity.uuid}">修改</a> | <a href='javascript:delPro("${entity.uuid}")'>删除</a></td>
+							</tr>
+						</#list>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="mart15">
+			<div class="batchOperation">
+				<a href="javascript:batchGround()">批量上架</a><a href="javascript:batchUndercarriage()">批量下架</a><a href="javascript:batchdelPros()">批量删除</a>
+			</div>
+			 <div class="pagination right">
+			    <a href="#" class="first" data-action="first">&laquo;</a>
+			    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+			    <input type="text" readonly="readonly" data-max-page="${pageInfoMap.countpage}" />
+			    <a href="#" class="next" data-action="next">&rsaquo;</a>
+			    <a href="#" class="last" data-action="last">&raquo;</a>
+		</div>
+		</div>
+	</div>
+</div>
+
+</@frame>
+<script type="text/javascript" src="${base}/res/bhecms/js/admin/product/productManage.js"></script>
+<script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"  ></script>
+<script type="text/javascript" src="${base}/res/bhecms/js/admin/base.js"></script>
+<script>
+	//全选、单选
+	$("input.js-chooseInput").each(function () {
+		 $(this).click(function(){
+			$("input.js-chooseAll").prop("checked",false); 
+		 });
+	 });
+	//类别 树
+	$.ajax({
+		type: "post",
+		url: "${base}/admin/product/getProductCategoryForTree.html",
+		data:{
+		},
+		dataType:'json',
+		success:function(data){
+			for(var i = 0 ; i < data[0].length ; i++){
+				data1=data[0][i];
+				$("#customerSelect").append("<optgroup label="+data1.namecn+"></optgroup >")
+				if(data[data1.id] != undefined){
+					for ( var j = 0 ; j < data[data1.id].length ; j++) {
+						$("#customerSelect").append("　<option value="+data[data1.id][j].id+" namecn="+data[data1.id][j].namecn+">----"+data[data1.id][j].namecn+"</option>")
+					} 
+				}
+			}
+			$('#customerSelect').val('${type}' == '' ? -1 : '${type}');
+			$('#statusselect').val('${status}'  == '' ? -1 : '${status}');
+		}
+	});
+	
+//加载产品列表
+$('.pagination').jqPagination({
+	current_page:'${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+	max_page:'${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+    paged: function(page) {
+    	window.location.href = "${base}/admin/product/productManage.html?pageindex="
+			+ page + "&pagesize=15&status=" + $('#statusselect option:selected').val() + '&type=' + $('#customerSelect option:selected').val() + '&content=' + $('.txtsearch').val();
+    	}
+});
+
+//删除
+function delPro(uuid){
+	var uuidjson = {};
+	uuidjson.uuid = uuid;
+	var uuidjsons = [];
+	uuidjsons.push(uuidjson);
+	batchdelProsCommon(uuidjsons,1);
+}
+
+//上架
+function Ground(uuid) {
+	var uuidjson = {};
+	uuidjson.uuid = uuid;
+	var uuidjsons = [];
+	uuidjsons.push(uuidjson);
+	carriageGroundManager(uuidjsons,1);
+}
+
+//下架
+function Undercarriage (uuid) {
+	var uuidjson = {};
+	uuidjson.uuid = uuid;
+	var uuidjsons = [];
+	uuidjsons.push(uuidjson);
+	carriageGroundManager(uuidjsons,0);
+}
+
+
+
+//批量删除
+function batchdelPros(){
+	var uuids = getCheckedPro();
+	batchdelProsCommon(uuids,1);
+}
+
+//批量上架
+function batchGround() {
+	var checkedpros = getCheckedPro();
+	carriageGroundManager(checkedpros,1);
+}
+
+//批量下架
+function batchUndercarriage () {
+	var checkedpros = getCheckedPro();
+	carriageGroundManager(checkedpros,0);
+}
+
+//批量删除  公共
+//uuids   编号json
+//state 删除到垃圾箱  0 删除到垃圾箱    1删除
+function batchdelProsCommon(checkedpros,state){
+	var checkedpro = JSON.stringify(checkedpros);
+	$.ajax({
+		type:"post",
+		url:"${base}/admin/product/delProInfo.html",
+		data:{
+			uuids:checkedpro,
+			state:state
+		},
+		dataType:'json',
+		success:function(data){
+			search();
+		}
+	});
+}
+
+//上下架处理
+function carriageGroundManager(checkedpros,status){
+	var checkedpro = JSON.stringify(checkedpros);
+	$.ajax({
+		type:"post",
+		url:"${base}/admin/product/proGroundOrUndercarriage.html",
+		data:{
+			uuids:checkedpro,
+			status:status
+		},
+		dataType:'json',
+		success:function(data){
+			search();
+		}
+	});
+}
+
+
+//获取选择的产品s
+function getCheckedPro(){
+	var procheckeds = [];
+	
+	var proinput = $(".js-chooseInput");
+	var proinputs = $(".js-chooseInput:checked");
+	for (var i = 0; i<proinputs.length; i++) {
+		var inputval = {};
+		inputval.uuid = $(proinputs[i]).attr("uuid");
+		procheckeds.push(inputval);
+	}
+	return procheckeds;
+}
+// 条件查询
+$('.search').click(function(){
+	 search();
+});
+function search(){
+	var status = $('#statusselect option:selected').val();
+	var type = $('#customerSelect option:selected').val();
+	var content = $('.txtsearch').val();
+	
+	window.location.href = '${base}/admin/product/productManage.html?status=' + status + '&type=' + type + '&content=' + content;
+	
+}
+</script>

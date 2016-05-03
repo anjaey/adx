@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>产品垃圾箱</title>
+<link  href="css/adminIndex.css" rel="stylesheet" type="text/css"/>
+<link  href="css/articleManage.css" rel="stylesheet" type="text/css"/>
+<script src="js/jquery-1.8.3.min.js"></script>
+</head>
+<script>
+	$(document).ready(function(){
+							   //给标题加上背景色以及鼠标移动到某一行的事加上背景色
+							   $(".art_table tr:first-child").css("background-color","#f3f7fb");
+							   $(".art_table tr:not(:first-child)").hover(function(){
+															 $(this).css("background-color","#f3f7fb");
+															 },function(){
+																 $(this).css("background-color","#fff");
+															 });
+							   //切换选项卡							 
+								$(".art_list_all>.artListAll001:not(:first-child)").hide();
+								$('.art_header ul li').click(function(){										
+										$(this).addClass('art_on').siblings().removeClass('art_on');
+										$('.art_list_all>div:eq('+$(this).index()+')').show().siblings().hide();	
+									});
+							
+							   $(".art_header ul li:first-child").addClass("art_on");
+							   
+							   
+							   });
+
+</script>
+
+<body>
+	<div class="welcom">
+    	<div class="wel_content">
+        	<div class="art_list">            	
+                <div class="art_list_all">
+                	<div class="artListAll001">
+                    	
+                    
+                <table width="100%" border="0"  cellspacing="0" cellpadding="0" class="art_table">
+                	<tr>
+                    	<th width="35px" ><input  type="checkbox"/></th>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>更新时间</th>
+                        <th>状态</th>
+                        <th>点击数</th>
+                        <th>录入者</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr>
+                    	<td width="35"><input  type="checkbox"/></td>
+                        <td><a href="#">KD1000123</a></td>
+                        <td>[国内] KESION 在线网校系统管理系统全解</td>
+                        <td>2015-07-21</td>
+                        <td>待审核</td>
+                        <td>522</td>
+                        <td>张三</td>
+                        <td><a href="#">恢复</a> | <a href="#" >彻底删除</a></td>
+                    </tr>
+                    <tr>
+                    	<td width="35"><input  type="checkbox"/></td>
+                        <td><a href="#">KD1000123</a></td>
+                        <td>[国内] KESION 在线网校系统管理系统全解</td>
+                        <td>2015-07-21</td>
+                        <td>待审核</td>
+                        <td>522</td>
+                        <td>张三</td>
+                        <td><a href="#">恢复</a> | <a href="#" >彻底删除</a></td>
+                    </tr>
+                    <tr>
+                    	<td width="35"><input  type="checkbox"/></td>
+                        <td><a href="#">KD1000123</a></td>
+                        <td>[国内] KESION 在线网校系统管理系统全解</td>
+                        <td>2015-07-21</td>
+                        <td>待审核</td>
+                        <td>522</td>
+                        <td>张三</td>
+                        <td><a href="#">恢复</a> | <a href="#" >彻底删除</a></td>
+                    </tr>
+                    <tr>
+                    	<td width="35"><input  type="checkbox"/></td>
+                        <td><a href="#">KD1000123</a></td>
+                        <td>[国内] KESION 在线网校系统管理系统全解</td>
+                        <td>2015-07-21</td>
+                        <td>待审核</td>
+                        <td>522</td>
+                        <td>张三</td>
+                       <td><a href="#">恢复</a> | <a href="#" >彻底删除</a></td>
+                    </tr>
+                    <tr>
+                    	<td width="35"><input  type="checkbox"/></td>
+                        <td><a href="#">KD1000123</a></td>
+                        <td>[国内] KESION 在线网校系统管理系统全解</td>
+                        <td>2015-07-21</td>
+                        <td>待审核</td>
+                        <td>522</td>
+                        <td>张三</td>
+                        <td><a href="#">恢复</a> | <a href="#" >彻底删除</a></td>
+                    </tr>
+                    <tr>
+                    	<td width="35"><input  type="checkbox"/></td>
+                        <td><a href="#">KD1000123</a></td>
+                        <td>[国内] KESION 在线网校系统管理系统全解</td>
+                        <td>2015-07-21</td>
+                        <td>待审核</td>
+                        <td>522</td>
+                        <td>张三</td>
+                        <td><a href="#">恢复</a> | <a href="#" >彻底删除</a></td>
+                    </tr>
+                    <tr>
+                    	<td width="35"><input  type="checkbox"/></td>
+                        <td><a href="#">KD1000123</a></td>
+                        <td>[国内] KESION 在线网校系统管理系统全解</td>
+                        <td>2015-07-21</td>
+                        <td>待审核</td>
+                        <td>522</td>
+                        <td>张三</td>
+                        <td><a href="#">恢复</a> | <a href="#" >彻底删除</a></td>
+                    </tr><tr>
+                    	<td width="35"><input  type="checkbox"/></td>
+                        <td><a href="#">KD1000123</a></td>
+                        <td>[国内] KESION 在线网校系统管理系统全解</td>
+                        <td>2015-07-21</td>
+                        <td>待审核</td>
+                        <td>522</td>
+                        <td>张三</td>
+                        <td><a href="#">恢复</a> | <a href="#" >彻底删除</a></td>
+                    </tr>
+                    <tr>
+                    	<td width="35"><input  type="checkbox"/></td>
+                        <td><a href="#">KD1000123</a></td>
+                        <td>[国内] KESION 在线网校系统管理系统全解</td>
+                        <td>2015-07-21</td>
+                        <td>待审核</td>
+                        <td>522</td>
+                        <td>张三</td>
+                       <td><a href="#">恢复</a> | <a href="#" >彻底删除</a></td>
+                    </tr><tr>
+                    	<td width="35"><input  type="checkbox"/></td>
+                        <td><a href="#">KD1000123</a></td>
+                        <td>[国内] KESION 在线网校系统管理系统全解</td>
+                        <td>2015-07-21</td>
+                        <td>待审核</td>
+                        <td>522</td>
+                        <td>张三</td>
+                       <td><a href="#">恢复</a> | <a href="#" >彻底删除</a></td>
+                    </tr>                 
+                    
+                                                     
+                
+                </table>
+                	
+                	</div>
+                   
+                </div>
+                 <div class="paging"><button>首页</button><button>1</button><span>转到</span><input type="text"><button>GO</button></div>
+            
+            </div>
+        </div>
+    
+    
+    
+    
+    </div>
+
+
+
+
+
+</body>
+</html>

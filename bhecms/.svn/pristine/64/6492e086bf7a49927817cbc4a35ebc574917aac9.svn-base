@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bhe.dao.mybatis.mapper.UserDetailEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.bhe.dao.mybatis.model.UserDetailEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="userkey" property="userkey" jdbcType="VARCHAR" />
+    <result column="nameEn" property="nameen" jdbcType="VARCHAR" />
+    <result column="nameCn" property="namecn" jdbcType="VARCHAR" />
+    <result column="bith" property="bith" jdbcType="TIMESTAMP" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="orgid" property="orgid" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="createUser" property="createuser" jdbcType="VARCHAR" />
+    <result column="usergroupid" property="usergroupid" jdbcType="BIGINT" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="interest" property="interest" jdbcType="VARCHAR" />
+    <result column="companyName" property="companyname" jdbcType="VARCHAR" />
+    <result column="mainbusiness" property="mainbusiness" jdbcType="VARCHAR" />
+    <result column="provinces" property="provinces" jdbcType="VARCHAR" />
+    <result column="zipcode" property="zipcode" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="contactinfo" property="contactinfo" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, userkey, nameEn, nameCn, bith, age, gender, position, orgid, createTime, createUser, 
+    usergroupid, qq, address, description, interest, companyName, mainbusiness, provinces, 
+    zipcode, phone, contactinfo
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bhe.dao.mybatis.model.UserDetailEntityCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_user_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bhe.dao.mybatis.model.UserDetailEntityCriteria" >
+    delete from t_user_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bhe.dao.mybatis.model.UserDetailEntity" >
+    insert into t_user_detail (id, userkey, nameEn, 
+      nameCn, bith, age, 
+      gender, position, orgid, 
+      createTime, createUser, usergroupid, 
+      qq, address, description, 
+      interest, companyName, mainbusiness, 
+      provinces, zipcode, phone, 
+      contactinfo)
+    values (#{id,jdbcType=BIGINT}, #{userkey,jdbcType=VARCHAR}, #{nameen,jdbcType=VARCHAR}, 
+      #{namecn,jdbcType=VARCHAR}, #{bith,jdbcType=TIMESTAMP}, #{age,jdbcType=INTEGER}, 
+      #{gender,jdbcType=INTEGER}, #{position,jdbcType=VARCHAR}, #{orgid,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{createuser,jdbcType=VARCHAR}, #{usergroupid,jdbcType=BIGINT}, 
+      #{qq,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{interest,jdbcType=VARCHAR}, #{companyname,jdbcType=VARCHAR}, #{mainbusiness,jdbcType=VARCHAR}, 
+      #{provinces,jdbcType=VARCHAR}, #{zipcode,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{contactinfo,jdbcType=INTEGER})
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.bhe.dao.mybatis.model.UserDetailEntity" >
+    insert into t_user_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userkey != null" >
+        userkey,
+      </if>
+      <if test="nameen != null" >
+        nameEn,
+      </if>
+      <if test="namecn != null" >
+        nameCn,
+      </if>
+      <if test="bith != null" >
+        bith,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="orgid != null" >
+        orgid,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="createuser != null" >
+        createUser,
+      </if>
+      <if test="usergroupid != null" >
+        usergroupid,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="interest != null" >
+        interest,
+      </if>
+      <if test="companyname != null" >
+        companyName,
+      </if>
+      <if test="mainbusiness != null" >
+        mainbusiness,
+      </if>
+      <if test="provinces != null" >
+        provinces,
+      </if>
+      <if test="zipcode != null" >
+        zipcode,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="contactinfo != null" >
+        contactinfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userkey != null" >
+        #{userkey,jdbcType=VARCHAR},
+      </if>
+      <if test="nameen != null" >
+        #{nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="namecn != null" >
+        #{namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="bith != null" >
+        #{bith,jdbcType=TIMESTAMP},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="orgid != null" >
+        #{orgid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="usergroupid != null" >
+        #{usergroupid,jdbcType=BIGINT},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="interest != null" >
+        #{interest,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null" >
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="mainbusiness != null" >
+        #{mainbusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="provinces != null" >
+        #{provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null" >
+        #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactinfo != null" >
+        #{contactinfo,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterType="com.bhe.dao.mybatis.model.UserDetailEntityCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_user_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_user_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userkey != null" >
+        userkey = #{record.userkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameen != null" >
+        nameEn = #{record.nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.namecn != null" >
+        nameCn = #{record.namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bith != null" >
+        bith = #{record.bith,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.position != null" >
+        position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgid != null" >
+        orgid = #{record.orgid,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createuser != null" >
+        createUser = #{record.createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usergroupid != null" >
+        usergroupid = #{record.usergroupid,jdbcType=BIGINT},
+      </if>
+      <if test="record.qq != null" >
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interest != null" >
+        interest = #{record.interest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyname != null" >
+        companyName = #{record.companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mainbusiness != null" >
+        mainbusiness = #{record.mainbusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinces != null" >
+        provinces = #{record.provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zipcode != null" >
+        zipcode = #{record.zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactinfo != null" >
+        contactinfo = #{record.contactinfo,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_user_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      userkey = #{record.userkey,jdbcType=VARCHAR},
+      nameEn = #{record.nameen,jdbcType=VARCHAR},
+      nameCn = #{record.namecn,jdbcType=VARCHAR},
+      bith = #{record.bith,jdbcType=TIMESTAMP},
+      age = #{record.age,jdbcType=INTEGER},
+      gender = #{record.gender,jdbcType=INTEGER},
+      position = #{record.position,jdbcType=VARCHAR},
+      orgid = #{record.orgid,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      createUser = #{record.createuser,jdbcType=VARCHAR},
+      usergroupid = #{record.usergroupid,jdbcType=BIGINT},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      interest = #{record.interest,jdbcType=VARCHAR},
+      companyName = #{record.companyname,jdbcType=VARCHAR},
+      mainbusiness = #{record.mainbusiness,jdbcType=VARCHAR},
+      provinces = #{record.provinces,jdbcType=VARCHAR},
+      zipcode = #{record.zipcode,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      contactinfo = #{record.contactinfo,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bhe.dao.mybatis.model.UserDetailEntity" >
+    update t_user_detail
+    <set >
+      <if test="userkey != null" >
+        userkey = #{userkey,jdbcType=VARCHAR},
+      </if>
+      <if test="nameen != null" >
+        nameEn = #{nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="namecn != null" >
+        nameCn = #{namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="bith != null" >
+        bith = #{bith,jdbcType=TIMESTAMP},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="orgid != null" >
+        orgid = #{orgid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        createUser = #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="usergroupid != null" >
+        usergroupid = #{usergroupid,jdbcType=BIGINT},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="interest != null" >
+        interest = #{interest,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null" >
+        companyName = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="mainbusiness != null" >
+        mainbusiness = #{mainbusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="provinces != null" >
+        provinces = #{provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null" >
+        zipcode = #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactinfo != null" >
+        contactinfo = #{contactinfo,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bhe.dao.mybatis.model.UserDetailEntity" >
+    update t_user_detail
+    set userkey = #{userkey,jdbcType=VARCHAR},
+      nameEn = #{nameen,jdbcType=VARCHAR},
+      nameCn = #{namecn,jdbcType=VARCHAR},
+      bith = #{bith,jdbcType=TIMESTAMP},
+      age = #{age,jdbcType=INTEGER},
+      gender = #{gender,jdbcType=INTEGER},
+      position = #{position,jdbcType=VARCHAR},
+      orgid = #{orgid,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      createUser = #{createuser,jdbcType=VARCHAR},
+      usergroupid = #{usergroupid,jdbcType=BIGINT},
+      qq = #{qq,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      interest = #{interest,jdbcType=VARCHAR},
+      companyName = #{companyname,jdbcType=VARCHAR},
+      mainbusiness = #{mainbusiness,jdbcType=VARCHAR},
+      provinces = #{provinces,jdbcType=VARCHAR},
+      zipcode = #{zipcode,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      contactinfo = #{contactinfo,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

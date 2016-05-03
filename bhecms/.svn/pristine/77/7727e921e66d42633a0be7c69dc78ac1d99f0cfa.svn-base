@@ -1,0 +1,14 @@
+<div class="menu">
+	<div class="user">
+		<div class="article_title">用户管理</div>
+		<div class="article_list">
+			<div class="list01">
+				<a href="userIndex.html"  <@sets.setCurr currIndex 1 />>会员管理</a>
+			</div>
+			<div class="list01">
+				<a href="adminList.html"  <@sets.setCurr currIndex 3 />>管理员管理</a>
+			</div>
+		</div>
+	</div>
+
+</div>

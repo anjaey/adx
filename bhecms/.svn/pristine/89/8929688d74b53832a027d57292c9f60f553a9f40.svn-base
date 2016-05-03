@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BHE通用CMS</title>
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/admin_login.css">
+</head>
+
+<body>
+<div class="login">
+	<div class="content">
+    	 <p class="log_title">BHE通用CMS系统</p>
+         <div class="user">登录账号：<input type="text" value="" name="userName" class="js-login-name"><span></span></div>
+    	 <div class="password">登录密码：<input type="password" value="" name="pwd" class="js-login-pwd"><span></span></div>
+         <button class="js-login-bt">管理员登录</button>
+    </div>
+    <div class="copyright" >
+   	 <p>重庆百居易电子商务有限公司 Copyright ©2006-2015 www.bhe.com.cn,All Rights Reserved.</p>
+    </div>
+</div>
+
+<script type="text/javascript" src="${base}/res/common/js/jquery/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${base}/res/bhecms/js/loginValidate.js"></script>
+<script type="text/javascript" src="${base}/res/common/js/json2.js"></script>
+
+<script>
+
+	$(function () {
+		/* $(".js-login-name").val("admin");
+		$(".js-login-pwd").val("a123456"); */
+    	//$(".js-login-bt").click();
+	});
+	
+	$(document).keydown(function (event) {
+	    if (event.keyCode == 13) {
+	    	$(".js-login-bt").click();
+	    }
+	});
+	
+	//登陆 验证 插件调用
+	var url="";
+	<#if loginLastUrl??>
+		url="${base}${loginLastUrlParams}";
+		<#else>
+		url="${base}/admin/index.html";
+	</#if>
+	$(".js-login-bt").loginValidate({unObj:".js-login-name",pwdObj:".js-login-pwd",loginUrl:'${base}/admin/toLogin/login.html',indexUrl:url});
+	
+	
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+a.backToTop{width:60px; height:60px; background:#eaeaea url(top.png) no-repeat 0px 0px; }
+a.backToTop:hover{background-position:-61px 0px}
+a.backToTop {display: inline; position: fixed; top: 236px; right:10%;}
+
+
+

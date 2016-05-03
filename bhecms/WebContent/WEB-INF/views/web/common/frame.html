@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<body>
+<#macro frame frameLeft>
+<#include "web/common/head.html"/> 
+<#import "template/common/setUtil.ftl" as sets>
+<#import "template/common/util.ftl" as util>
+	<div class="id_content">
+
+		 <#include "web/common/top.html"/> 
+		 <#include "web/common/nav.html"/> 
+		
+		
+
+		 <#nested> 
+		
+								<!--在线客服-->
+    <div class="online">
+		<div class="onlineMessage">
+			<div class="onlineContent">
+				<a href="#" class="onlineTitle">在线客服</a>				
+				<a class="onlineUser" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=245484419&site=qq&menu=yes"><img  src="${base}/res/web/images/QQ.png" width="27" height="24" />QQ</a>
+				<a class="onlineUser" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=245484419&site=qq&menu=yes"><img  src="${base}/res/web/images/QQ.png" width="27" height="24" />QQ</a>
+			</div>
+		</div>	
+		<img  src="${base}/res/web/images/model.png" width="113" height="198" class="modelImg"/>
+   	</div>
+   	<!-- <div class="topImage wind1200" onclick="gotop()">
+   		<img  src="${base}/res/web/images/top.png" width="29" height="60" class="right"/>
+   	</div> -->
+    
+		<#include "web/common/footer.html"/>
+		
+	</div>
+		
+	
+
+	<script type="text/javascript" src="${base}/res/common/js/jquery/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="${base}/res/common/js/base.js"></script>
+	<script type="text/javascript" src="${base}/res/common/js/gotop/gotoTop.js"></script>
+
+	<script>
+		$(function() {
+			$("a.js-logout-bt").click(function() {
+				if (confirm("确定退出？")) {
+					window.location.href = "${base}/web/toLogin/logout.html";
+				}
+			});
+			$("button.js-userInfo").click(function() {
+					window.location.href = "${base}/web/personalCenter/userInfoManage.html";
+			});
+			
+			/*取消所有在ueditor中添加的背景颜色*/
+			$(".ueditorContent p").css("background-color","");
+			
+			/*导航栏背景颜色*/
+			$(".navNew .mainlevel").each(function(){
+				if($(this).attr("codeold") == $(this).attr("codenew")){
+					$(this).children("a").css("color","#07b995");
+				}
+			});
+			$(".navNew .childNav").each(function(){
+				if($(this).attr("codeold") == $(this).attr("codenew")){
+					$(this).parents(".mainlevel").children("a:first").css("color","#07b995");
+				}
+				
+				
+			});
+		})
+		function goback(){
+			window.history.back();
+		} 
+		 //当点击跳转链接后，回到页面顶部位置
+        function gotop() {
+            $('body,html').animate({
+                scrollTop: 0
+            },
+            1000);
+            return false;
+        }
+	</script>
+
+</body>
+</html>
+</#macro>

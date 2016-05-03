@@ -1,0 +1,53 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/individualUser.css">
+
+<@frame>
+<div class="container" style="margin-top:137px;">
+	<div class="content">
+		<div class="contentLeft">
+			<dl>
+				<dt>
+					<img src="${base}/res/web/images/user_center.png">
+				</dt>
+				<dd>
+					<span class="font14 red">${entity.username}</span>
+				</dd>
+			</dl>
+			<h3 class="font18">帐号管理</h3>
+			<ul>
+				<li><a href="${base}/account/toAccountCenter.html" class="font14 gray"<@sets.setCurr currIndex 1 />>安全设置</a></li>
+				<li><a href="${base}/account/toOrderForm.html?orderType=0" class="font14 gray"<@sets.setCurr currIndex 2 />>订单详情</a></li>
+				<li><a href="${base}/account/toPersonalinfo.html" class="font14 gray"<@sets.setCurr currIndex 3 />>个人信息</a></li>
+				<li><a href="${base}/account/toShippingAddress.html" class="font14 gray"<@sets.setCurr currIndex 4 />>收货地址</a></li>
+<!-- 				<li><a href="${base}/account/toStationLetter.html" class="font14 gray"<@sets.setCurr currIndex 5 />>站内信息</a></li> -->
+			</ul>
+		</div>
+		<div class="contentRight">
+			<div>
+				<div style="font-size: 17px;" class="stationTitle"><span>站内信</span></div>
+			</div>
+			<#list entityList as entity>
+				<div style="margin-top: 30px;" class="stationMessage">
+					<div>
+						<span><a href="javascript:void(0);" class="js_show" data_id="${entity.id}">${entity.title}</a></span>
+						<span class="right linkMessage" style="margin-right:30px;">
+						<#if (entity.createtime)??>
+	        				${entity.createtime ? string("yyyy-MM-dd")}
+		        		</#if>
+		        		</span>
+					</div>
+					<div style="display: none;" data_id="${entity.id}" class="js_isshow">
+						<span class="spanIndent">${entity.content}</span>
+					</div>
+				</div>
+			</#list>
+		</div>
+	</div>
+</div>
+</@frame>
+<script>
+	$(".js_show").click(function(){
+		$("div.js_isshow[data_id="+$(this).attr("data_id")+"]").toggle(1000);
+	});
+</script>

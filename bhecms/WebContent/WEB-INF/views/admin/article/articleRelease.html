@@ -1,0 +1,161 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/adminIndex.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/articleManage.css">
+<link rel="stylesheet" type="text/css"	href="${base}/res/bhecms/css/admin/productManage.css">
+
+<@frame> 
+	<#if (states == 0)>
+		<div class="artLocation left">您当前的位置：<a href="${base}/admin/article/articleIndex.html">文章系统</a>>发布文章</div>
+	</#if>
+	<#if (states == 1)>
+		<#if (type == "rubbish")>
+			<div class="artLocation left">您当前的位置：<a href="${base}/admin/article/articleIndex.html">文章系统</a>>查看</div>
+		<#else>
+			<div class="artLocation left">您当前的位置：<a href="${base}/admin/article/articleIndex.html">文章系统</a>>编辑</div>
+		</#if>
+	</#if>
+	<div class="clear"></div>
+	<div class="welcom">
+    	<div class="wel_content">
+    		<input name="type" class="request_type" value="${type}" type="hidden" />
+        	<form action="${base}/admin/article/addArticle.html" method="post" class="js_from_addArticle" >
+        		<textarea rows="" cols="" style="display: none;" class="js_ueditor" name="content">${articleEntity.content}</textarea>
+        		<input type="hidden" class="js_uuid" name="uuid" value="${articleEntity.uuid}" />
+                <p class="release">
+                    <label>类型：</label>
+                    <select name="classid" class="js_classid">
+                    </select>
+                </p>
+                <p class="release">
+                    <label>标题：</label>
+                    <input  type="text" class="txtAddproduct txtAddproduct2 js_title" name="title" value="${articleEntity.title}"/>            
+                </p>
+                <p class="release">
+                    <label>是否外链：</label>
+                    <input name="isextraurl" type="radio" class="rdotype"  value="1"  <@sets.setRadio articleEntity.isextraurl 1 /> /> 是
+                    <input name="isextraurl" type="radio" class="rdotype" value="0"  <@sets.setRadio articleEntity.isextraurl 0/> /> 否           
+                </p>
+                <div class="clear"></div>
+<!--                 <p class="release"> -->
+<!--                     <label>简短标题：</label> -->
+<!--                     <input  type="text" class="txtAddproduct txtAddproduct2" name="subtitle" value="${articleEntity.subtitle}" />             -->
+<!--                 </p> -->
+<!--                 <p class="release"> -->
+<!--                     <label>标题颜色：</label> -->
+<!--                     <input  type="text" class="txtAddproduct txtAddproduct2" name="titlecolor" value="${articleEntity.titlecolor}" />             -->
+<!--                 </p> -->
+<!--                 <p class="release"> -->
+<!--                     <label>是否加粗：</label> -->
+<!--                     <input name="isbold" type="radio" class="rdotype"  value="1" <@sets.setRadio articleEntity.isbold 1 />/> 是  -->
+<!--                     <input name="isbold" type="radio" class="rdotype" value="0" <@sets.setRadio articleEntity.isbold 0 /> /> 否             -->
+<!--                 </p> -->
+<!--                 <div class="clear"></div> -->
+<!--                 <p class="release"> -->
+<!--                     <label>摘要：</label> -->
+<!--                     <input type="text" class="txtAddproduct txtAddproduct2" name="summary" value="${articleEntity.summary}"/>             -->
+<!--                 </p> -->
+<!--                 <p class="release"> -->
+<!--                     <label>是否自动生成摘要：</label> -->
+<!--                     <input name="isautocreatesummary" type="radio" class="rdotype"  value="1" <@sets.setRadio articleEntity.isautocreatesummary 0 /> /> 是  -->
+<!--                     <input name="isautocreatesummary" type="radio" class="rdotype" value="0" <@sets.setRadio articleEntity.isautocreatesummary 0 /> /> 否           -->
+<!--                 </p> -->
+<!--                 <div class="clear"></div> -->
+<!--                 <p class="release"> -->
+<!--                     <label>来源：</label> -->
+<!--                     <input type="text" class="txtAddproduct txtAddproduct2" name="fromwhere" value="${articleEntity.fromwhere}" />             -->
+<!--                 </p> -->
+<!--                 <p class="release"> -->
+<!--                     <label>URL：</label> -->
+<!--                     <input type="text" class="txtAddproduct txtAddproduct2" name="extralurl" value="${articleEntity.extralurl}"/>             -->
+<!--                 </p> -->
+<!--                 <p class="release"> -->
+<!--                     <label>浏览权限：</label> -->
+<!--                     <input type="number" class="txtAddproduct txtAddproduct2 js_readpermission" name="readpermission" value="${articleEntity.readpermission}" />             -->
+<!--                 </p> -->
+<!--                 <p class="release"> -->
+<!--                     <label>固顶级别：</label> -->
+<!--                     <input type="number" class="txtAddproduct txtAddproduct2" name="toplevel" value="${articleEntity.toplevel}" />             -->
+<!--                 </p> -->
+                <p class="release">
+                    <label>排序：</label>
+                    <input type="number" class="txtAddproduct txtAddproduct2" name="rank" value="${articleEntity.rank}" />            
+                </p>
+<!--                 <p class="release"> -->
+<!--                     <label>模板：</label> -->
+<!--                     <input type="number" class="txtAddproduct txtAddproduct2" name="templateid" value="${articleEntity.templateid}"/>             -->
+<!--                 </p> -->
+<!--                 <p class="release"> -->
+<!--                     <label>附件：</label> -->
+<!--                     <input type="number" class="txtAddproduct txtAddproduct2" name="hasatachment" value="${articleEntity.hasatachment}"/>             -->
+<!--                 </p> -->
+<!--                 <p class="release"> -->
+<!--                     <label>多媒体：</label> -->
+<!--                     <input type="number" class="txtAddproduct txtAddproduct2" name="hasmedia" value="${articleEntity.hasmedia}" />             -->
+<!--                 </p> -->
+<!--                 <p class="release"> -->
+<!--                     <label>价格：</label> -->
+<!--                     <input type="text" class="txtAddproduct txtAddproduct2" name="price" value="${articleEntity.price}"/>             -->
+<!--                 </p> -->
+                <p>
+					<div>
+					    <script id="editor" type="text/plain" style="height:500px;"></script>
+					</div>
+                </p>
+                <input class="js_submit" type="button" value="提交" />
+                <input  type="reset" value="重置" class="js_reset"/>
+                <input  type="button" value="定时提交"/>
+            </form>
+            
+        </div>
+    </div>
+</@frame>
+<script type="text/javascript" charset="utf-8" src="${base}/res/common/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/common/js/ueditor/ueditor.all.js"> </script>
+<script type="text/javascript" src="${base}/res/common/js/ueditor/third-party/video-js/video.js"></script>
+<script type="text/javascript" src="${base}/res/bhecms/js/tree_tab.js"></script>
+<script type="text/javascript">
+	//实例化编辑器
+	var ue = UE.getEditor('editor');
+	
+	
+	$(this).tree({
+		url: 	'${base}/admin/article/getArtilceClassForTree.html',
+		top:	'0',
+		select:	'js_classid',
+	});
+	
+	$(".js_submit").click(function(){
+		$(".js_ueditor").text(ue.getContent());
+		if($(".js_title").val() == null || $(".js_title").val() == ""){
+			alert("标题不能为空");
+		}else{
+			$(".js_from_addArticle").submit();
+		}
+	});
+	
+	$(".js_reset").click(function(){
+		location.reload();
+	});
+	
+	$(function(){
+		if($(".js_ueditor").text() != "" && $(".js_ueditor").text() != null){
+	        // editor准备好之后才可以使用
+			ue.addListener("ready", function () {
+		        ue.setContent($(".js_ueditor").text());
+			});
+		}
+	});
+	
+	window.onload = function(){
+		$(function(){
+			$(".js_classid option[value='${articleEntity.classid}']").attr("selected",true);
+			if($(".request_type").val() == "rubbish"){
+				$(".js_from_addArticle input").attr("disabled",true);
+				$(".js_from_addArticle select").attr("disabled",true);
+			}
+		});
+		$("#edui1").css("width","90%");
+	}
+	
+</script>
+

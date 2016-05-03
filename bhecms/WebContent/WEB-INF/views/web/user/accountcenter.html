@@ -1,0 +1,56 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/individualUser.css">
+
+<@frame>
+
+<div class="container" style="margin-top: 137px;">
+
+	<div class="content">
+		<div class="contentLeft">
+			<dl>
+				<dt>
+					<img src="${base}/res/web/images/user_center.png">
+				</dt>
+				<dd>
+					<span class="font14 red">${userentity.username}</span>
+				</dd>
+			</dl>
+			<h3 class="font18">帐号管理</h3>
+			<ul>
+				<li><a href="${base}/account/toAccountCenter.html" class="font14 gray" <@sets.setCurr currIndex 1 />>安全设置</a></li>
+				<li><a href="${base}/account/toOrderForm.html?orderType=0" class="font14 gray" <@sets.setCurr currIndex 2 />>订单详情</a></li>
+				<li><a href="${base}/account/toPersonalinfo.html" class="font14 gray" <@sets.setCurr currIndex 3 />>个人信息</a></li>
+				<li><a href="${base}/account/toShippingAddress.html" class="font14 gray" <@sets.setCurr currIndex 4 />>收货地址</a></li>
+<!-- 				<li><a href="${base}/account/toStationLetter.html" class="font14 gray" <@sets.setCurr currIndex 5 />>站内信息</a></li> -->
+			</ul>
+		</div>
+		<div class="contentRight">
+			<dl class="baseInfor">
+				<dt class="font14">您的基础信息</dt>
+				<dd class="font12">
+					<span>登录：${userentity.email}</span><a href="#" class="amend">修改密码</a>
+				</dd>
+				<dd class="font12">
+					<span>手机号码： ${userentity.phone}</span><a href="#" class="amend">修改手机</a>
+				</dd>
+			</dl>
+			<dl class="safeService">
+				<dt class="font14">您的安全服务</dt>
+				<dd class="font14">
+					安全等级<span class="level"><a>&nbsp;</a><a>&nbsp;</a><a>高</a></span>
+				</dd>
+				<dd class="font12">
+					<img src="${base}/res/web/images/complete_icon.png" />登录密码<span class="spandown">安全性高的密码可以使账户更安全。建议您定期更换密码，且设置一个包含数字和字母，并且长度超过6位以上的密码。</span><a href="#" class="amend">修改</a>
+				</dd>
+				<dd class="font12">
+					<img src="${base}/res/web/images/complete_icon.png" />手机绑定<span>绑定手机后，您即可享受宇田的手机服务，如手机登录、手机找回密码等。</span><a href="#" class="amend">修改</a>
+				</dd>
+				<dd class="font12">
+					<img src="${base}/res/web/images/complete_icon.png" />邮箱绑定<span>绑定邮箱后，您即可享受宇田的手机服务，如邮箱登录、邮箱找回密码等。</span><a href="#" class="amend">修改</a>
+				</dd>
+			</dl>
+		</div>
+	</div>
+</div>
+</@frame>

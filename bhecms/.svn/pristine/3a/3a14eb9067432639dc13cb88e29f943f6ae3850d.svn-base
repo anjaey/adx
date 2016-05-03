@@ -1,0 +1,45 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/bhecms/css/admin/productManage.css">
+<@frame>
+	<div class="welcom">
+    	<div class="wel_content">
+        	<div class="art_list">          	
+              
+                	<div class="artListAll001">
+               			 <table width="100%" border="0"  cellspacing="0" cellpadding="0" class="art_table">
+                            <tr>
+                                <th width="35px" ><input  type="checkbox"/></th>
+                                <th>所属栏目</th>
+                                <th>名称</th>
+                                <th>类型</th>
+                                <th>英文名</th>
+                                <th>绑定模型</th>
+                                <th>栏目介绍</th>
+                                <th>操作</th>
+                            </tr>
+                        </table>
+                	</div>
+                   
+                   
+               
+                 <div class="paging"><button>首页</button><button>1</button><span>转到</span><input type="text"><button>GO</button></div>
+            
+            </div>
+        </div>
+    </div>
+   </@frame>
+<script>
+	$(document).ready(function(){
+							   //给标题加上背景色以及鼠标移动到某一行的事加上背景色
+							   $(".art_table tr:first-child").css("background-color","#f3f7fb");
+							   $(".art_table tr:not(:first-child)").hover(function(){
+															 $(this).css("background-color","#f3f7fb");
+															 },function(){
+																 $(this).css("background-color","#fff");
+															 });
+							   							   
+							   
+							   });
+
+</script>

@@ -1,0 +1,371 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/shopCar.css">
+
+<@frame>
+
+<div class="clear"></div>
+<div class="wind1200">
+	<div class="orderSearch right">
+<!--     	<img src="images/order_04.png"><input type="text" value="请输入关键词"><button class="white font14">产品名</button>   -->
+    </div>
+    <div class="clear"></div>
+   <div class="goodsInformation font14">
+   
+  <a class="returnBtn" href="javascript:history.go(-1)">返回</a>
+   		<div class="conInformation">
+        	<div class="left conTitle colorGary">收货信息</div>
+        	<button class="margin16 js-newAddress">使用新地址</button>
+        	
+        	<#if userAddressList?has_content>
+	        	<div class="left conDetail colorGary">
+	        	  <ul>
+	        	  	<#list userAddressList as entity>
+	        	  		<li>
+	        	  		<#if entity.isdefault==1>
+	        	  			<input type="radio" value="${entity.id}" name="addressId" checked="checked">
+	        	  		<#else>
+	        	  			<input type="radio" value="${entity.id}" name="addressId">
+	        	  		</#if>
+	        	  		<p>${entity.country+entity.province+entity.city+entity.districts+entity.address}(${entity.username} 收) ${entity.mobile} ${entity.phone}</p>
+	        	  	</li>
+	        	  	</#list>
+	        	  </ul>
+	        	</div>  
+	        	<div class="left conDetail colorGary js-hideed">
+	                <p><span class="letterDistance">收货人：</span><input type="text" value="" class="middleInput js-dataEle"  data-name="username"></p>
+	                <p>
+	                	<span>所在地址：</span><select class="addressSelect js-dataEle"  id="s_province" data-name="province"><option>省份</option></select>
+	                    <select class="addressSelect js-dataEle" id="s_city"  data-name="city"><option>地级市</option></select>
+	                    <select class="addressSelect js-dataEle" id="s_county" data-name="districts"><option>市、县级市</option></select>
+	                </p>
+	                <p><span>街道地址：</span><textarea  class="detailAddress js-detailAddress" data-name="address"></textarea></p>
+	                <p><span class="letterDistance01">邮编：</span><input type="text" value="" class="middleInput js-dataEle" data-name="zipCode"></p>
+	                <p><span class="letterDistance01">手机：</span><input type="text" value="" class="longInput js-mobile"><span class="red">（手机、固定电话至少填写一个）</span></p><br/>
+	                <p><span>固定电话：</span><input type="text" value="区号" class="shortInput js-dataPhone"><span>——</span><input type="text" value="电话号码" class="middleInput js-dataPhone"><span>——</span><input type="text" value="分机号" class="shortInput js-dataPhone"></p>
+	                <p><input type="checkbox" name="sex" class="positionLeft select_box js-isdefault"><span>&nbsp;设置为默认地址</span></p>
+	                <p><button class="right white sureBtn js-subAddress">确认收货信息</button></p>
+	            </div> 
+            	<#else>
+	            <div class="left conDetail colorGary">
+	                <p><span class="letterDistance">收货人：</span><input type="text" value="" class="middleInput js-dataEle"  data-name="username"></p>
+	                <p>
+	                	<span>所在地址：</span><select class="addressSelect js-dataEle"  id="s_province" data-name="province"><option>省份</option></select>
+	                    <select class="addressSelect js-dataEle" id="s_city"  data-name="city"><option>地级市</option></select>
+	                    <select class="addressSelect js-dataEle" id="s_county" data-name="districts"><option>市、县级市</option></select>
+	                </p>
+	                <p><span>街道地址：</span><textarea  class="detailAddress js-detailAddress" data-name="address"></textarea></p>
+	                <p><span class="letterDistance01">邮编：</span><input type="text" value="" class="middleInput js-dataEle" data-name="zipCode"></p>
+	                <p><span class="letterDistance01">手机：</span><input type="text" value="" class="longInput js-mobile"><span class="red">（手机、固定电话至少填写一个）</span></p><br/>
+	                <p><span>固定电话：</span><input type="text" value="区号" class="shortInput js-dataPhone"><span>——</span><input type="text" value="电话号码" class="middleInput js-dataPhone"><span>——</span><input type="text" value="分机号" class="shortInput js-dataPhone"></p>
+	                <p><input type="checkbox" name="sex" class="select_box js-isdefault"><span>&nbsp;设置为默认地址</span></p>
+	                <p><button class="right white sureBtn js-subAddress">确认收货信息</button></p>
+	            </div>  
+            </#if>   
+        </div>
+        <div class="font14 overflow goodsSure">
+        	<div class="left conTitle01 colorGary">确认订单</div>
+            <div class="left conDetail colorGary">
+            	<table width="960" border="0" cellspacing="0" cellpadding="0" class="confirmTable">
+            		<tr>
+            			<td>货品</td>
+            			<td>单价</td>
+            			<td>数量</td>
+            			<#if rentOrBuy=="rent">
+            			<td>租赁时间</td>
+            			</#if>
+            			<td>金额</td>
+            		</tr>
+            		
+            	<#assign productCount=0/>
+                <#if productListMap?has_content>
+                <#list productListMap as entity>
+	              <tr class="js-td">
+              		<td>
+              		<img src="${entity.productImgurl}" style="width:85px;height:85px;" alt="货品图片"/><span>${entity.productName}</span>
+              		<input type="hidden" value="${entity.id}" data-key="pid">
+              		<input type="hidden" value="${entity.count}" data-key="count">
+              		<input type="hidden" value="${entity.price}" data-key="price">
+              		<input type="hidden" value="${entity.uuid}" data-key="uuid">
+              		<input type="hidden" value="${entity.productName}" data-key="productName">
+              		</td>
+           			<td><span>${entity.price}</span></td>
+           			 <#assign productCount=productCount+(entity.count)?number/>
+	                  <#if rentOrBuy=="buy">
+          			  <td><img src="${base}/res/web/images/decrese_btn.png" class="js-reduce" alt="减少"/><input type="text" value="${entity.count}" class="lestinput js-countInput numberDetail "><img src="${base}/res/web/images/increase_btn.png" class="js-add" alt="增加" max="${entity.productMaxCount}"/></td>
+          			  <#elseif rentOrBuy=="rent">
+          			  <td><img src="${base}/res/web/images/decrese_btn.png" class="js-rentReduce" alt="减少"/><input type="text" value="${entity.count}" class="lestinput js-rentCountInput"><img src="${base}/res/web/images/increase_btn.png" class="js-rentAdd" alt="增加" max="${entity.productMaxCount}"/> </td>
+          			   <td>
+                       <input type="hidden" value="1" data-key="rentTime">
+                       <input type="text" value="1" class="tdInput js-rentTime">
+                       <input type="hidden" value="时" data-key="rentUnit">
+                        <select class="js-select-rentTime">
+                        	<option value="时">时</option>
+                        	<option value="天">天</option>
+                        	<option value="周">周</option>
+                        	<option value="月">月</option>
+                        	<option value="年">年</option>
+                        </select>
+		              </td>
+          			  </#if>
+           			<td class="js-sum">${entity.sum}</td>
+	              </tr>
+               </#list>
+              </#if>
+              
+            	</table>
+                
+                <div>
+                	<p><span class="positionTop">详细说明</span></p>
+               		<p><textarea  class="detailAddress js-detailContent">
+               		
+               		</textarea></p>
+                	<div class="displayBlock">
+                		<span>货品种类：</span>
+                		<span class="lestMar">${productListMap?size}种</span>
+                   	 	<span>数量总计：</span>
+                    	<span>${productCount}件</span>
+               		</div>
+               </div>
+            </div>     
+        </div>
+   </div>
+</div>
+<div class="wind1200 font14 mostMar">
+	<div class="right"><span>合计（不含运费）：</span><span class="allPrice font22 ">￥</span><span class="allPrice font22 js-allPrice">${sumAll?string(',###.00')}</span></div>
+    <div class="clear"></div>
+    <div class="right"><button class="commitBtn white js-subOrder">提交订单</button></div>
+</div>
+
+</@frame>
+
+<script type="text/javascript" src="${base}/res/common/js/area.js"></script>
+<script type="text/javascript" src="${base}/res/common/js/jquery.json-2.4.js"></script>
+<script >
+_init_area();
+
+$(function(){
+	$("button.js-newAddress").click(function(){
+		$(this).next().hide();
+		$(this).next().next().show();
+	});
+	
+	$("button.js-subAddress").click(function(){
+		var obj={};
+		$("select.js-dataEle").each(function(k,v){
+			var name=$(this).attr("data-name");
+			var val=$(this).val();
+			obj[name]=val;
+		});
+		$("input.js-dataEle").each(function(k,v){
+			var name=$(this).attr("data-name");
+			var val=$(this).val();
+			obj[name]=val;
+		});
+		var phone="";
+		$("input.js-dataPhone").each(function(k,v){
+			phone+=v.value+"-";
+		});
+		phone=phone.substring(0,phone.length-1);
+		obj.phone=phone;
+		obj.mobile=$("input.js-mobile").val();
+		obj.address=$("textarea.js-detailAddress").val();
+		if($("input.js-isdefault").prop("checked")){
+			obj.isDefault=1;
+		}else{
+			obj.isDefault=0;
+		}
+		
+		$.post("updateShippingAddress.html",obj,
+			function(data){
+				if(data.result==1){
+					location.reload(true);
+				}else{
+					alert("操作失败！");
+				}
+			},"json");
+	
+	});
+	
+	
+	<!-------数量加减--------->
+	
+	function countBuy(){
+		 var allCount=0;
+		 $("td.js-sum").each(function(){
+			 var litleCount = $(this).text();
+			 allCount=allCount+parseInt(litleCount);
+		 });
+		 $("span.js-allPrice").text(allCount.toFixed(2));
+	}
+	function countnum(){
+		var num = 0;
+		$('.js-countInput').each(function(){
+			num += parseInt($(this).val());
+			
+		});
+		$('.displayBlock span:last').html(num + "件");	
+		}
+	//增加数量
+	$("img.js-add").click(function(){
+		 var t = $(this).prev("input");
+		 var max = parseInt($(this).attr("max"));
+		 if(isNaN(parseInt(t.val()))||t.val()>=max){
+			 return;
+		 }else{
+			 t.val(parseInt(t.val())+1)
+			 $(this).parent().next().text((parseInt(t.val())*$(this).parent().prev().text()).toFixed(2));//toFixed()是保留小数点的函数很实用哦
+		 }
+		 countBuy();
+		 countnum()
+	});
+	
+	//减速数量
+	$("img.js-reduce").click(function(){
+		var t = $(this).next("input");
+		if(isNaN(parseInt(t.val()))||parseInt(t.val())<=1){
+			return;
+		}else{
+			t.val(parseInt(t.val())-1);
+			if (parseInt(t.val())>0){
+			 $(this).parent().next().text((parseInt(t.val())*$(this).parent().prev().text()).toFixed(2));//toFixed()是保留小数点的函数很实用哦
+			 countBuy();
+			 countnum()
+			}
+		}
+	});
+	
+	//自己输入数量
+	$("input.js-countInput").keyup(function(){
+		var t = $(this);
+		var max = parseInt($(this).next("img").attr("max"));
+		if(isNaN(parseInt(t.val()))||parseInt(t.val())<=0||t.val()>=max){
+			return;
+		}else{
+			$(this).parent().next().text((parseInt(t.val())*$(this).parent().prev().text()).toFixed(2));//toFixed()是保留小数点的函数很实用哦
+			 countBuy();
+		}
+	}).blur(function(){
+		var t = $(this);
+		var max = parseInt($(this).next("img").attr("max"));
+		if(isNaN(parseInt(t.val()))||parseInt(t.val())<=0||t.val()>=max){
+			t.val(1);
+			$(this).parent().next().text((parseInt(t.val())*$(this).parent().prev().text()).toFixed(2));//toFixed()是保留小数点的函数很实用哦
+			 countBuy();
+		}
+		
+	});
+	
+	
+	
+	<!---- 租赁的数量操作---->
+	
+	//增加数量
+	$("img.js-rentAdd").click(function(){
+		 var t = $(this).prev("input");
+		 var max = parseInt($(this).attr("max"));
+		 if(isNaN(parseInt(t.val()))||t.val()>=max){
+			 return;
+		 }else{
+			 t.val(parseInt(t.val())+1)
+			 $(this).parent().next().next().text((parseInt(t.val())*$(this).parent().prev().text()).toFixed(2)*$(this).parent().next().find("input").val());//toFixed()是保留小数点的函数很实用哦
+			 countBuy();
+		 }
+	});
+	
+	//减速数量
+	$("img.js-rentReduce").click(function(){
+		var t = $(this).next("input");
+		if(isNaN(parseInt(t.val()))||parseInt(t.val())<=1){
+			return;
+		}else{
+			t.val(parseInt(t.val())-1);
+			if (parseInt(t.val())>0){
+				$(this).parent().next().next().text((parseInt(t.val())*$(this).parent().prev().text()).toFixed(2)*$(this).parent().next().find("input").val());//toFixed()是保留小数点的函数很实用哦
+				countBuy();
+			}
+		}
+	});
+	
+	//自己输入数量
+	$("input.js-rentCountInput").keyup(function(){
+		var t = $(this);
+		var max = parseInt($(this).next("img").attr("max"));
+		if(isNaN(parseInt(t.val()))||parseInt(t.val())<=0||t.val()>max){
+			return;
+		}else{
+			$(this).parent().next().next().text((parseInt(t.val())*$(this).parent().prev().text()).toFixed(2)*$(this).parent().next().find("input").val());//toFixed()是保留小数点的函数很实用哦
+			countBuy();
+		}
+	}).blur(function(){
+		var t = $(this);
+		var max = parseInt($(this).next("img").attr("max"));
+		if(isNaN(parseInt(t.val()))||parseInt(t.val())<=0||t.val()>=max){
+			t.val(1);
+			$(this).parent().next().next().text((parseInt(t.val())*$(this).parent().prev().text()).toFixed(2)*$(this).parent().next().find("input").val());//toFixed()是保留小数点的函数很实用哦
+			countBuy();
+		}
+		
+	});
+	
+	//租赁时间输入
+	$("input.js-rentTime").keyup(function(){
+		var t = $(this);
+		if(isNaN(parseInt(t.val()))||parseInt(t.val())<=0){
+			return;
+		}else{
+			$(this).prev().val(t.val());
+			$(this).parent().next().text((parseInt(t.val())*$(this).parent().prev().prev().text()).toFixed(2)*$(this).parent().prev().find("input").val());//toFixed()是保留小数点的函数很实用哦
+			countBuy();
+		}
+	}).blur(function(){
+		var t = $(this);
+		if(isNaN(parseInt(t.val()))||parseInt(t.val())<=0){
+			t.val(1);
+			$(this).prev().val(t.val());
+			$(this).parent().next().text((parseInt(t.val())*$(this).parent().prev().prev().text()).toFixed(2)*$(this).parent().prev().find("input").val());//toFixed()是保留小数点的函数很实用哦
+			countBuy();
+		}
+		
+	});
+	
+    $("select.js-select-rentTime").change(function(){
+    	$(this).prev().val($(this).val());
+    });
+    
+	
+	$("button.js-subOrder").click(function(){
+		if(confirm("确定提交？")){
+			var valueMap = new Array();
+			$("tr.js-td").each(function(){
+				var obj={};
+				$(this).find("input:hidden").each(function(){
+					var name = $(this).data("key");
+					obj[name]=$(this).val();
+				});
+				valueMap.push(obj);
+			});
+			var otherInfo={};
+			otherInfo.addressId=$("input[name=addressId]:checked").val();
+			otherInfo.detailContent=$("textarea.js-detailContent").val();
+			otherInfo.totalPrice=$("span.js-allPrice").text();
+			<#if rentOrBuy=="buy">
+			otherInfo.rentOrBuy="buy";
+			<#elseif rentOrBuy=="rent">
+			otherInfo.rentOrBuy="rent";
+			</#if>
+		    $.post("saveOrder.html",{"valueMap":$.toJSON(valueMap),"otherInfo":$.toJSON(otherInfo)},
+					function(data){
+						if(data.result==1){
+							alert("下单成功");
+							location.href="${base}";
+						}else{
+							alert("操作失败！");
+						}
+					},"json");
+			    
+			}
+	});
+})
+</script>
+

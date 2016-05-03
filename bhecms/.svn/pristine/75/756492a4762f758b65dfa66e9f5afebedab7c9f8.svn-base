@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* CSS Document */
+.vip_title{margin-top:20px;}
+.top_title{margin:0 60px;}
+.top_title01{margin:0 58px;}
+.top_title02{margin:0 26px;}
+.top_title03{margin:0 60px;}
+.top_title04{margin:0 90px}
+.user_content{margin-left:20px;}
+.operate{margin-right:10px;color:#00BAAD;}
+.operate:hover{cursor:pointer;}
+.operate_click{margin-right:20px;width:60px;height:24px;background-color:#006E9E;color:white;}
+.paging{float:right;margin-top:10px;width:600px;}
+.paging button{margin-right:10px;width:80px;height:28px;background-color:#bde2ff;}
+.paging input{width:50px;height:22px;margin:0 10px;border:solid 1px black;text-align:center}
+.top_title04{margin-left:90px;}
+.top_title05{margin-left:85px;}
+.top_title06{margin-left:125px;}
+.top_title07{margin-left:145px;}
+.dep_nav a{display:block;margin:10px 0;margin-right:60px;float:left;}
+.department p span{margin-right:80px;}
+.department .dep_num01{margin-right:70px;}
+.dep_content a{margin-right:10px;}
+.dep_content{border:solid 1px black;width:1270px;}
+.dep_paging{margin-left:200px;}
+.hou_span{margin-right:150px;font-weight:bold;}
+.hou_time{margin-right:600px;font-weight:bold;}
+.house{margin:10px 0;}
+.hou_content{border-top:solid 1px black;margin-top:10px;border-bottom:solid 1px black;}
+.houcon_span{margin-right:120px;}
+.houcon_time{margin-right:540px;}
+.hou_btn button{margin-right:20px;margin-top:10px;}
+.email{width:80%;min-width:700px;height:500px;margin-left:90px;}
+.email_btn{margin-left:90px;margin-top:40px;}
+.email_btn button{width:60px;border-radius:5px 5px;background-color:white;border:solid 1px #A5A5A5;height:28px;margin-right:20px; }
+.login_note_list,.login_note_title01{min-width:1200px;}
+.login_note_title01 span{margin-right:150px;font-weight:bold;}
+.login_note_list span{margin-right:120px;}
+.pagination{margin-right:20px;margin-top:10px;}
+.user_list{text-align:center;width:98%;border:1px solid #ccc;}
+.user_list tr td{border:1px solid #ccc;}
+.user_list_nav{font-weight:bold;font-size:14px;background-color:#EDF1F2;}
+.user_list_content{font-size:12px;line-height:38px;border-bottom:solid 1px #EDF1F2;}
+.user_top{margin:15px 0;}
+.user_top select{width:90px;height:32px;border-radius:5px; border:1px solid #ccc;}
+.user_top input{width:200px;height:34px;}
+.user_top_01{color:white;background-color:#00BAAD;width:60px;height:34px;margin-left:10px;}
+.user_top_02{color:white;background-color:#00BAAD;width:90px;height:34px;margin-right:20px;margin-bottom:20px;}
+.user_list_nav td{border-right:solid 1px white;padding:0 5px;line-height:28px;}
+.edit_title{font-size:16px;}
+.search{margin-left:5px;}

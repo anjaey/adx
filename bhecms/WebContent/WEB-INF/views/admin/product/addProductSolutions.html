@@ -1,0 +1,451 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/bhecms/css/admin/productManage.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/common/js/sobox/popbox-style.css">
+<@frame> <#if (states == 0)>
+<div class="nav_position">
+	您当前位置：<a href="${base}/admin/product/productBrandManage.html">商品品牌</a>>新增解决方案
+</div>
+</#if> <#if (states == 1)>
+<div class="nav_position">
+	您当前位置：<a href="${base}/admin/product/productBrandManage.html">商品品牌</a>>编辑解决方案
+</div>
+</#if>
+<div class="welcom">
+
+	<div class="wel_content">
+		<form method="post" >
+			<input type="hidden" id='uuid' name="id" value="${returned.uuid}" />
+			<p class="release">
+				<label>标题：</label> <input type="text" id="title" value="${returned.title}"
+					class="txtAddproduct txtAddproduct2" name="namecn"
+					value="${prdouct.namecn}" />
+			</p>
+			<p class="release">
+				<label>适应环境：</label>
+<!-- 				<textarea rows="" cols="" class="txtareaProduct" id="appliesment">${returned.appliesment}</textarea> -->
+			</p> <br><br><br><br>
+			<div>
+				    <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
+			</div>
+			<p class="release">
+				<label>主要客户：</label> <input type="button" class="js-pro-customer"
+					value="..." />
+			</p>
+			<div class="customer-checked solve">
+				<#if returned??>
+				<#assign entityList=returned.customerlis /> 
+				<#list entityList as entity>
+					<div id="divcustomer${entity.uuid}" style='width:108px;height:160px;  float:left;'>
+						<label style='width:100px;height:120px;'for="customer${entity.uuid}">
+							<img style='width: 100px; height:120px' src="${entity.url}" />
+						</label>
+						<span style = 'text-align: center;'>${entity.title}</span>
+					</div>
+				</#list>
+				</#if>
+			</div>
+			<p class="release">
+				<label>销售冠军：</label> <input type="button" class="js-pro-champion"
+					value="..." />
+			</p>
+			<div class="champion-checked solve">
+				<#if returned??>
+				<#assign entityList=returned.prochampionlist /> 
+				<#list entityList as entity>
+					<div id="divchampion${entity.uuid}" class="champion" >
+						<label style='width:100px;height:120px;'for="champion${entity.uuid}">
+							<img style='width: 100px; height:120px' src="${entity.url}" />
+						</label>
+						<span style = 'text-align: center;'>${entity.namecn}</span>
+					</div>
+				</#list>
+				</#if>
+			</div>
+			<p class="release">
+				<label>推荐机型：</label>
+<!-- 				 <input type="button" class="js-pro-recommend"	value="..." /> -->
+			<div>
+				<select class="select" id="customerSelect" >
+				</select>
+				<input type="button" id="SelectButton" value="添加" />
+				<#if returned??>
+				<#assign entityList1=returned.products /> 
+				<#list entityList1 as entity>
+					<div id='${entity.sort.id}' class="divrecommend solve" >
+						 ${entity.sort.namecn}
+						<input class="add" type="button" value=添加 /> 
+						<input class="del" type="button" value=删除 /></br>
+						<#assign entityList2=entity.pros /> 
+						<#list entityList2 as entity2>
+							<div id="div${entity.sort.id}${entity2.uuid}" class="champion">
+								<label style='width:100px;height:120px;'for="${entity.sort.id}${entity2.uuid}">
+									<img style='width: 100px; height:120px' src="${entity2.url}" />
+								</label>
+								<input style="display:none" type='checkbox' checked id="${entity.sort.id}${entity2.uuid}" value="${entity2.uuid}" />
+								<span style = 'text-align: center;'>${entity2.namecn}</span>
+							</div>
+						</#list>
+						
+					</div>
+				</#list>
+				</#if>
+			</div>
+			</p>
+<!-- 			<div class="recommend-checked" style="width:100%; height: 200px; overflow-x:hidden; overflow-y:auto"></div> -->
+			<div class="clear"></div>
+			<input type="button" class="formsubmit btnsearch" value="提交" />
+		</form>
+	</div>
+</div>
+
+
+
+<!-- 客户名录 -->
+<div class="so-customer-popbox so-popbox" style="width: 800px">
+	<div class="h2-sopop">
+		<span class="s-sopop-title">选择图片</span> <span
+			class="ss-close s-sopop-close">[关闭]</span>
+	</div>
+	<div class="so-popbox-cont" >
+		<div class = "js-customer-img">
+			<div class="customer-check" style="width:100%; height: 300px; overflow-y:auto;"></div></br>
+		</div>
+		<p class="p-so-popBtn js-findcustomer-img">
+			<input type="button" class="close" value="确定" />
+		</p>
+	</div>
+</div>
+
+<!-- 销售冠军 -->
+<div class="so-champion-popbox so-popbox"  style="width: 800px">
+	<div class="h2-sopop">
+		<span class="s-sopop-title">选择图片</span> <span
+			class="ss-close s-sopop-close">[关闭]</span>
+	</div>
+	<div class="so-popbox-cont">
+		<div class = "js-champion-img">
+			<div class="champion-check" style="width:100%; height: 300px; overflow-y:auto;"></div></br>
+		</div>
+		<p class="p-so-popBtn js_findchampion-img">
+			<input type="button" class="close" value="确定">
+		</p>
+	</div>
+</div>
+
+<!-- 推荐机型 -->
+<div class="so-recommend-popbox so-popbox" style="width: 800px">
+	<div class="h2-sopop">
+		<span class="s-sopop-title">选择图片</span> <span
+			class="ss-close s-sopop-close">[关闭]</span>
+	</div>
+	<div class="so-popbox-cont">
+		<div class = "js-recommend-img">
+			<div class="recommend-check" style="width:100%; height: 300px; overflow-y:auto;"></div></br>
+		</div>
+		<p class="p-so-popBtn js_findrecommend-img">
+			<input type="button" class="close" value="确定">
+		</p>
+	</div>
+</div>
+
+</@frame>
+<script src="${base}/res/common/js/sobox/jquery.sobox.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/common/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/common/js/ueditor/ueditor.all.js"> </script>
+<script>
+$(function(){
+	var customer= '${data.customer}' == '' ? [] : JSON.parse('${data.customer}');
+	var champion='${data.prochampion}' == '' ? [] :  JSON.parse('${data.prochampion}');
+	var recommend='${data.procategoryid}' == '' ? [] :  JSON.parse('${data.procategoryid}');
+	//实例化编辑器
+	var ue = UE.getEditor('editor');
+    // editor准备好之后才可以使用
+	ue.addListener("ready", function () {
+        ue.setContent('${returned.appliesment}');
+	});
+	$.ajax({
+		type: "post",
+		url: "${base}/admin/product/getProductCategoryForTree.html",
+		data:{
+		},
+		dataType:'json',
+		success:function(data){
+			for(var i = 0 ; i < data[0].length ; i++){
+				data1=data[0][i];
+				$("#customerSelect").append("<optgroup label="+data1.namecn+"></optgroup >")
+				if(data[data1.id] != undefined){
+					for ( var j = 0 ; j < data[data1.id].length ; j++) {
+						$("#customerSelect").append("　<option value="+data[data1.id][j].id+" namecn="+data[data1.id][j].namecn+">----"+data[data1.id][j].namecn+"</option>")
+					}
+				}
+			}
+		}
+	});
+	$('.formsubmit').on('click',function(){
+		//获取值
+		var uuid = $('#uuid').val();
+		var title = $('#title').val();
+		var appliesment = ue.getContent();
+		var data = {};
+		data.uuid = uuid;
+		data.title = title;
+		data.appliesment = appliesment;
+		data.customer = JSON.stringify(customer);
+		data.prochampion = JSON.stringify(champion);
+		data.procategoryid = JSON.stringify(recommend);
+		$.ajax({
+			type: "post",
+			url: "${base}/admin/product/addProductSolutions.html",
+			dataType:'json',
+			data : data , 
+			success:function(data){
+				if(data == '1'){
+					window.location.href="${base}/admin/product/tosolutionsManager.html";
+				}else{
+					alert('添加失败')
+				}
+			}
+		}) 
+	});
+	//添加 空div、
+	$("#SelectButton").click(function(){
+		var $div = $(this).nextAll('div')
+		for (var i=0 ; i<$div.length ; i++){
+			if($(this).prev().val() == $div[i].id)	{
+				return false;
+			}
+		}
+		$(this).after('<div id='+$(this).prev().val()+' style="width:100%; height: 200px; overflow-x:hidden; overflow-y:auto;margin-left:110px;">'+$('.select :selected').attr('namecn')+' <input class=add type=button value=添加 /> <input class=del type=button value=删除 /></br></div>')
+		var sort = {}
+		sort.sortid = $(this).prev().val();
+		sort.pros=[];
+		recommend.push(sort);
+		$(".add").click(function(){
+			data={};
+			data.sortid=$(this).parent().prop("id");
+			data.time= new Date();
+			popData2(recommend,"${base}/admin/product/getProductList.html",$(this).parent().prop("id"),data);
+			$.sobox.pop({
+				popTarget:'div.so-recommend-popbox',
+				wrapTarget:false,
+				maskClick : false,
+				title:"查看图片",
+			});
+		})
+		$(".del").click(function(){
+			for(var i = 0; i < recommend.length ; i++){
+				if(recommend[i].sortid == $(this).parent().prop("id")){
+					recommend.splice(i,1);
+				}
+			}
+			$(this).parent().remove();
+		})
+	})
+
+	 //显示客户名录框
+	$(".js-pro-customer").click(function(){ 
+		var data = {
+				
+		};
+		popData(customer,"${base}/admin/user/findAllCustomer.html","customer",data);
+		$.sobox.pop({
+			popTarget : 'div.so-customer-popbox',
+			wrapTarget : false,
+			maskClick : false,
+			title:"查看图片",
+		});
+	});
+	
+// 	//用于客户名录设置图片
+// 	$(".js-findcustomer-img").click(function(){  
+// 		var title = $(".js_customer_title").val();		
+// 		$.ajax({
+// 			type:"post",
+// 			url:"${base}/admin",
+// 			data:{
+// // 				title:checkedpro,
+// 			},
+// 			dataType:'json',
+// 			success:function(data){
+// 				$(".js-customer-img").html(""); 
+// // 				显示图片到页面
+// 				for (var i= 0; i < data.length; i++) {
+// 					var title = data[i].title;
+// 					var url = data[i].url;
+					
+// 				}
+// 			}
+// 		});
+// 	});
+	
+	$(".js-pro-champion").click(function(){  //查询产品图片
+		var data = {
+			
+		};
+		popData(champion,"${base}/admin/product/getProductList.html","champion",data);
+		$.sobox.pop({
+			popTarget:'div.so-champion-popbox',
+			wrapTarget:false,
+			maskClick : false,
+			title:"查看图片",
+		});
+	
+	});
+	
+// 	$(".js-pro-recommend").click(function(){  //查询产品图片
+// 		popData(recommend,"${base}/admin/product/getProductList.html","recommend");
+// 		$.sobox.pop({
+// 			popTarget:'div.so-recommend-popbox',
+// 			wrapTarget:false,
+// 			maskClick : false,
+// 			title:"查看图片",
+// 		});
+// 	});
+	function popData(Array,url,divname,datas){
+		var checkArr = [];
+		$.ajax({
+			async: false,
+			type: "post",
+			url: url,
+			data : datas,
+			dataType:'json',
+			success:function(data){
+				var html = "";
+				for(var i = 0 ; i < data.length ; i++ ){
+					html += "<div style = 'width:108px;height:160px;  float:left'><label style='width:100px;height:120px;'for="
+					+divname+data[i].id+"><img style=' width: 100px; height:120px' src="+data[i].logo+" /></label><input type='checkbox' id="
+					+divname+data[i].id+" value="
+					+data[i].id+"><span style = 'text-align: center;'>"
+					+data[i].title+"</span></div>"
+				}	
+				$("."+divname+"-check").html(html);
+				for(var i = 0 ; i < Array.length ; i++){
+					checkArr.push(Array[i].id)
+				}
+				$("."+divname+"-check input").val(checkArr);
+				$("."+divname+"-check input").change(function(){
+					if($(this).prop('checked')){
+						$("."+divname+"-checked").append("<div id=div"
+							+divname+$(this).val()+" style='width:108px;height:160px;  float:left;'><label style='width:100px;height:120px;'for="
+							+divname+$(this).val()+"><img style='width: 100px; height:120px' src="+$(this).prev().children().attr('src')+" /></label><span style = 'text-align: center;'>"
+							+$(this).next().text()+"</span></div>")
+							var v={};
+							v.id=$(this).val();
+							Array.push(v);
+					}else{
+						$("."+divname+"-checked div[id=div"+divname+$(this).val()+"]").remove();
+						for(var i = 0 ; i < Array.length ; i++){
+							if($(this).val() == Array[i].id){
+								Array.splice(i, 1);
+							}
+						}
+					}
+				})
+			}
+		});
+	}
+	function popData2(Array,url,divname,datas){
+		var checkArr = [];
+		$.post(url,datas,function(data){
+				var html = "";
+				for(var i = 0 ; i < data.length ; i++ ){
+					html += "<div style = 'width:108px;height:160px;  float:left'><label style='width:100px;height:120px;'for=recommend"
+					+data[i].id+"><img style=' width: 100px; height:120px' src="+data[i].logo+" /></label><input type='checkbox' id=recommend"
+					+data[i].id+" value="
+					+data[i].id+"><span style = 'text-align: center;'>"
+					+data[i].title+"</span></div>"
+				}	
+				$(".recommend-check").html(html);
+				for(var i = 0 ; i < Array.length ; i++){
+					if(divname == Array[i].sortid){
+						for(var j = 0 ; j < Array[i].pros.length ; j++){
+							checkArr.push(Array[i].pros[j].uuid);
+						}
+					}
+				}
+				$(".recommend-check input").val(checkArr);
+				$(".recommend-check input").change(function(){
+					if($(this).prop('checked')){
+						$("#"+divname).append("<div id=div"
+							+divname+$(this).val()+" style='width:108px;height:160px;  float:left;'><label style='width:100px;height:120px;'for="
+							+divname+$(this).val()+"><img style='width: 100px; height:120px' src="+$(this).prev().children().attr('src')+" /></label><input type='checkbox' checked id="
+							+divname+$(this).val()+" value="+$(this).val()+"><span style = 'text-align: center;'>"
+							+$(this).next().text()+"</span></div>")
+							var v={};
+							v.uuid=$(this).val();
+							for(var i = 0 ; i < Array.length ; i++ ){
+								if(Array[i].sortid == divname){
+									Array[i].pros.push(v)
+								}
+							}
+					}else{
+						$("#"+divname+" div[id=div"+divname+$(this).val()+"]").remove();
+						for(var i = 0 ; i < Array.length ; i++){
+							if(divname == Array[i].sortid){
+								for(var j = 0 ; j < Array[i].pros.length ; j++){
+									if($(this).val() == Array[i].pros[j].uuid ){
+										Array[i].pros.splice(j, 1);
+									}
+								}
+							}
+						}
+					}
+					$("#"+divname+" input").change(function(){
+						$("#"+divname+" div[id=div"+divname+$(this).val()+"]").remove();
+						for(var i = 0 ; i < Array.length ; i++){
+							if(divname == Array[i].sortid){
+								for(var j = 0 ; j < Array[i].pros.length ; j++){
+									if($(this).val() == Array[i].pros[j].uuid ){
+										Array[i].pros.splice(j, 1);
+									}
+								}
+							}
+						}
+					})
+				})
+		},"json");
+	}
+	$(".add").click(function(){
+		data={};
+		data.sortid=$(this).parent().prop("id");
+		data.time= new Date();
+		popData2(recommend,"${base}/admin/product/getProductList.html",$(this).parent().prop("id"),data);
+		$.sobox.pop({
+			popTarget:'div.so-recommend-popbox',
+			wrapTarget:false,
+			maskClick : false,
+			title:"查看图片",
+		});
+	})
+	$(".del").click(function(){
+		for(var i = 0; i < recommend.length ; i++){
+			if(recommend[i].sortid == $(this).parent().prop("id")){
+				recommend.splice(i,1);
+			}
+		}
+		$(this).parent().remove();
+	})
+	$(".divrecommend input").on('change',function(){
+		for(var i = 0 ; i < recommend.length ; i++){
+			if($(this).parent().parent().attr("id") == recommend[i].sortid){
+				for(var j = 0 ; j < recommend[i].pros.length ; j++){
+					if($(this).val() == recommend[i].pros[j].uuid ){
+						recommend[i].pros.splice(j, 1);
+					}
+				}
+			}
+		}
+		$(this).parent().remove();
+	})
+	popData(customer,"${base}/admin/user/findAllCustomer.html","customer",null);
+	popData(champion,"${base}/admin/product/getProductList.html","champion",null);
+})
+
+//点击确定关闭选择框
+	$(".close").click(function(){
+		$(".so-popbox").hide();
+		$(".so-openmask").remove();
+	});
+</script>

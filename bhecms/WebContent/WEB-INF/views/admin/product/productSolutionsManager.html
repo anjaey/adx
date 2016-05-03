@@ -1,0 +1,156 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/bhecms/css/admin/productManage.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/bhecms/css/articleManage.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/common/jqpagination/css/jqpagination.css">
+<@frame>
+<div class="welcom">
+	<div class="artLocation">您当前的位置：商品管理>商品列表</div>
+	<div class="wel_content">
+		<div class="art_list">
+			<div class="art_list_all">
+				<div class="artListAll001">
+					<div class="productSearchall">
+						<div class="left">
+							标题 <input type="text" class="txtsearch" value="${title}" /><input type="button"
+								class="btnsearch search" value="搜索" />
+						</div>
+
+						<div class="right marr10">
+							<input onclick="toaddProSolutions()" type="button" value="添加"
+								class="btnsearch" />
+						</div>
+
+					</div>
+					<div class="clear"></div>
+					<table width="98%" border="0" cellspacing="0" cellpadding="0"
+						class="art_table productTable">
+						<tr>
+							<th width="35px">
+							<input type="checkbox" onclick="allChecked(this)" /></th>
+							<th>标题</th>
+							<th>适用环境</th>
+							<th>操作</th>
+						</tr>
+						<#assign entityList=returned.list /> 
+						<#list entityList as entity>
+						<tr>
+							<td width="35px;"><input class="js-pro-input"
+								uuid="${entity.uuid}" type="checkbox" /></td>
+							<td>${entity.title}</td>
+							<td>${entity.appliesment}</td>
+							<td>
+								<a href="${base}/admin/product/toUpdataProSolutions.html?uuid=${entity.uuid}">修改
+								</a><a href='javascript:delProSolutions("${entity.uuid}")'>删除</a>
+							</td>
+						</tr>
+						</#list>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="mart15">
+			<div class="batchOperation">
+				<a href="javascript:batchdelPros()">批量删除</a>
+			</div>
+			<div class="pagination right">
+				<a href="#" class="first" data-action="first">&laquo;</a>
+				<a href="#" class="previous" data-action="previous">&lsaquo;</a> 
+				<input type="text" readonly="readonly" data-max-page="${returned.countpage}" />
+				<a href="#" class="next" data-action="next">&rsaquo;</a>
+				<a href="#"	class="last" data-action="last">&raquo;</a>
+			</div> 
+		</div>
+	</div>
+</div>
+</@frame>
+<script type="text/javascript"
+	src="${base}/res/bhecms/js/admin/product/productManage.js"></script>
+<script type="text/javascript"
+	src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+<script type="text/javascript" src="${base}/res/bhecms/js/admin/base.js"></script>
+<script>
+	//加载解决方案列表
+	$('.pagination')
+			.jqPagination(
+					{
+						current_page : '${returned.pageindex???string(returned.pageindex,1)}',
+						max_page : '${returned.countpage???string(returned.countpage,1)}',
+						paged : function(page) {
+							window.location.href = "${base}/admin/product/tosolutionsManager.html?pageIndex="
+									+ page + "&pageSize=15&title="+$('.txtsearch').val();
+						}
+					});
+	
+	//搜索
+	$(".search").click(function(){
+		window.location.href = "${base}/admin/product/tosolutionsManager.html?title="+$('.txtsearch').val();
+	});
+	//全选
+	function allChecked(_this) {
+		if ($(_this).prop('checked')) {
+			$(".js-pro-input").prop("checked", true);
+		} else {
+			$(".js-pro-input").prop("checked", false);//取消全选
+		}
+		
+	}
+
+	//删除
+	function delProSolutions(uuid) {
+		var uuidjson = {};
+		uuidjson.uuid = uuid;
+		var uuidjsons = [];
+		uuidjsons.push(uuidjson);
+		batchdelProsCommon(uuidjsons, 1);
+	}
+	
+	//跳转到添加页面
+	function toaddProSolutions() {
+		location.href = "${base}/admin/product/toaddProductSolutions.html";
+	}
+	
+	//跳转到修改页面
+// 	function toaddProSolution1s(uuid) {
+// 		location.href = "${base}/admin/product/toUpdataProSolutions.html?uuid="+uuid;
+		
+// 	}
+
+	//批量删除
+	function batchdelPros() {
+		var uuids = getCheckedPro();
+		batchdelProsCommon(uuids);
+	}
+	//获取选择的产品s
+	function getCheckedPro(){ 
+		var procheckeds = [];
+		
+		var proinput = $(".js-pro-input");
+		var proinputs = $(".js-pro-input:checked");
+		for (var i = 0; i<proinputs.length; i++) {
+			var inputval = {};
+			inputval.uuid = $(proinputs[i]).attr("uuid");
+			procheckeds.push(inputval);
+		}
+		return procheckeds;
+	}
+	//批量删除  公共
+	//uuids   编号json
+	//state 删除到垃圾箱  0 删除到垃圾箱    1删除
+	function batchdelProsCommon(checkedpros){
+		var checkedpro = JSON.stringify(checkedpros);
+		$.ajax({
+			type:"post",
+			url:"${base}/admin/product/delSolutionInfo.html",
+			data:{
+				uuids:checkedpro
+			},
+			dataType:'json',
+			success:function(data){
+				window.location.href="${base}/admin/product/tosolutionsManager.html";
+			}
+		});
+	}
+</script>

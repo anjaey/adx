@@ -1,0 +1,6 @@
+target/
+rebel.xml
+*.class
+/build/
+.classpath
+org.eclipse.wst.common.project.facet.core.xml

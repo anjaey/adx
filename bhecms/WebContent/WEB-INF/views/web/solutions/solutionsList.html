@@ -1,0 +1,129 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/web/css/index.css" />
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/web/css/productInformation.css" />
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/web/css/productSale.css" />
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/common/jqpagination/css/jqpagination.css" />
+
+<@frame>
+<!-- <div class="solve"></div> -->
+	<div class="SafetyProtectionBg" style="background:url(${picurl}) no-repeat center; width:100%;min-width:1200px;height:560px; z-index:1;"></div>   		
+
+<!--第二屏主要内容-->
+<div class="pi_content mart60">
+	<div class="pi_left left">
+		<!-- <div class="news_bottom_rInformation">
+			<div class="news_search mar0 height45">
+				<a class="pro_name">产品名</a>
+				<div class="search_k">
+					<img src="${base}/res/web/images/search02.png" class="search01"> <input
+						type="text" class="theKey" value="请输入关键词">
+				</div>
+			</div>
+			
+
+			<div class="news_price2">
+            	<a class="pro_name pro_name2">价格</a>
+                <input type="text" value="" class="price_k" style="width:68px;">
+               		 &nbsp;&nbsp;到&nbsp;&nbsp;
+                <input type="text" value="" class="price_k" style="width:68px;">
+            </div>
+		</div> -->
+
+
+		<div class="left_title">解决方案</div>
+		<div class="font18 solutionList">			
+			<table class="solutionListTable">
+			<#list returned as entity>
+				<tr>					
+						<td><a href="${base}/web/product/toSolutions.html?uuid=${entity.uuid}">&gt;&gt;${entity.title}</a></td>
+				</tr>
+			</#list>	
+			
+			</table>		
+		
+
+		</div>
+		
+		
+		
+		
+		<div class="left_title">联系方式</div>
+		<p class="font12 contact">公司：重庆宇田丹增机电技术有限公司</p>
+		<p class="font12 contact">地址：重庆市渝北区加州花园A4栋1-3号</p>
+		<p class="font12 contact">联系电话：023-67627211<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;67625227（技术支持）</p>
+		<p class="font12 contact">传真：（023）67620867</p>
+		<p class="font12 contact">
+			邮箱：cqyutian@163.com<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cfd626@163.com（销售）<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2575005954@qq.com（销售）
+		</p> 
+	</div>
+	<div class="pi_right right">		
+		<div class="left_title05">${solution.title}</div>
+		<div class="recommended">主要客户</div>
+			<div class="contract">
+				<ul>
+					<#list solution.customerlis as entity>
+					<li><img src="${entity.url}" width="194" height="98" /></li>
+					</#list>
+				</ul>
+			</div>
+		<div class="clear"></div>	
+		<div class="recommended">适应环境</div>
+		<div class="mart15 gray">${solution.appliesment}</div>
+		<div class="clear"></div>
+		<div class="recommended">销售冠军</div>		
+		<div class="champion">
+			<ul>
+				<#list solution.prochampionlist as entity>
+					<li class=" js-detail" data-uuid="${entity.uuid}">
+					<div class="commonImageSize">
+						<img src="${entity.url}" width="249" height="238" />
+					</div>	
+						<span class="namecn">${entity.namecn}</span>
+					</li>
+					
+				</#list>
+			</ul>
+			
+		</div>
+		<div class="clear"></div>
+		<div class="recommended">推荐机型</div>
+		
+		<#if solution.products??>
+		<#assign entityList=solution.products />  
+		<#list entityList as entity>
+			<div class="" style="margin-top:10px;">
+				<div class="recommended02">${entity.sort.namecn}</div>
+				<div class="champion">
+					<ul>
+						<#assign entityList2=entity.pros />  
+						<#list entityList2 as entity2>
+							<li class="js-detail" data-uuid="${entity2.uuid}">
+							<div class="solutionDiv">
+								<img src="${entity2.url}" width="196px" height="184px" />
+							</div>
+							
+								<span class="namecn">${entity2.namecn}</span>
+							</li>
+						</#list>
+					</ul>					
+				</div>
+			
+			</div>
+			<div class="clear"></div>
+			
+		</#list>
+		</#if>
+	</div>
+
+</div>
+<div class="clear"></div>
+</@frame>
+<script type="text/javascript">
+		$(".js-detail").click(function(){
+			location.href="${base}/web/product/productDetail.html?uuid="+$(this).attr("data-uuid");
+		})
+</script>

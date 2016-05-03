@@ -1,0 +1,21 @@
+<div class="header">
+	<div class="wind1200">
+		<div class="tel left">
+			销售热线：${hotline}
+		</div>
+		<div class="headerRight right" style="margin-left:10px;">
+			<ul>
+				<li class="liBorder"><i class="bgImage bgImage02"></i><a class="" style="margin-left: -8px; color:#484848;" href="${base}/web/product/buyProductCar.html">购物车</a></li>
+				<li class="liBorder"><i class="bgImage bgImage01"></i><a class="" style="margin-left: -8px; color:#484848;" href="${base}/account/toAccountCenter.html">个人账户</a></li>
+				<#if ( sessionLoginBeforeUser != null)>
+				<li style="color:#484848;">欢迎您,${sessionLoginBeforeUser.username}!</li>
+				<li><a class="left js-logout-bt" style="color:#4292dc;">安全退出</a></li>
+				<#else>
+					<li><i class="bgImage bgImage03"></i><a class="" style="margin-left: -8px; color:#484848" href="${base}/user/toLogin/loginPage.html">登录</a></li> 
+				</#if>
+			</ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+

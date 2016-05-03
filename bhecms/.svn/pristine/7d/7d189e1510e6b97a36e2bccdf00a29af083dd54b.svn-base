@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bhe.dao.mybatis.mapper.ProductAttachmentEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.bhe.dao.mybatis.model.ProductAttachmentEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="hdUrl" property="hdurl" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="attachmentType" property="attachmenttype" jdbcType="INTEGER" />
+    <result column="keyid" property="keyid" jdbcType="VARCHAR" />
+    <result column="ismain" property="ismain" jdbcType="INTEGER" />
+    <result column="fileModule" property="filemodule" jdbcType="VARCHAR" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, url, hdUrl, status, createTime, attachmentType, keyid, ismain, fileModule, 
+    uuid, title
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bhe.dao.mybatis.model.ProductAttachmentEntityCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_product_attachment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_attachment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_product_attachment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bhe.dao.mybatis.model.ProductAttachmentEntityCriteria" >
+    delete from t_product_attachment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bhe.dao.mybatis.model.ProductAttachmentEntity" >
+    insert into t_product_attachment (id, name, url, 
+      hdUrl, status, createTime, 
+      attachmentType, keyid, ismain, 
+      fileModule, uuid, title
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{hdurl,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{attachmenttype,jdbcType=INTEGER}, #{keyid,jdbcType=VARCHAR}, #{ismain,jdbcType=INTEGER}, 
+      #{filemodule,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}
+      )
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.bhe.dao.mybatis.model.ProductAttachmentEntity" >
+    insert into t_product_attachment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="hdurl != null" >
+        hdUrl,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="attachmenttype != null" >
+        attachmentType,
+      </if>
+      <if test="keyid != null" >
+        keyid,
+      </if>
+      <if test="ismain != null" >
+        ismain,
+      </if>
+      <if test="filemodule != null" >
+        fileModule,
+      </if>
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="hdurl != null" >
+        #{hdurl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attachmenttype != null" >
+        #{attachmenttype,jdbcType=INTEGER},
+      </if>
+      <if test="keyid != null" >
+        #{keyid,jdbcType=VARCHAR},
+      </if>
+      <if test="ismain != null" >
+        #{ismain,jdbcType=INTEGER},
+      </if>
+      <if test="filemodule != null" >
+        #{filemodule,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterType="com.bhe.dao.mybatis.model.ProductAttachmentEntityCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_product_attachment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_product_attachment
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hdurl != null" >
+        hdUrl = #{record.hdurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.attachmenttype != null" >
+        attachmentType = #{record.attachmenttype,jdbcType=INTEGER},
+      </if>
+      <if test="record.keyid != null" >
+        keyid = #{record.keyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ismain != null" >
+        ismain = #{record.ismain,jdbcType=INTEGER},
+      </if>
+      <if test="record.filemodule != null" >
+        fileModule = #{record.filemodule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_product_attachment
+    set id = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      hdUrl = #{record.hdurl,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      attachmentType = #{record.attachmenttype,jdbcType=INTEGER},
+      keyid = #{record.keyid,jdbcType=VARCHAR},
+      ismain = #{record.ismain,jdbcType=INTEGER},
+      fileModule = #{record.filemodule,jdbcType=VARCHAR},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bhe.dao.mybatis.model.ProductAttachmentEntity" >
+    update t_product_attachment
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="hdurl != null" >
+        hdUrl = #{hdurl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attachmenttype != null" >
+        attachmentType = #{attachmenttype,jdbcType=INTEGER},
+      </if>
+      <if test="keyid != null" >
+        keyid = #{keyid,jdbcType=VARCHAR},
+      </if>
+      <if test="ismain != null" >
+        ismain = #{ismain,jdbcType=INTEGER},
+      </if>
+      <if test="filemodule != null" >
+        fileModule = #{filemodule,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null" >
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bhe.dao.mybatis.model.ProductAttachmentEntity" >
+    update t_product_attachment
+    set name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      hdUrl = #{hdurl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      attachmentType = #{attachmenttype,jdbcType=INTEGER},
+      keyid = #{keyid,jdbcType=VARCHAR},
+      ismain = #{ismain,jdbcType=INTEGER},
+      fileModule = #{filemodule,jdbcType=VARCHAR},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_product_attachment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

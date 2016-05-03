@@ -1,0 +1,74 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/productInformation.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/productSale.css">
+
+<@frame>
+
+<div class="show01">
+    	<div class="top">
+        	<div class="tel left white font12"><a href="#" class="searchImage"><img  src="${base}/res/web/images/search.png" width="23" height="25" /></a>销售热线：023-67627211&nbsp;&nbsp;技术支持：023-67625227</div>            
+            <a class="white right shopcar font14" href="#">&nbsp;&nbsp;购物车</a>
+            <a class="white right user font14" href="#">&nbsp;&nbsp;个人账户</a>
+            <a class="white right user font14 userLogin" href="#">&nbsp;&nbsp;登录</a>            
+    </div>
+	
+		<div class="nav01">
+				<div class="wind1200">
+					<div class="nav font16 white right">
+						<ul>
+							<li><a href="">企业概况</a><img src="${base}/res/web/images/dropDown.png" class="dropdown" width="14" height="9"/></li>
+						   <li><a href="">清洁设备</a><img src="${base}/res/web/images/dropDown.png" class="dropdown" width="14" height="9"/></li>
+						   <li><a href="">安全防护</a><img src="${base}/res/web/images/dropDown.png" class="dropdown" width="14" height="9"/></li>
+						   <li><a href="">工业吸尘器</a><img src="${base}/res/web/images/dropDown.png" class="dropdown" width="14" height="9"/></li>
+						   <li><a href="">租凭服务</a><img src="${base}/res/web/images/dropDown.png" class="dropdown" width="14" height="9"/></li>
+						   <li><a href="">保洁承包</a><img src="${base}/res/web/images/dropDown.png" class="dropdown" width="14" height="9"/></li>
+						   <li><a href="">解决方案</a><img src="${base}/res/web/images/dropDown.png" class="dropdown"  width="14" height="9"/></li>
+						   <li><a href="">客户名录</a><img src="${base}/res/web/images/dropDown.png" class="dropdown" width="14" height="9"/></li> 
+						   <li><a href="">客户名录</a><img src="${base}/res/web/images/dropDown.png" class="dropdown" width="14" height="9"/></li> 
+						</ul>
+					</div>
+					<div class="left"> <img src="${base}/res/web/images/logo.png" class="logo"></div>
+				
+			</div>
+		</div>
+        <div class="poster"><img src="${base}/res/web/images/pi_text.png"></div>
+        <div class="change01">
+    	<a class="black01_btn"></a>
+        <a class="gray01_btn"></a>
+        <a class="gray01_btn"></a>
+        <a class="gray01_btn"></a>
+    </div>
+        
+    </div>
+						<!--第二屏主要内容-->
+<div class="article_list">
+	<div class="pi_title01 white font18 width1200" ><ul><li>&gt;&gt;${pageTitle}</li></ul></div>
+    <ul class="art_content">
+    	
+    	<@util.loopArticle articleList; uuid,title,createtime>
+		    	<li><a href="">${title}[${createtime}]</a></li>
+        </@util.loopArticle>
+    
+    </ul>
+    <div class="art_btn"><a href="" class="left">上一页</a><a href="" class="left">下一页</a></div>
+</div>
+
+
+			<!--在线客服-->
+    <div class="online">
+		<div class="onlineMessage">
+			<div class="mart15">
+				<a href="#" class="white onlineUser"><img  src="${base}/res/web/images/user02.png" width="19" height="19"/>在线客服</a>
+				<a href="#" class="onlineConsulting">洗地机/车咨询</a>
+				<a href="#" class="onlineConsulting">扫地机/车咨询</a>
+				<a href="#" class="onlineConsulting">工业吸尘器咨询</a>
+				<a href="#" class="onlineConsulting">其他类咨询</a>
+			</div>
+		</div>	
+		<img  src="${base}/res/web/images/model.png" width="152" height="272" class="modelImg"/>
+   	</div>	
+	<!--在线客服结束-->
+	<div class="clear"></div>
+	
+	</@frame>

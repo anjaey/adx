@@ -1,0 +1,15 @@
+<div class="top">
+       <div class="nav">
+       	   <a href="${base}/admin/index.html" <@sets.setNav navigateBar 1 />>首页</a>
+       	   <a href="${base}/admin/article/articleIndex.html"  <@sets.setNav navigateBar 2 /> >文章系统</a>
+       	   <a href="${base}/admin/navigatebar/toNavigateBarIndex.html" <@sets.setNav navigateBar 3 />>内容管理</a>
+           <a href="${base}/admin/product/productManage.html" <@sets.setNav navigateBar 4 />>商品管理</a>
+           <a href="${base}/admin/order/orderIndex.html" <@sets.setNav navigateBar 5 />>订单管理</a>
+           <a href="${base}/admin/user/userIndex.html" <@sets.setNav navigateBar 6 />>用户管理</a>
+           <a href="${base}/admin/system/systemIndex.html" <@sets.setNav navigateBar 7 />>系统设置</a>
+       </div>
+       <div class="right exit">
+	       	<button class="left saf_exit js-userInfo">个人中心</button>
+	       	<button class="left js-logout-bt saf_exit">安全退出</button>
+       </div>
+</div>

@@ -1,0 +1,97 @@
+<#include "admin/common/frame.html"/>
+
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/adminIndex.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+
+ <@frame> 
+    <div class="nav_position">您当前位置：首页</div>
+		<div class="wel_content">
+	    	<div class="wel_user">
+	        	<div class="head_img left"><img src="${base}/res/bhecms/images/head_img.png"></div>
+	            <div class="text03 left"><p><span>您好，</span><span>${username}!</span></p><p>欢迎进入网站后台系统!&nbsp;&nbsp;登录次数：<span>${logincount}次</span>&nbsp;&nbsp;本次登录时间：<span>${now}</span></p></div>
+	        </div>
+
+	        <div class="clear"></div>
+	        <div class="text04" style="display:none">KesionCMS®系统由漳州科兴信息技术有限公司(Kesion.Com)独立开发，软件制作权登记号：2012SR058633。任何个人或组织不得在授权允许的情况下删除、修改、拷贝本软件及其它副本上一切关于版权的信息。您当前使用的是免费版本，仅授权个人非商业使用</div>
+	   		<div class="text05">
+
+	    		<div class="text05_l left" style="display:none" >
+	            	<p class="title_l">程序信息：</p>
+	            	<p>当前版本：KesionEshop X1.0.150526 Free</p>
+	            	<p>最新版本：X1.0.150526 Release</p>
+	           	 	<p>产品开发：重庆百居易电子商务有限公司</p>
+	            	<p>咨询热线：400-0080-263</p>
+	            	<p>在线升级：当前已经是最新版本!</p>
+	            </div>
+	            <div class="text05_r right" style="display:none" >
+	            	<p class="title_l">技术论坛新帖：</p>
+	            	<ul>
+	                	<li><a href="">论坛列表页第一页正常，第二(14:50)</a></li>
+	                    <li><a href="">今日头条的效果请给点建议(12:21)</a></li>
+	                    <li><a href="">商品列表 如何升序排列(12:20)</a></li>
+	                    <li><a href="">关于抢购产品设置问题(16:12)</a></li>
+	                    <li><a href="">转让网站，装饰公司，科汛制作(21:49)</a></li>
+	                    <li><a href="">KesionCMS X1.0.150526 版本(22:16)</a></li>
+	                </ul>
+	            </div>
+	    	</div>
+			<div class="clear"></div>
+		    <!--  <div class="last_news">
+		    	<div class="last_news_title">最新消息</div>
+		   <div class="basic">
+		<div class="vip_title">
+			<table border="0" cellspadding="0px" cellspcing="0px"
+				class="user_list">
+				<tr class="user_list_nav">
+					<td>标题</td>
+					<td>收件时间</td>
+					<td>发件人</td>
+					<td>状态</td>
+					<td>回复时间</td>
+					<td>操作</td>
+				</tr>
+				<#if (count>0)> <#list listMap as map>
+				<tr class="user_list_content">
+					<td>${map['title']}</td>
+					<td>${map['createtime']}</td>
+					<td>${map['fromUserName']}</td>
+					<td><#switch map['status']> <#case 1> 已回复 <#break> <#default>
+						未回复 </#switch></td>
+					<td><#if map['answerTime']??>
+						${map['answerTime']?string('yyyy-MM-dd HH:mm:ss')}</td> <#else> --
+					</#if>
+					<td><span class="top_title02"> <#if map['status']==0> <a
+							class="operate js-answer" toUserId="${map['fromuserid']}"
+							msgId="${map['id']}">回复</a> </#if> <a class="operate js-show"
+							msgId="${map['id']}">查看</a><a class="operate js-delete"
+				</tr>
+				</#list> </#if>
+
+
+			</table>
+		</div> -->
+		    </div> 
+		       <div class="right more"><p><a href="${base}/admin/personalCenter/myReciveMsges.html">更多>></a></p></div>
+	    </div>  
+
+</@frame>
+<script>
+		$(function() {
+
+			$(".js-show").click(
+					function() {
+						location.href = "${base}/admin/personalCenter/showReciveMsg.html?msgId="
+								+ $(this).attr("msgId");
+					});
+
+			$(".js-answer").click(
+					function() {
+						location.href = "${base}/admin/personalCenter/replyMsgEdit.html?toUserId="
+								+ $(this).attr("toUserId") + "&lastId="
+								+ $(this).attr("msgId");
+					});
+
+		});
+	</script>
+

@@ -21,8 +21,8 @@
 			<property name="suppressDate" value="true" />
 		</commentGenerator>
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://115.28.84.38:3306/bhecms"
-			userId="bhecms" password="bhecms">
+			connectionURL="jdbc:mysql://localhost:3306/adx"
+			userId="root" password="Zy123456">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />

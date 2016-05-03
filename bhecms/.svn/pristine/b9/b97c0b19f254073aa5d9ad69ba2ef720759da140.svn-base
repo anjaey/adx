@@ -1,0 +1,141 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemOrder.css">
+<@frame> 
+
+
+	<div class="wel_content">
+    	<div class="check_top">
+    		<span>订单号：${order.orderno}</span>
+    		<span>订单状态：
+    		<#switch order.auditstatus>
+   				<#case 0>
+   				待审核
+   				<#break>
+   				<#case 1>
+   				已通过
+   				<#break>
+   				<#default>
+   				已退回
+   			</#switch>
+    		</span>
+    		<span>下单时间：${order.createtime?datetime}</span>
+    	</div>
+     	<div class="check_order">
+     		<p>买家信息：</p>
+     		<div class="order_value">
+     			<span>账号：${userInfo.username}</span>
+     			<span>姓名/公司名称：${userDetailInfo.namecn}</span>
+     			<span>联系电话：${userInfo.phone}</span>
+     		</div>
+     		<p>收货信息：</p>
+     		<div class="order_value">
+     			<span>收货人：${order.buyername}</span>
+     			<span>联系电话：${order.buyerphone} ${order.buyermobile}</span>
+     			<span>收货地址：${order.conuntry+order.province+order.city+order.districts+order.address}</span>
+     		</div>
+     		<p>支付信息：</p>
+     		<div class="order_value">
+     			<span>支付状态：
+     			<#switch order.paystatus>
+	   				<#case 0>
+	   				未付款
+	   				<#break>
+	   				<#case 1>
+	   				已付款
+	   				<#break>
+	   				<#default>
+
+	   			</#switch>
+     			
+     			</span>
+     			<span>应付金额：${order.payprice}</span>
+     		</div>
+     		<p>备注信息：</p>
+     		<div class="order_value">
+     			<span>买家留言：${order.leavemsg}</span>
+     		</div>
+     		<div class="check_title">订单信息</div>
+     	</div>
+     	<#if order.auditstatus==0>
+     	<div class="check_btn right"><a href="orderBasicInfo.html?orderCode=${order.orderno}">修改基本信息</a></div>
+     	</#if>
+     	<div class="check_product">
+     		<table width="99%" cellpadding="0" cellspacing="0" border="1">
+     		<tr class="check_tab01">
+     			<td>序号</td>
+     			<td>商品型号</td>
+     			<td>商品名称</td>
+     			<td>数量（台）</td>
+     			<td>单价</td>
+     			<td>小计金额</td>
+     			<td>备注</td>
+     		</tr>
+	          	<#assign allCount=0>
+	          	<#assign allPrice=0>
+     		 <#if (orderDetailListCount>0)>
+	          	<#list orderDetailMap as map>
+		     		<tr>
+		     			<td>${map_index+1}</td>
+		     			<td>${map['modelName']}</td>
+		     			<td>${map['productName']}</td>
+		     			<td>${map['count']}
+		     			<#assign allCount=allCount+map['count']>
+		     			</td>
+		     			<td>${map['price']}</td>
+		     			<td>${map['price']*map['count']}
+		     			<#assign allPrice=allPrice+(map['price']*map['count'])>
+		     			</td>
+		     			<td>无</td>	
+		     		</tr>
+		    	</#list>
+	        </#if>
+     		<tr>
+     			<td colspan="3">总计：</td>
+     			<td>${allCount}</td>
+     			<td colspan="3"> ${allPrice}</td>
+     		</tr>
+     		</table>
+     		<div class="check_title">商品信息</div>
+     	</div>
+	    <#if order.auditstatus==0>
+     	<div class="check_btn right"><a href="orderProductInfo.html?orderCode=${order.orderno}">修改产品信息</a></div>
+	     	 <div class="check_btn01 js-upstatus">
+		     	 <a href="javascript:void(0)"  data="pass">通过审核</a>
+		     	 <a href="javascript:void(0)" data="notpass">不通过</a>
+	     	 </div>
+			</#if>
+     	</div>
+     	
+
+</@frame>
+<script>
+
+$(function(){
+	<#if order.auditstatus==0>
+	$("div.js-upstatus").find("a").click(function(){
+		var text="";
+	    var data=$(this).attr("data");
+		if(data=="pass"){
+			text="确定通过该订单审核？"	
+		}else{
+			text="不通过？"	
+		}
+		   if(confirm(text)){
+			$.post("updateOrderStatus.html", {"auditresult":data,"orderId":"${order.id}"},
+				function(data){
+					if(data.result){
+						alert("操作成功");
+						window.location.reload(true);
+					}else{
+						alert("操作失败");
+					}
+				},"json");
+		   }
+	});
+	</#if>
+})
+
+
+</script>

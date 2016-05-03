@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>${title}</title>
+<script type="text/javascript" src="${base}/res/common/js/jquery/jquery-1.11.3.min.js"></script>
+<script>
+	$(function(){
+		console.log("==============")
+		
+		$.post("ajaxtest.html", "", function(reData){
+			console.log(">>>>>>>>>" + reData.json);
+		}, "json");
+		
+		$(".btn_adddict").click(function(){
+			$.post("addDict.do", "", function(reData){
+				if (reData.state == 1) {
+					alert("成功");
+				} else {
+					console.log(">>>>>>>>>" + reData.state);
+				}
+			}, "json");
+		});
+		// jquery end;
+	});
+</script>
+</head>
+<body>
+${content}
+
+<input type="button" class="btn_adddict" value="写入字典" />
+</body>
+</html>

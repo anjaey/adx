@@ -1,0 +1,205 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/css/jquery.validity.css">
+<@frame> 
+    <div class="nav_position">您当前位置：站点配置>基本信息</div>
+    <div class="wel_content">
+        <div class="sys_nav01">
+	        <!-- <a href="javascript:void(0)" class="js-switchDiv-a sys_01_a">基本配置</a> -->
+	       <!--  <a href="javascript:void(0)" class="js-switchDiv-a">公司信息</a> -->
+        </div>
+        <div class="clear"></div>
+        <!--基本信息-->
+        <form action="${base}/admin/system/updateWebSiteInfo.html" method="post" class="js-form">
+        <div class="basic js-switchDiv">
+	       <!--  <div class="name">
+	        	<label>网站名称：</label><input type="text" value="${bInfoMap.webSiteName.content}" class="txtAddproduct required" name="webSiteName">
+	        </div> -->
+	        <!-- <div class="name">
+	        	<label>网站简称：</label><input type="text" value="${bInfoMap.webSiteNameAbbrevia.content}" class="txtAddproduct required" name="webSiteNameAbbrevia">
+	        	
+	        </div> -->
+	       <!--  <div class="name">
+	        	<label>网站关键词：</label>
+	        	<textarea type="text" class="sys_input02 required" name="keyWord">${bInfoMap.keyWord.content}</textarea>
+	        </div> -->
+	        <!-- <div class="name" >
+	        	<label>网页描述：</label><input type="text" value="${bInfoMap.describe.content}" class="txtAddproduct required" name="describe"></input>
+	        </div> -->
+	        <!-- <div class="name">
+	        	<label>域名：</label><input type="text" value="${bInfoMap.domainName.content}" class="txtAddproduct required" name="domainName"></p>
+	        </div> -->
+	        <!-- <div class="name">
+	        	<label>路径：</label><input type="text" value="${bInfoMap.sitePath.content}" class="txtAddproduct required" name="sitePath">
+	        </div> -->
+	       <!--  <div class="name">
+	        	<label>域名别名：</label><input type="text" value="${bInfoMap.domainAliases.content}" class="txtAddproduct required" name="domainAliases">
+	        	
+	        </div> -->
+	       <!--  <div class="name">
+	        	<label>安装目录：</label><input type="text" value="${bInfoMap.webSiteNameAbbrevia.content}" class="txtAddproduct required" name="webSiteNameAbbrevia">
+	        </div> -->
+	        <!-- <div class="name">
+	        	<label>站点访问路径：</label><input type="text" value="${bInfoMap.siteAccessPath.content}" class="txtAddproduct required" name="siteAccessPath">
+	        </div> -->
+	        <div class="name">
+	        	<label>FTP&nbsp;IP：</label><input type="text" value="${bInfoMap.ftpip.content}" class="txtAddproduct required" name="ftpip">
+	        </div>
+	        <div class="name">
+	        	<label>FTP用户名：</label><input type="text" value="${bInfoMap.ftpusername.content}" class="txtAddproduct required" name="ftpusername">
+	        </div>
+	        <div class="name">
+	        	<label>FTP密码：</label><input type="text" value="${bInfoMap.ftppwd.content}" class="txtAddproduct required" name="ftppwd">
+	        </div>
+	        <div class="name">
+	        	<label>FTP端口：</label><input type="text" value="${bInfoMap.ftpport.content}" class="txtAddproduct required" name="ftpport">
+	        </div>
+	        <div class="name">
+	        	<label>轮播时间：</label><input type="text" value="${flashview.flashviewdate.content}" class="txtAddproduct required" name="flashviewdate">
+	        </div>
+	        <div class="name">
+	        	<label>销售热线：</label><input type="text" value="${siteSetting.hotline.content}" class="txtAddproduct required" name="hotline">
+	        </div>
+	        <div class="name">
+	        	<label>版权信息：</label><input type="text" value="${siteSetting.copyrightcontrol.content}" class="txtAddproduct required" name="copyrightcontrol">
+	        </div>
+	     <!--    <div class="name">
+	        	<label>访问协议：</label>
+	        	<select name="accessProtocol">
+	            		<option value="1" <@sets.setSelected bInfoMap.accessProtocol.content "1" /> >http</option>
+	                    <option value="2" <@sets.setSelected bInfoMap.accessProtocol.content "2" /> >https</option>
+	            </select>
+	        	
+	        </div>
+	         <div class="suffix01">
+	        	<label>动态页后缀：</label>
+	            	<select name="dynamicPagesSuffix">
+	            		<option value="1" <@sets.setSelected bInfoMap.dynamicPagesSuffix.content "1" /> >.asp</option>
+	                    <option value="2" <@sets.setSelected bInfoMap.dynamicPagesSuffix.content "2" /> >.html</option>
+	                    <option value="3" <@sets.setSelected bInfoMap.dynamicPagesSuffix.content "3" /> >.htm</option>
+	                    <option value="4" <@sets.setSelected bInfoMap.dynamicPagesSuffix.content "4" /> >.shtml</option>
+	                    <option value="5" <@sets.setSelected bInfoMap.dynamicPagesSuffix.content "5" /> >.shtm</option>
+	            	</select>	           
+	        </div> -->
+        </div>
+        <div class="clear"></div>
+        </form>
+        
+         <!--公司信息-->
+       <form action="${base}/admin/system/updateWebSiteInfo.html" method="post" class="js-form">
+	        <div class="company js-switchDiv" style="display:none;">																				
+	    	<div class="name">
+	        	<label>公司名称：</label><input type="text" value="${cInfoMap.companyName.content}" class="txtAddproduct required" name="companyName">
+	        	
+	        </div>
+	        <div class="suffix01">
+	        	<label>公司规模：</label>
+	            	<select name="companyScale">
+	            		<option value="1" <@sets.setSelected cInfoMap.companyScale.content "1" /> >50人以下</option>
+	                    <option value="2" <@sets.setSelected cInfoMap.companyScale.content "2" /> >50~100人</option>
+	                    <option value="3" <@sets.setSelected cInfoMap.companyScale.content "3" /> >100~500人</option>
+	                    <option value="4" <@sets.setSelected cInfoMap.companyScale.content "4" /> >500人以上</option>
+	            	</select>
+	            
+	        	
+	        </div>
+	        <div class="clear"></div>
+	        <div class="suffix01">
+	        	<label>公司性质：</label>
+	            	<select name="companyProperty">
+	            		<option value="1" <@sets.setSelected cInfoMap.companyProperty.content "1" /> >民营</option>
+	                    <option value="2" <@sets.setSelected cInfoMap.companyProperty.content "2" /> >国企</option>
+	                    <option value="3" <@sets.setSelected cInfoMap.companyProperty.content "3" /> >外企</option>
+	                    <option value="4" <@sets.setSelected cInfoMap.companyProperty.content "4" /> >中外合资</option>
+	            	</select>
+	            
+	        	
+	        </div>
+	        <div class="clear"></div>
+	        <div class="suffix01">
+	        	<label>公司行业：</label>
+	            	<select name="companyIndustry">
+	            		<option value="1" <@sets.setSelected cInfoMap.companyIndustry.content "1" /> >互联网</option>
+	                    <option value="2" <@sets.setSelected cInfoMap.companyIndustry.content "2" /> >房地产</option>
+	                    <option value="3" <@sets.setSelected cInfoMap.companyIndustry.content "3" /> >快消品</option>
+	                    <option value="4" <@sets.setSelected cInfoMap.companyIndustry.content "4" /> >金融投资</option>
+	            	</select>	
+	        </div>
+	        <div class="name">
+	        	<label>公司地址：</label><input type="text" value="${cInfoMap.companyAddress.content}" class="txtAddproduct" name="companyAddress">
+	        </div>
+	        <div class="name">
+	        	<label>联系方式：</label><input type="text" value="${cInfoMap.companyContactway.content}" class="txtAddproduct" name="companyContactway">
+	        </div>
+	        <div class="suffix01">
+	        	<label>企业logo：</label><input type="text" readonly="readonly" value="${cInfoMap.companyLOGO.content}" class="up_input">
+	        	<input type="file" class="upload js-img-imgurls" multiple="true">	        	
+	        </div>
+	        
+	         <div class="name">
+	        	<label>定位坐标：</label><input type="text" value="${cInfoMap.companySite.content}" class="txtAddproduct" name="companySite">
+	        </div>
+	    </div>
+ 	</form>  
+    <div class="save">
+		<button class="js-save-form save_btn">保存</button>
+	</div>    
+</div> 
+
+ 
+ 
+ </@frame> 
+ 
+ <script type="text/javascript" src="${base}/res/common/js/jquery/jquery.validity.js"></script>
+ 
+ 
+ <script type="text/javascript">
+	
+	$(function() {
+		$("a.js-switchDiv-a").click(function(){
+			$("div.js-switchDiv").hide(); 
+			var _index = $(this).index();
+			$("div.js-switchDiv").eq(_index).show(); 
+		})
+        
+		/**
+		*验证JS 暂未启用
+		*
+		*/
+		$("form.js-form").validity(function() {
+           //$("input.required").require("不能为空");
+        });
+		
+		$("button.js-save-form").click(function(){
+			$("div.js-switchDiv:visible").parent("form").submit();
+		});
+		
+
+		$('input.js-img-imgurls').change(function () {
+		    var _this=$(this);
+			var formData = new FormData();
+		    formData.append('imgurls', _this.get(0).files[0]);
+		    
+		    $.ajax({
+		        url: '${base}/admin/system/uploadWaterImg.html',
+		        type: 'POST',
+		        data: formData,
+		        processData: false,
+		        contentType : false, 
+		        dataType:'json',
+		        success:function(re){
+		        	if(re.result==0){
+			        	_this.prev("input").val(re.fileName);
+		        		_this.next("span").text("上传成功！");
+		        	}else{
+		        		_this.next("span").text("上传失败！");
+		        	}
+		        }
+		    });
+		});
+		
+	})
+	
+ 
+ </script>
+ 

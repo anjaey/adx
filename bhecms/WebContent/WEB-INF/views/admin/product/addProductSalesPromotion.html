@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新增产品促销</title>
+<link  href="css/adminIndex.css" rel="stylesheet" type="text/css"/>
+<link  href="css/articleManage.css" rel="stylesheet" type="text/css"/>
+<script src="js/jquery-1.8.3.min.js"></script>
+</head>
+<script>
+	$(document).ready(function(){
+							   //给标题加上背景色以及鼠标移动到某一行的事加上背景色
+							   $(".art_table tr:first-child").css("background-color","#f3f7fb");
+							   $(".art_table tr:not(:first-child)").hover(function(){
+															 $(this).css("background-color","#f3f7fb");
+															 },function(){
+																 $(this).css("background-color","#fff");
+															 });
+							   //切换选项卡							 
+								$(".art_list_all>.artListAll001:not(:first-child)").hide();
+								$('.art_header ul li').click(function(){										
+										$(this).addClass('art_on').siblings().removeClass('art_on');
+										$('.art_list_all>div:eq('+$(this).index()+')').show().siblings().hide();	
+									});
+							
+							   $(".art_header ul li:first-child").addClass("art_on");
+							   
+							   
+							   });
+
+</script>
+
+<body>
+	<div class="welcom">
+    	<div class="wel_content">
+        	<div class="art_list">
+            	<div class="art_header">
+                	<ul>
+                    	<li><a href="#">限时抢购</a></li>
+                        <li><a href="#">限量抢购</a></li>
+                        <li><a href="#">按用户组定价</a></li>
+                        <li><a href="#">换购商品</a></li>
+                        <li><a href="#">竞价</a></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+                <div class="art_list_all">
+                	<div class="artListAll001">
+                    	<form>
+                                <p class="release">
+                                    <label>任务名：</label>            
+                                    <input  type="text" class="txtvalue"/>
+                                </p>
+                                <p class="release">
+                                    <label>时间段：</label>
+                                    <input  type="text" class="txtvalue"/> - <input  type="text" class="txtvalue"/>            
+                                </p>
+                                <p class="release">
+                                    <label>抢购价：</label>
+                                   <input  type="text" class="txtvalue"/>         
+                                </p>
+                                 <p class="release">
+                                    <label>数量：</label>
+                                   <input  type="text" class="txtvalue"/>        
+                                </p>
+                               
+            			</form>
+                    
+                    
+                    </div>
+                    <div class="artListAll001">
+                			<form>
+                                <p class="release">
+                                    <label>任务：</label>            
+                                    <input  type="text" class="txtvalue"/>
+                                </p>
+                                <p class="release">
+                                    <label>抢购价：</label>
+                                    <input  type="text" class="txtvalue"/> - <input  type="text" class="txtvalue"/>            
+                                </p>
+                                <p class="release">
+                                    <label>数量：</label>
+                                   <input  type="text" class="txtvalue"/>         
+                                </p>
+                                 <p class="release">
+                                    <label>积分兑换：</label>
+                                   <input  type="text" class="txtvalue"/>        
+                                </p>
+                              
+            			</form>
+                	</div>
+                    <div class="artListAll001">
+                			<form>
+                                <p class="release">
+                                    <label>用户组：</label>            
+                                    <input  type="text" class="txtvalue"/>
+                                </p>
+                                <p class="release">
+                                    <label>价格：</label>
+                                    <input  type="text" class="txtvalue"/>
+                                </p>                                
+                              
+            			</form>
+                	</div>
+                    <div class="artListAll001">
+                			<form>
+                                <p class="release">
+                                    <label>满足金额：</label>            
+                                    <input  type="text" class="txtvalue"/>
+                                </p>
+                                <p class="release">
+                                    <label>换购价：</label>
+                                    <input  type="text" class="txtvalue"/>
+                                </p>                                
+                               
+            			</form>
+                	</div>
+                    <div class="artListAll001">
+                			<form>
+                                <p class="release">
+                                    <label>起拍价：</label>            
+                                    <input  type="text" class="txtvalue"/>
+                                </p>
+                                <p class="release">
+                                    <label>时间段：</label>
+                                    <input  type="text" class="txtvalue"/> - <input  type="text" class="txtvalue"/>            
+                                </p>
+                                 <p class="release">
+                                    <label>数量：</label>            
+                                    <input  type="text" class="txtvalue"/>
+                                </p>
+                                 <p class="release">
+                                    <label>保证金：</label>            
+                                    <input  type="text" class="txtvalue"/>
+                                </p>
+                                 <p class="release">
+                                    <label>延长时间：</label>            
+                                    <input  type="text" class="txtvalue"/> - <input  type="text" class="txtvalue"/>     
+                                </p>
+                                 <p class="release">
+                                    <label>状态：</label>            
+                                    <select>
+                                    	<option>请选择</option>
+                                    </select>
+                                </p> 
+                                <p class="release">
+                                    <label>SEO选项：</label>            
+                                    <select>
+                                    	<option>请选择</option>
+                                    </select>
+                                </p>
+                                <p class="release">
+                                    <label>捆绑销售：</label>            
+                                    <select>
+                                    	<option>请选择</option>
+                                    </select>
+                                </p>                               
+                                
+            			</form>
+                	</div>
+                   				
+                     
+                   
+                </div>
+                				<input type="submit" value="提交" />
+                                <input  type="reset" value="重置"/>
+                                <input  type="button" value="定时提交"/>
+                
+            
+            </div>
+        </div>
+    
+    
+    
+    
+    </div>
+
+
+
+
+
+</body>
+</html>

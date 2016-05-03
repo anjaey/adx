@@ -1,0 +1,276 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/articleManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/js/uploadify3.2.1/uploadify.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/js/sobox/popbox-style.css">
+
+<@frame>
+<div class="artLocation">
+	<div class="left">您当前的位置：内容管理>友情链接</div>
+	<div align="right">
+		<input type="button" value="添加" class="js_toAdd_customer btnsearch" />
+	</div>
+</div>
+<div class="wel_content">
+	<div class="art_list">
+		<div class="art_list_all">
+			<div class="artListAll001">
+				<input class="js_realUrl" value="${realUrl}" type="hidden" />
+				<table width="98%" id="treeTable" border="1" cellspacing="0" cellpadding="0" class="art_table">
+					<tr>
+						<th width="50px;">行号</th>
+						<th>标题</th>
+						<th>logo</th>
+						<th>状态</th>
+						<th>链接</th>
+						<th>操作</th>
+					</tr>
+					<#list linksmap.list as entity>
+					<tr>
+						<td>${entity.rowno}</td>
+						<td>${entity.name}</td>
+						<td><img width="200px" height="60px" alt="" src="${entity.url}" /></td>
+						<td>${entity.status}</td>
+						<td>${entity.logourl}</td>
+						<td><a href="javascript:void(0)" id="${entity.id}" class="js_upd_customer">编辑</a> | <a href="javascript:void(0)" id="${entity.id}" class="js_del_customer">删除</a></td>
+					</tr>
+					</#list>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="so-popbox">
+	<div class="h2-sopop">
+		<h2 class="left">添加友情链接</h2>
+		<a href="#" class="ss-close s-sopop-close">[关闭]</a>
+	</div>
+	<div class="so-popbox-cont">
+		<div>
+			<label>标题：</label><input type="text" class="js_curstomer_title txtAddproduct txtAddproduct5" />
+		</div>
+		<div>
+			<label>Logo：</label>
+			<div class="logoRightaa">
+				<div id="upload" class="left"></div>
+				<input type="file" id="file_upload" style="margin: 5px -50px;" />
+			</div>
+			<label>建议尺寸：350*135</label>
+		</div>
+		<div class="clear">
+			<label>是否显示：</label>
+	
+			<div class="paddt9">
+				<input type="radio" name="status" value="1" class="isshow" /> 是 <input type="radio" name="status" value="0" class="isshow"   /> 否
+			</div>
+	
+		</div>
+		<input type="hidden" class="js_curstomer_logo" />
+		<div class="imgUpload">
+			<ul>
+			</ul>
+		</div>
+		<div style="display: none;" class="js_logo_isshow">
+			<div class="js_logo_margin">
+				<img alt="" src="" class="js_upd_logo" width="250" height="150" />
+			</div>
+		</div>
+	
+		<div class="clear">
+			<label>排序：</label><input type="text" class="js_curstomer_rank txtpopbox" />
+		</div>
+		<div class="mar5">
+	
+			<label>链接地址：</label><input type="text" class="js_curstomer_url txtpopbox" />
+		</div>
+		<input type="hidden" id="js_link_id" />
+		<div class="p-so-popBtn">
+			<input class="js_doAdd_customer" type="button" value="确定">
+		</div>
+	</div>
+</div>
+
+</@frame>
+<script type="text/javascript" src="${base}/res/common/js/uploadify3.2.1/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+<script type="text/javascript" src="${base}/res/common/js/sobox/jquery.sobox.js"></script>
+<script>
+	var url = ""; //临时保持url
+
+	//加载产品列表
+	$('.pagination').jqPagination({
+		current_page : '${pageInfoMap.pageindex???string(pageInfoMap.pageIndex,1)}',
+		max_page : '${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+		paged : function(page) {
+			window.location.href = "${base}/admin/link/tolinklist.html?pageIndex=" + page + "&pageSize=15";
+		}
+	});
+
+	$(function() {
+		initimg();
+	})
+
+	function initimg() {
+		$("#file_upload").uploadify({
+			swf : '${base}/res/common/js/uploadify3.2.1/uploadify.swf', //[必须设置]swf的路径
+			uploader : '${base}/admin/common/addfile.html?root=2', //[必须设置]上传文件触发的url
+			fileObjName : 'file', //上传文件name 
+			fileSizeLimit : '10000', //上传文件的大小限制
+			buttonClass : 'btn btn-info',
+			height : '40px', //设置浏览按钮的高度， 默认值：30
+			folder : 'upload', //您想将文件保存到的路径  
+			buttonText : '上传图片',
+			cancelImg : '${base}/res/common/js/uploadify3.2.1/cancel.png', //每个文件后面的取消按钮
+			auto : true, //是否自动提交
+			multi : false, //是否允许上传多个文件
+			removeCompleted : true, //上传成功后的文件，是否在队列中自动删除
+			fileTypeExts : '*.jpg;*.bmp;*.png;*.gif;*.jpeg;', // 控制可上传文件的扩展名，启用本项时需同时声明fileDesc
+			fileTypeDesc : '*.jpg;*.bmp;*.png;*.gif;*.jpeg;',
+			method : 'Post', // 提交方式
+			onUploadStart : function(file) {
+				$("#js-picimg-pagehead-img").uploadify("settings", "formData");
+			},
+			onUploadSuccess : function(file, data, response) {
+				var uuidurl = eval("[" + data + "]");
+				if (uuidurl.length > 0) {
+					url = uuidurl[0].returned.url;
+
+					$(".js_upd_logo").attr("src", uuidurl[0].returned.urlAddress);
+				} else {
+					alert("上传失败！");
+				}
+
+
+			},
+			onUploadComplete : function(file, data, response) {
+				//后台servlet一定要有返回值，否则会认为不成功，上传进度条也会不消失
+			},
+			//当文件选定发生错误时触发   
+			onUploadError : function(file, errorCode, errorMsg, errorString) {
+				console.log(file + errorCode + errorMsg + errorString);
+				$(".js-upload-issmg-to").html("上传失败!");
+			}
+		});
+	}
+
+	/* 打开添加 */
+	$(".js_toAdd_customer").click(function() {
+		$(".js_curstomer_title").val("");
+		$(".js_curstomer_logo").val("");
+		$(".js_curstomer_url").val("");
+		$("#js_link_id").val("");
+		$(".js_curstomer_rank").val("");
+		$(".isshow").val([1]);
+		$(".js_logo_isshow").hide();
+
+		$.sobox.pop({
+			popTarget:'div.so-popbox',
+			wrapTarget:false,
+			maskClick : false,
+			title : "添加友情链接",
+		});
+	});
+
+	/* 添加 */
+	$(".js_doAdd_customer").click(function() {
+		var data = {};
+		var status = $("input[name='status']:checked").val();
+		var tourl = $(".js_curstomer_url").val();
+		var name = $(".js_curstomer_title").val();
+		var rank = $(".js_curstomer_rank").val();
+		var rank = $(".js_curstomer_rank").val();
+		var id = $("#js_link_id").val();
+
+		data.status = status;
+		data.logourl = tourl;
+		data.name = name;
+		data.rank = rank;
+
+		if (url != "") {
+			data.url = url;
+		}
+
+		if (id != "" && id != "0") {
+			data.id = id;
+		}
+
+		var json = JSON.stringify(data);
+		$.ajax({
+			type : "post",
+			url : "${base}/admin/link/addOrUpdateLinkInfo.html",
+			async : false,
+			dataType : "json",
+			data : {
+				param : json
+			},
+			success : function(json) {
+				window.location.reload();
+			},
+			error : function() {
+				alert("添加失败");
+			}
+		});
+	});
+
+	/* 修改 */
+	$(".js_upd_customer").click(function() {
+		var id = $(this).attr("id");
+		$.ajax({
+			type : "post",
+			url : "${base}/admin/link/selectLinkInfoByid.html",
+			async : false,
+			dataType : "json",
+			data : {
+				id : id,
+			},
+			success : function(json) {
+				$("#js_link_id").val(json.returned.id);
+				$(".js_curstomer_title").val(json.returned.name);
+				$(".js_upd_logo").attr("src", json.returned.url);
+				$(".js_curstomer_rank").val(json.returned.rank);
+				$(".js_curstomer_url").val(json.returned.logourl);
+				$(".isshow").val([json.returned.status]);
+				$(".js_logo_isshow").show();
+				$.sobox.pop({
+					popTarget:'div.so-popbox',
+					wrapTarget:false,
+					maskClick : false,
+					title:"修改友情链接",
+				});
+			},
+			error : function() {
+				alert("查询失败");
+			}
+		});
+	});
+
+	/* 删除 */
+	$(".js_del_customer").click(function() {
+		if (confirm("是否删除")) {
+			var id = $(this).attr("id");
+			var data = ajaxDelUserCustomer(id);
+			window.location.reload();
+		}
+
+	});
+
+	function ajaxDelUserCustomer(id) {
+		var data;
+		$.ajax({
+			type : "post",
+			url : "${base}/admin/link/delLinkInfoById.html",
+			async : false,
+			dataType : "json",
+			data : {
+				id : id,
+			},
+			success : function(json) {
+				data = json;
+			},
+			error : function() {
+				alert("删除失败");
+			}
+		});
+		return data;
+	}
+</script>

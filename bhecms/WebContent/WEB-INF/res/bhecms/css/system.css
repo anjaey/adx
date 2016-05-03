@@ -1,0 +1,27 @@
+@charset "utf-8";
+/* CSS Document */
+.name{margin:20px 0;}
+.sys_title01{font-size:14px;margin-left:30px;}
+.sys_title04{margin-left:110px;}
+.sys_title02{font-size:14px;}
+.sys_title03{font-size:14px;margin-left:16px;}
+.sys_input01{height:28px;width:600px;border:solid 1px #C4C4C4;}
+.sys_input02{height:100px;width:668px;border:solid 1px #C4C4C4;}
+.sys_title01 select{width:100px;}
+.suffix01 p{margin-left:30px;}
+.sys_nav01{margin:20px 0;min-width:1400px;}
+.sys_nav01 a{display:block;text-decoration:underline;margin-right:20px;float:left;font-size:14px;}
+.clear{clear:both;}
+.upload{width:70px;height:22px;margin-left:10px;}
+.up_input{width:200px;height:22px;}
+.choose01{margin-left:20px;}
+.auth{height:22px;width:60px;}
+.vip_content{height:150px;background-color:#bde2ff;margin-top:2px;}
+.vip_content textarea{width:400px;height:100px;margin-left:20px;}
+.suffix02{height:230px;background-color:#bde2ff;margin-top:2px;}
+.search_btn{width:60px;height:28px;background-color:#bde2ff;}
+.distance{margin-left:47px;}
+.sys_nav01 .sys_nav01_a01{color:#2D9CE4;}
+.mail_top input{height:28px;}
+.mail_top button{height:28px;width:60px;border-radius:5px 5px;background-color:white;border:solid 1px #A5A5A5;}
+.gray{color:#8ED8DB;margin-left:20px;}

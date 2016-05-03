@@ -1,0 +1,944 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bhe.dao.mybatis.mapper.ProductEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.bhe.dao.mybatis.model.ProductEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="productNo" property="productno" jdbcType="VARCHAR" />
+    <result column="nameCn" property="namecn" jdbcType="VARCHAR" />
+    <result column="nameEn" property="nameen" jdbcType="VARCHAR" />
+    <result column="modelName" property="modelname" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="hits" property="hits" jdbcType="INTEGER" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="warnNum" property="warnnum" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="articleId" property="articleid" jdbcType="BIGINT" />
+    <result column="showType" property="showtype" jdbcType="INTEGER" />
+    <result column="clazzid" property="clazzid" jdbcType="BIGINT" />
+    <result column="brandid" property="brandid" jdbcType="BIGINT" />
+    <result column="providerid" property="providerid" jdbcType="BIGINT" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="validity" property="validity" jdbcType="INTEGER" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <result column="canSale" property="cansale" jdbcType="INTEGER" />
+    <result column="hasFreight" property="hasfreight" jdbcType="INTEGER" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="bulk" property="bulk" jdbcType="DECIMAL" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="saleType" property="saletype" jdbcType="VARCHAR" />
+    <result column="color" property="color" jdbcType="VARCHAR" />
+    <result column="size" property="size" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
+    <result column="userkey" property="userkey" jdbcType="VARCHAR" />
+    <result column="sayCount" property="saycount" jdbcType="INTEGER" />
+    <result column="commonSort" property="commonsort" jdbcType="VARCHAR" />
+    <result column="productivity" property="productivity" jdbcType="VARCHAR" />
+    <result column="isrent" property="isrent" jdbcType="INTEGER" />
+    <result column="appliesField" property="appliesfield" jdbcType="VARCHAR" />
+    <result column="power" property="power" jdbcType="VARCHAR" />
+    <result column="pressure" property="pressure" jdbcType="VARCHAR" />
+    <result column="rotatingSpeed" property="rotatingspeed" jdbcType="VARCHAR" />
+    <result column="capacity" property="capacity" jdbcType="VARCHAR" />
+    <result column="dryingTime" property="dryingtime" jdbcType="VARCHAR" />
+    <result column="workWidth" property="workwidth" jdbcType="VARCHAR" />
+    <result column="noise" property="noise" jdbcType="VARCHAR" />
+    <result column="motivation" property="motivation" jdbcType="VARCHAR" />
+    <result column="toShowProduct" property="toshowproduct" jdbcType="INTEGER" />
+    <result column="toPopular" property="topopular" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, uuid, productNo, nameCn, nameEn, modelName, type, count, price, status, hits, 
+    keywords, description, warnNum, createTime, updateTime, remark, articleId, showType, 
+    clazzid, brandid, providerid, unit, validity, introduce, canSale, hasFreight, weight, 
+    bulk, level, saleType, color, size, isdelete, userkey, sayCount, commonSort, productivity, 
+    isrent, appliesField, power, pressure, rotatingSpeed, capacity, dryingTime, workWidth, 
+    noise, motivation, toShowProduct, toPopular
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bhe.dao.mybatis.model.ProductEntityCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bhe.dao.mybatis.model.ProductEntityCriteria" >
+    delete from t_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bhe.dao.mybatis.model.ProductEntity" >
+    insert into t_product (id, uuid, productNo, 
+      nameCn, nameEn, modelName, 
+      type, count, price, 
+      status, hits, keywords, 
+      description, warnNum, createTime, 
+      updateTime, remark, articleId, 
+      showType, clazzid, brandid, 
+      providerid, unit, validity, 
+      introduce, canSale, hasFreight, 
+      weight, bulk, level, 
+      saleType, color, size, 
+      isdelete, userkey, sayCount, 
+      commonSort, productivity, isrent, 
+      appliesField, power, pressure, 
+      rotatingSpeed, capacity, dryingTime, 
+      workWidth, noise, motivation, 
+      toShowProduct, toPopular)
+    values (#{id,jdbcType=BIGINT}, #{uuid,jdbcType=VARCHAR}, #{productno,jdbcType=VARCHAR}, 
+      #{namecn,jdbcType=VARCHAR}, #{nameen,jdbcType=VARCHAR}, #{modelname,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
+      #{status,jdbcType=INTEGER}, #{hits,jdbcType=INTEGER}, #{keywords,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{warnnum,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{articleid,jdbcType=BIGINT}, 
+      #{showtype,jdbcType=INTEGER}, #{clazzid,jdbcType=BIGINT}, #{brandid,jdbcType=BIGINT}, 
+      #{providerid,jdbcType=BIGINT}, #{unit,jdbcType=VARCHAR}, #{validity,jdbcType=INTEGER}, 
+      #{introduce,jdbcType=VARCHAR}, #{cansale,jdbcType=INTEGER}, #{hasfreight,jdbcType=INTEGER}, 
+      #{weight,jdbcType=DECIMAL}, #{bulk,jdbcType=DECIMAL}, #{level,jdbcType=INTEGER}, 
+      #{saletype,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, 
+      #{isdelete,jdbcType=INTEGER}, #{userkey,jdbcType=VARCHAR}, #{saycount,jdbcType=INTEGER}, 
+      #{commonsort,jdbcType=VARCHAR}, #{productivity,jdbcType=VARCHAR}, #{isrent,jdbcType=INTEGER}, 
+      #{appliesfield,jdbcType=VARCHAR}, #{power,jdbcType=VARCHAR}, #{pressure,jdbcType=VARCHAR}, 
+      #{rotatingspeed,jdbcType=VARCHAR}, #{capacity,jdbcType=VARCHAR}, #{dryingtime,jdbcType=VARCHAR}, 
+      #{workwidth,jdbcType=VARCHAR}, #{noise,jdbcType=VARCHAR}, #{motivation,jdbcType=VARCHAR}, 
+      #{toshowproduct,jdbcType=INTEGER}, #{topopular,jdbcType=INTEGER})
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.bhe.dao.mybatis.model.ProductEntity" >
+    insert into t_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="productno != null" >
+        productNo,
+      </if>
+      <if test="namecn != null" >
+        nameCn,
+      </if>
+      <if test="nameen != null" >
+        nameEn,
+      </if>
+      <if test="modelname != null" >
+        modelName,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="hits != null" >
+        hits,
+      </if>
+      <if test="keywords != null" >
+        keywords,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="warnnum != null" >
+        warnNum,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="articleid != null" >
+        articleId,
+      </if>
+      <if test="showtype != null" >
+        showType,
+      </if>
+      <if test="clazzid != null" >
+        clazzid,
+      </if>
+      <if test="brandid != null" >
+        brandid,
+      </if>
+      <if test="providerid != null" >
+        providerid,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="validity != null" >
+        validity,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+      <if test="cansale != null" >
+        canSale,
+      </if>
+      <if test="hasfreight != null" >
+        hasFreight,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="bulk != null" >
+        bulk,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="saletype != null" >
+        saleType,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+      <if test="userkey != null" >
+        userkey,
+      </if>
+      <if test="saycount != null" >
+        sayCount,
+      </if>
+      <if test="commonsort != null" >
+        commonSort,
+      </if>
+      <if test="productivity != null" >
+        productivity,
+      </if>
+      <if test="isrent != null" >
+        isrent,
+      </if>
+      <if test="appliesfield != null" >
+        appliesField,
+      </if>
+      <if test="power != null" >
+        power,
+      </if>
+      <if test="pressure != null" >
+        pressure,
+      </if>
+      <if test="rotatingspeed != null" >
+        rotatingSpeed,
+      </if>
+      <if test="capacity != null" >
+        capacity,
+      </if>
+      <if test="dryingtime != null" >
+        dryingTime,
+      </if>
+      <if test="workwidth != null" >
+        workWidth,
+      </if>
+      <if test="noise != null" >
+        noise,
+      </if>
+      <if test="motivation != null" >
+        motivation,
+      </if>
+      <if test="toshowproduct != null" >
+        toShowProduct,
+      </if>
+      <if test="topopular != null" >
+        toPopular,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="productno != null" >
+        #{productno,jdbcType=VARCHAR},
+      </if>
+      <if test="namecn != null" >
+        #{namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameen != null" >
+        #{nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="modelname != null" >
+        #{modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="hits != null" >
+        #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="warnnum != null" >
+        #{warnnum,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="articleid != null" >
+        #{articleid,jdbcType=BIGINT},
+      </if>
+      <if test="showtype != null" >
+        #{showtype,jdbcType=INTEGER},
+      </if>
+      <if test="clazzid != null" >
+        #{clazzid,jdbcType=BIGINT},
+      </if>
+      <if test="brandid != null" >
+        #{brandid,jdbcType=BIGINT},
+      </if>
+      <if test="providerid != null" >
+        #{providerid,jdbcType=BIGINT},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="validity != null" >
+        #{validity,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="cansale != null" >
+        #{cansale,jdbcType=INTEGER},
+      </if>
+      <if test="hasfreight != null" >
+        #{hasfreight,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="bulk != null" >
+        #{bulk,jdbcType=DECIMAL},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="saletype != null" >
+        #{saletype,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="userkey != null" >
+        #{userkey,jdbcType=VARCHAR},
+      </if>
+      <if test="saycount != null" >
+        #{saycount,jdbcType=INTEGER},
+      </if>
+      <if test="commonsort != null" >
+        #{commonsort,jdbcType=VARCHAR},
+      </if>
+      <if test="productivity != null" >
+        #{productivity,jdbcType=VARCHAR},
+      </if>
+      <if test="isrent != null" >
+        #{isrent,jdbcType=INTEGER},
+      </if>
+      <if test="appliesfield != null" >
+        #{appliesfield,jdbcType=VARCHAR},
+      </if>
+      <if test="power != null" >
+        #{power,jdbcType=VARCHAR},
+      </if>
+      <if test="pressure != null" >
+        #{pressure,jdbcType=VARCHAR},
+      </if>
+      <if test="rotatingspeed != null" >
+        #{rotatingspeed,jdbcType=VARCHAR},
+      </if>
+      <if test="capacity != null" >
+        #{capacity,jdbcType=VARCHAR},
+      </if>
+      <if test="dryingtime != null" >
+        #{dryingtime,jdbcType=VARCHAR},
+      </if>
+      <if test="workwidth != null" >
+        #{workwidth,jdbcType=VARCHAR},
+      </if>
+      <if test="noise != null" >
+        #{noise,jdbcType=VARCHAR},
+      </if>
+      <if test="motivation != null" >
+        #{motivation,jdbcType=VARCHAR},
+      </if>
+      <if test="toshowproduct != null" >
+        #{toshowproduct,jdbcType=INTEGER},
+      </if>
+      <if test="topopular != null" >
+        #{topopular,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterType="com.bhe.dao.mybatis.model.ProductEntityCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_product
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productno != null" >
+        productNo = #{record.productno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.namecn != null" >
+        nameCn = #{record.namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameen != null" >
+        nameEn = #{record.nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelname != null" >
+        modelName = #{record.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.hits != null" >
+        hits = #{record.hits,jdbcType=INTEGER},
+      </if>
+      <if test="record.keywords != null" >
+        keywords = #{record.keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warnnum != null" >
+        warnNum = #{record.warnnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null" >
+        updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleid != null" >
+        articleId = #{record.articleid,jdbcType=BIGINT},
+      </if>
+      <if test="record.showtype != null" >
+        showType = #{record.showtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.clazzid != null" >
+        clazzid = #{record.clazzid,jdbcType=BIGINT},
+      </if>
+      <if test="record.brandid != null" >
+        brandid = #{record.brandid,jdbcType=BIGINT},
+      </if>
+      <if test="record.providerid != null" >
+        providerid = #{record.providerid,jdbcType=BIGINT},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.validity != null" >
+        validity = #{record.validity,jdbcType=INTEGER},
+      </if>
+      <if test="record.introduce != null" >
+        introduce = #{record.introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cansale != null" >
+        canSale = #{record.cansale,jdbcType=INTEGER},
+      </if>
+      <if test="record.hasfreight != null" >
+        hasFreight = #{record.hasfreight,jdbcType=INTEGER},
+      </if>
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bulk != null" >
+        bulk = #{record.bulk,jdbcType=DECIMAL},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.saletype != null" >
+        saleType = #{record.saletype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.color != null" >
+        color = #{record.color,jdbcType=VARCHAR},
+      </if>
+      <if test="record.size != null" >
+        size = #{record.size,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdelete != null" >
+        isdelete = #{record.isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.userkey != null" >
+        userkey = #{record.userkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saycount != null" >
+        sayCount = #{record.saycount,jdbcType=INTEGER},
+      </if>
+      <if test="record.commonsort != null" >
+        commonSort = #{record.commonsort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productivity != null" >
+        productivity = #{record.productivity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isrent != null" >
+        isrent = #{record.isrent,jdbcType=INTEGER},
+      </if>
+      <if test="record.appliesfield != null" >
+        appliesField = #{record.appliesfield,jdbcType=VARCHAR},
+      </if>
+      <if test="record.power != null" >
+        power = #{record.power,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pressure != null" >
+        pressure = #{record.pressure,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rotatingspeed != null" >
+        rotatingSpeed = #{record.rotatingspeed,jdbcType=VARCHAR},
+      </if>
+      <if test="record.capacity != null" >
+        capacity = #{record.capacity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dryingtime != null" >
+        dryingTime = #{record.dryingtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workwidth != null" >
+        workWidth = #{record.workwidth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noise != null" >
+        noise = #{record.noise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motivation != null" >
+        motivation = #{record.motivation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.toshowproduct != null" >
+        toShowProduct = #{record.toshowproduct,jdbcType=INTEGER},
+      </if>
+      <if test="record.topopular != null" >
+        toPopular = #{record.topopular,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_product
+    set id = #{record.id,jdbcType=BIGINT},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
+      productNo = #{record.productno,jdbcType=VARCHAR},
+      nameCn = #{record.namecn,jdbcType=VARCHAR},
+      nameEn = #{record.nameen,jdbcType=VARCHAR},
+      modelName = #{record.modelname,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      count = #{record.count,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DECIMAL},
+      status = #{record.status,jdbcType=INTEGER},
+      hits = #{record.hits,jdbcType=INTEGER},
+      keywords = #{record.keywords,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      warnNum = #{record.warnnum,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      articleId = #{record.articleid,jdbcType=BIGINT},
+      showType = #{record.showtype,jdbcType=INTEGER},
+      clazzid = #{record.clazzid,jdbcType=BIGINT},
+      brandid = #{record.brandid,jdbcType=BIGINT},
+      providerid = #{record.providerid,jdbcType=BIGINT},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      validity = #{record.validity,jdbcType=INTEGER},
+      introduce = #{record.introduce,jdbcType=VARCHAR},
+      canSale = #{record.cansale,jdbcType=INTEGER},
+      hasFreight = #{record.hasfreight,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=DECIMAL},
+      bulk = #{record.bulk,jdbcType=DECIMAL},
+      level = #{record.level,jdbcType=INTEGER},
+      saleType = #{record.saletype,jdbcType=VARCHAR},
+      color = #{record.color,jdbcType=VARCHAR},
+      size = #{record.size,jdbcType=VARCHAR},
+      isdelete = #{record.isdelete,jdbcType=INTEGER},
+      userkey = #{record.userkey,jdbcType=VARCHAR},
+      sayCount = #{record.saycount,jdbcType=INTEGER},
+      commonSort = #{record.commonsort,jdbcType=VARCHAR},
+      productivity = #{record.productivity,jdbcType=VARCHAR},
+      isrent = #{record.isrent,jdbcType=INTEGER},
+      appliesField = #{record.appliesfield,jdbcType=VARCHAR},
+      power = #{record.power,jdbcType=VARCHAR},
+      pressure = #{record.pressure,jdbcType=VARCHAR},
+      rotatingSpeed = #{record.rotatingspeed,jdbcType=VARCHAR},
+      capacity = #{record.capacity,jdbcType=VARCHAR},
+      dryingTime = #{record.dryingtime,jdbcType=VARCHAR},
+      workWidth = #{record.workwidth,jdbcType=VARCHAR},
+      noise = #{record.noise,jdbcType=VARCHAR},
+      motivation = #{record.motivation,jdbcType=VARCHAR},
+      toShowProduct = #{record.toshowproduct,jdbcType=INTEGER},
+      toPopular = #{record.topopular,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bhe.dao.mybatis.model.ProductEntity" >
+    update t_product
+    <set >
+      <if test="uuid != null" >
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="productno != null" >
+        productNo = #{productno,jdbcType=VARCHAR},
+      </if>
+      <if test="namecn != null" >
+        nameCn = #{namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameen != null" >
+        nameEn = #{nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="modelname != null" >
+        modelName = #{modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="hits != null" >
+        hits = #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="keywords != null" >
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="warnnum != null" >
+        warnNum = #{warnnum,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="articleid != null" >
+        articleId = #{articleid,jdbcType=BIGINT},
+      </if>
+      <if test="showtype != null" >
+        showType = #{showtype,jdbcType=INTEGER},
+      </if>
+      <if test="clazzid != null" >
+        clazzid = #{clazzid,jdbcType=BIGINT},
+      </if>
+      <if test="brandid != null" >
+        brandid = #{brandid,jdbcType=BIGINT},
+      </if>
+      <if test="providerid != null" >
+        providerid = #{providerid,jdbcType=BIGINT},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="validity != null" >
+        validity = #{validity,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="cansale != null" >
+        canSale = #{cansale,jdbcType=INTEGER},
+      </if>
+      <if test="hasfreight != null" >
+        hasFreight = #{hasfreight,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="bulk != null" >
+        bulk = #{bulk,jdbcType=DECIMAL},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="saletype != null" >
+        saleType = #{saletype,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="userkey != null" >
+        userkey = #{userkey,jdbcType=VARCHAR},
+      </if>
+      <if test="saycount != null" >
+        sayCount = #{saycount,jdbcType=INTEGER},
+      </if>
+      <if test="commonsort != null" >
+        commonSort = #{commonsort,jdbcType=VARCHAR},
+      </if>
+      <if test="productivity != null" >
+        productivity = #{productivity,jdbcType=VARCHAR},
+      </if>
+      <if test="isrent != null" >
+        isrent = #{isrent,jdbcType=INTEGER},
+      </if>
+      <if test="appliesfield != null" >
+        appliesField = #{appliesfield,jdbcType=VARCHAR},
+      </if>
+      <if test="power != null" >
+        power = #{power,jdbcType=VARCHAR},
+      </if>
+      <if test="pressure != null" >
+        pressure = #{pressure,jdbcType=VARCHAR},
+      </if>
+      <if test="rotatingspeed != null" >
+        rotatingSpeed = #{rotatingspeed,jdbcType=VARCHAR},
+      </if>
+      <if test="capacity != null" >
+        capacity = #{capacity,jdbcType=VARCHAR},
+      </if>
+      <if test="dryingtime != null" >
+        dryingTime = #{dryingtime,jdbcType=VARCHAR},
+      </if>
+      <if test="workwidth != null" >
+        workWidth = #{workwidth,jdbcType=VARCHAR},
+      </if>
+      <if test="noise != null" >
+        noise = #{noise,jdbcType=VARCHAR},
+      </if>
+      <if test="motivation != null" >
+        motivation = #{motivation,jdbcType=VARCHAR},
+      </if>
+      <if test="toshowproduct != null" >
+        toShowProduct = #{toshowproduct,jdbcType=INTEGER},
+      </if>
+      <if test="topopular != null" >
+        toPopular = #{topopular,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bhe.dao.mybatis.model.ProductEntity" >
+    update t_product
+    set uuid = #{uuid,jdbcType=VARCHAR},
+      productNo = #{productno,jdbcType=VARCHAR},
+      nameCn = #{namecn,jdbcType=VARCHAR},
+      nameEn = #{nameen,jdbcType=VARCHAR},
+      modelName = #{modelname,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      hits = #{hits,jdbcType=INTEGER},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      warnNum = #{warnnum,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      articleId = #{articleid,jdbcType=BIGINT},
+      showType = #{showtype,jdbcType=INTEGER},
+      clazzid = #{clazzid,jdbcType=BIGINT},
+      brandid = #{brandid,jdbcType=BIGINT},
+      providerid = #{providerid,jdbcType=BIGINT},
+      unit = #{unit,jdbcType=VARCHAR},
+      validity = #{validity,jdbcType=INTEGER},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      canSale = #{cansale,jdbcType=INTEGER},
+      hasFreight = #{hasfreight,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DECIMAL},
+      bulk = #{bulk,jdbcType=DECIMAL},
+      level = #{level,jdbcType=INTEGER},
+      saleType = #{saletype,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      size = #{size,jdbcType=VARCHAR},
+      isdelete = #{isdelete,jdbcType=INTEGER},
+      userkey = #{userkey,jdbcType=VARCHAR},
+      sayCount = #{saycount,jdbcType=INTEGER},
+      commonSort = #{commonsort,jdbcType=VARCHAR},
+      productivity = #{productivity,jdbcType=VARCHAR},
+      isrent = #{isrent,jdbcType=INTEGER},
+      appliesField = #{appliesfield,jdbcType=VARCHAR},
+      power = #{power,jdbcType=VARCHAR},
+      pressure = #{pressure,jdbcType=VARCHAR},
+      rotatingSpeed = #{rotatingspeed,jdbcType=VARCHAR},
+      capacity = #{capacity,jdbcType=VARCHAR},
+      dryingTime = #{dryingtime,jdbcType=VARCHAR},
+      workWidth = #{workwidth,jdbcType=VARCHAR},
+      noise = #{noise,jdbcType=VARCHAR},
+      motivation = #{motivation,jdbcType=VARCHAR},
+      toShowProduct = #{toshowproduct,jdbcType=INTEGER},
+      toPopular = #{topopular,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

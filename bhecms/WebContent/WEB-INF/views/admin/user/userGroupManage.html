@@ -1,0 +1,31 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<@frame> 
+
+<div class="wel_content">
+   	<div class="sys_title">会员组列表</div>
+    <#include "admin/user/nav.html">
+    <div class="clear"></div>
+
+														<!--会员组列表管理-->
+                                                        
+    <div class="basic">
+	    <div class="vip_title">
+	    	<p class="sys_title01"><span>ID号&nbsp;&nbsp;</span><span class="top_title">用户组名称</span><span class="top_title">用户组简介</span><span class="top_title">类型</span><span class="top_title">允许注册</span><span class="top_title">会员数量</span><span class="top_title">操作</span></p>
+	    	<p class="user_content"><span>1&nbsp;</span><input type="checkbox" name="name"><span class="top_title04">网站管理员</span><span class="top_title02">网站管理员组</span><span class="top_title05">系统</span><span class="top_title06">不允许</span><span class="top_title07">1位</span>
+	        	<span class="top_title04"><a href="">添加子用户组</a>&nbsp;&nbsp;<a href="">修改</a>&nbsp;&nbsp;<a href="">列出会员</a></span></p>
+	    </div>
+	    <div class="vip_title">
+	    	<p class="sys_title01"><span>ID号&nbsp;&nbsp;</span><span class="top_title">用户组名称</span><span class="top_title">用户组简介</span><span class="top_title">类型</span><span class="top_title">允许注册</span><span class="top_title">会员数量</span><span class="top_title">操作</span></p>
+	    	<p class="user_content"><span>2&nbsp;</span><input type="checkbox" name="name"><span class="top_title04">网站管理员</span><span class="top_title02">网站管理员组</span><span class="top_title05">系统</span><span class="top_title06">不允许</span><span class="top_title07">1位</span>
+	        	<span class="top_title04"><a href="">添加子用户组</a>&nbsp;&nbsp;<a href="">修改</a>&nbsp;&nbsp;<a href="">列出会员</a></span></p>
+	    </div>
+	    <div class="suffix01">
+	    	<p class="user_content"><input type="checkbox" name="name">&nbsp;&nbsp;操作：<input type="radio" name="work"><span class="operate">新增</span><button class="operate">删除</button><input type="radio" name="work"><span class="operate">修改</span><input type="radio" name="work"><span class="operate">审核</span></p>
+	    </div>
+	    <div class="paging"><button>首页</button><button>1</button><span>转到</span><input type="text"><button>GO</button></div>
+	</div>
+
+</div>
+</@frame>

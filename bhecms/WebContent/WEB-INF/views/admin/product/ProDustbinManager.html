@@ -1,0 +1,84 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/bhecms/css/admin/productManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+<@frame>
+<div class="welcom">
+	<div class="wel_content">
+		<div class="art_list">
+			<div class="art_list_all">
+				<div class="artListAll001">
+					<div>
+						<input type="text" class="textSelect" /><input type="button"
+							value="查询" /> 列表分类： <select>
+							<option>所有</option>
+							<option>未审核</option>
+							<option>已审核</option>
+							<option>抢购品</option>
+							<option>积分兑换</option>
+							<option>换购</option>
+							<option>库存少于N件</option>
+						</select> 属性： <select>
+							<option>推荐</option>
+							<option>热点</option>
+							<option>精彩</option>
+							<option>头条</option>
+							<option>滚动</option>
+							<option>幻灯</option>
+						</select>
+						<input onclick="toaddProInfo()" type="button" value="添加"/>
+					</div>
+
+					<table width="100%" border="0" cellspacing="0" cellpadding="0"
+						class="art_table">
+						<tr>
+							<th width="35px"><input type="checkbox" /></th>
+							<th>编号</th>
+							<th>名称</th>
+							<th>创建人</th>
+							<th>数量</th>
+							<th>创建时间</th>
+							<th>点击数</th>
+							<th>操作</th>
+						</tr>
+						<#assign entityList=pageInfoMap.list />  
+						<#list entityList as entity>
+							<tr>
+								<td width="35"><input type="checkbox" /></td>
+								<td>${entity.productno}</td>
+								<td>${entity.namecn}</td>
+								<td>${entity.user.namecn}</td>
+								<td>${entity.count}</td>
+								<td>${entity.createtime}</td>
+								<td>${entity.hits}</td>
+								<td><a href="javascript:">查看</a> | <a href="articleRelease.html">修改</a>
+									| <a href="#">上架</a> | <a href='javascript:delProInfo("${entity.uuid}")'>直接删除</a> | <a href='javascript:proInfoToDustbin("${entity.uuid}")'>移除至垃圾箱</a></td>
+							</tr>
+						</#list>
+					</table>
+				</div>
+			</div>
+		</div>
+		 <div class="pagination right">
+		    <a href="#" class="first" data-action="first">&laquo;</a>
+		    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+		    <input type="text" readonly="readonly" data-max-page="${pageInfoMap.countpage}" />
+		    <a href="#" class="next" data-action="next">&rsaquo;</a>
+		    <a href="#" class="last" data-action="last">&raquo;</a>
+		</div>
+	</div>
+</div>
+
+</@frame>
+<script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"  ></script>
+<script type="text/javascript" src="${base}/res/bhecms/js/admin/base.js"></script>
+<script>
+//加载产品列表
+$('.pagination').jqPagination({
+	current_page:'${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+	max_page:'${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+    paged: function(page) {
+    	window.location.href = "${base}/admin/product/productManage.html?pageindex="
+			+ page + "&pagesize=15";}
+});
+</script>

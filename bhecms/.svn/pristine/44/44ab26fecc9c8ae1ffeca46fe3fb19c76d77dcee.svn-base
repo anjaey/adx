@@ -1,0 +1,55 @@
+<#macro frame frameLeft>
+<!doctype html>
+<html>
+
+<#include "admin/common/head.html"/> 
+<link rel="stylesheet" type="text/css"	href="${base}/res/bhecms/css/common.css">
+<body>
+<#import "template/common/setUtil.ftl" as sets>
+
+	
+	<div class="id_content">
+
+		 <#include "admin/common/top.html"/> 
+		
+		 <div class="main">
+			<#include "${frameLeft}"/>
+
+			<div class="rightDiv"> <#nested> </div>  
+		</div>
+		<div class="clear"></div> 
+
+		<#include "admin/common/footer.html"/>
+		
+	</div>
+		
+	
+
+	<script type="text/javascript" src="${base}/res/common/js/jquery/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="${base}/res/common/js/base.js"></script>
+
+	<script>
+		$(function() {
+			$("button.js-logout-bt").click(function() {
+				if (confirm("确定退出？")) {
+					window.location.href = "${base}/admin/toLogin/logout.html";
+				}
+			});
+			$("button.js-userInfo").click(function() {
+					window.location.href = "${base}/admin/personalCenter/userInfoManage.html";
+			});
+			$('div.article_list:gt(0)').addClass('hidemenu');
+			$('div.article_title').click(function(){
+				if($(this).next().is(".hidemenu")){
+					$('.article_list').addClass('hidemenu');
+					$(this).next().removeClass('hidemenu');
+				}else{
+					$('.article_list').addClass('hidemenu');
+				}
+			})
+		})
+	</script>
+
+</body>
+</html>
+</#macro>

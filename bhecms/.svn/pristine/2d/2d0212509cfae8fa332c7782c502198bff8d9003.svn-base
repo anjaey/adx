@@ -1,0 +1,96 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemOrder.css">
+<@frame> 
+
+
+	<div class="wel_content">
+    	<div class="check_top">
+    		<span>订单号：${order.orderno}</span>
+    		<span>订单状态：
+				<#switch order.auditstatus>
+	   				<#case 0>
+	   				待审核
+	   				<#break>
+	   				<#case 1>
+	   				已通过
+	   				<#break>
+	   				<#default>
+	   				已退回
+	   			</#switch>
+			</span>
+    		<span>下单时间：${order.createtime?datetime}</span>
+    	</div>
+    	<div class="check_product">
+    	<table width="1370" cellpadding="0" cellspacing="0" border="1">
+     		<tr class="check_tab01">
+     			<td>序列号</td>
+     			<td>商品型号</td>
+     			<td>商品名称</td>
+     			<td>租赁数量（台）</td>
+     			<td>租赁时间</td>
+     			<td>备注</td>
+     		</tr>
+     		
+     		 <#if (orderDetailListCount>0)>
+	          	<#list orderDetailMap as map>
+		     		<tr class="js-data-tr">
+		     			<input type="hidden" value="${map['id']}" class="js-pallets-input" data-key="id">
+		     			<td>${entity_index+1}</td>
+		     			<td>${map['modelName']}</td>
+		     			<td>${map['productName']}</td>
+		     			<td><input type="text" value="${map['count']}" class="order_num js-pallets-input" data-key="count"></td>
+		     			<td><input type="text" value="${map['renttime']}" class="order_num js-pallets-input" data-key="renttime">${map['rentunit']}</td>
+		     			<td>无</td>	
+		     		</tr>
+     			</#list>
+	        </#if>	
+     		
+     		</table>
+        </div>
+      <div class="check_btn01"><a href="javascript:void(0)" class="js-save">保存</a><a href="javascript:void(0)" class="js-back">返回订单审核</a></div>
+    </div>
+
+</@frame>
+<script type="text/javascript" src="${base}/res/common/js/jquery.json-2.4.js"></script>
+<script>
+
+$(function(){
+	
+	$("a.js-back").click(function(){
+		window.history.back()
+	});
+	
+	
+	
+	$("a.js-save").click(function(){
+		 if(confirm("确定提交？")){
+			 var array=new Array();
+			 $("tr.js-data-tr").each(function(){
+					var order={};
+				 $(this).find("input.js-pallets-input").each(function(){
+					var name = $(this).data("key");
+					order[name]=$(this).val();
+				 });
+					array.push(order);
+			 });
+			 var valueMap=$.toJSON(array);
+			 $.post("updateOrderProductInfo.html", {"valueMap":valueMap},
+						function(data){
+				 			if(data.result){
+				 				alert("操作成功");
+								window.location.reload(true);
+				 			}else{
+				 				alert("操作失败，共有"+data.count+"条数据处理错误");
+				 			}
+							
+						},"json");
+		
+		 }
+	});
+	
+
+})
+
+</script>

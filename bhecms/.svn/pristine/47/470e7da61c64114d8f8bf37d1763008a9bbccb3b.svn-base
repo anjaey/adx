@@ -1,0 +1,83 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/bhecms/css/admin/productManage.css">
+<@frame>
+<#if (states == 0)>
+	<div class="nav_position">您当前位置：<a href="${base}/admin/product/productBrandManage.html">商品品牌</a>>新增品牌</div>
+</#if>
+<#if (states == 1)>
+	<div class="nav_position">您当前位置：<a href="${base}/admin/product/productBrandManage.html">商品品牌</a>>编辑</div>
+</#if>
+	<div class="welcom">
+	
+    	<div class="wel_content" >
+        	<form action="${base}/admin/product/addproBrandinfo.html" method="post"  class="js_from_addBrand" > 
+                <input  type="hidden" name="id" value="${returned.id}"/>            
+                <p class="release">
+                    <label>名称：</label>
+                    <input type="hidden" class="js_namecn" value="${namecn}"/>
+                    <input  type="text" value="${returned.namecn}" id="js_pro_namecn" class="txtAddproduct txtAddproduct2" name="namecn" value="${prdouct.namecn}"/>           
+                </p>
+                <p class="release">
+                    <label>英文名：</label>
+                    <input  type="text" value="${returned.nameen}" class="txtAddproduct txtAddproduct2" name="nameen" value="${prdouct.nameEn}" />           
+                </p>
+               <!--  <p class="release">
+                    <label>品牌头像：</label>
+                   <input name="logourl" value="${returned.namecn}" type="text" class="txtvalue" value="${prdouct.logourl}" />         
+                </p> -->
+                <p class="release">
+                    <label>品牌网址：</label>
+                   <input name="weburl" value="${returned.weburl}" type="text" class="txtAddproduct txtAddproduct2" value="${prdouct.weburl}" />         
+                </p>
+                <p class="release">
+                    <label>推荐等级：</label>
+                   <input name="recommendlevel" value="${returned.recommendlevel}" type="number" class="txtAddproduct txtAddproduct2" value="${prdouct.recommendlevel}" />         
+                </p>
+                <p class="release">
+                    <label>排序：</label>
+                   <input  type="number" value="${returned.rank}" class="txtAddproduct txtAddproduct2" name="rank" value="${prdouct.rank}" />         
+                </p>
+                <p class="release">
+                    <label>描述： </label>
+                    <textarea rows="3" cols="30" name="description" >${returned.description}</textarea>                    
+                </p>
+                 <div class="clear"></div> 
+                 <div style="margin-left:120px;">
+                 	<input class="js_submit btnsearch" type="button" value="提交"/>
+	                <input type="reset" value="重置" class="js_reset btnsearch"/>
+	               <!--  <input type="button" value="定时提交" class="btnsearch" style="width:70px;" /> -->
+                 </div>                  
+                
+            </form>
+        </div>
+    </div>
+</@frame>
+<script>
+	
+	$(".js_reset").click(function(){
+		window.location.reload(true);
+	});
+	
+	$(".js_submit").click(function(){
+		var  nameCn = $("#js_pro_namecn").val();
+		if($('.js_namecn').val()!= nameCn){
+			$.ajax({
+				type : "post",
+				url : "${base}/admin/product/checkNameCn.html",
+				data : {namecn:nameCn},
+				dataType : 'json',
+				success : function(data){
+					if(data.status == 1){
+						$(".js_from_addBrand").submit();
+					}else{
+						alert("当前商品名称已存在，请换一个!");
+					}
+				}
+			});
+		}else{
+			$(".js_from_addBrand").submit();
+		}
+	});
+	
+</script>

@@ -1,0 +1,190 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/bhecms/css/articleManage.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/common/jqpagination/css/jqpagination.css">
+<@frame>
+
+<div class="artLocation">
+	<div class="left" style="height:24px;">您当前的位置：文章系统</div>
+	<div class="mart5 clear" style="height:35px;">
+		
+		<div class="left">
+			筛选: <select id="statusselect" class="js_article_class_resoureceid commonSelect">
+							<option value = "-1">全部类别</option><input type="hidden" class="js_categoryid" value="${type}" />
+				</select> 
+			标题:<input type="text" class="txtAddproduct  txtAddproduct5 js_txtsearch" value = "${title}"/><input type="button" class="btnsearch search marl15" value="搜索"/>
+		</div>
+	
+						
+		<div class="right">
+			<input onclick="addProInfo()" type="button" value="发布文章" class="btnsearch" />
+		</div>
+	
+	</div>
+	
+</div>
+<div class="clear"></div>
+<div class="wel_content mart15">
+	<div class="art_list">
+		<div class="art_list_all">
+			<div class="artListAll001">
+				<table width="98%" min-width="800" border="1" cellspacing="0" cellpadding="0" class="art_table">
+					<tr>
+						<th width="6%"><input type="checkbox" class="js-chooseAll" /></th>
+						<th width="10%">序号</th>
+						
+						<th>标题</th>
+	                    <th>发布者</th>
+						<th width="25%">创建时间</th>
+						<th width="25%">操作</th>
+					</tr>
+					<#if (pageInfoMap.count>0)> <#assign entityList=pageInfoMap.list />
+						<#list entityList as entity>
+							<tr>
+								<td width="35"><input type="checkbox" class="js-chooseInput" uid="${entity.uuid}" /></td>
+								<td><a href="#">${entity_index+1}</a></td>
+								<td>${entity.title}</td>
+								<td>${entity.author}</td>
+								<td>
+									<#if (entity.createtime)??>
+				        				${entity.createtime ? string("yyyy-MM-dd HH:mm:ss")}
+					        		</#if>
+								</td>
+								<td>
+									<a href="articleRelease.html?uuid=${entity.uuid}">编辑</a>&nbsp;|&nbsp; 
+									<a href="javascript:void(0)" class="js-updateStatus" uid="${entity.uuid}">删除</a>
+								</td>
+							</tr>
+						</#list> 
+					</#if>
+				</table>
+			</div>
+		</div>
+		<div class="mart15">
+			<div class="batchOperation">
+				<a href="javascript:void(0)" class="js-batchDel">批量删除</a>
+			</div>
+		</div>
+		<#if (pageInfoMap.count>0)>
+			<div class="pagination right mart15">
+				<a href="#" class="first" data-action="first">&laquo;</a>
+				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				<input type="text" readonly="readonly" data-max-page="${pageInfoMap.countpage}" />
+				<a href="#" class="next" data-action="next">&rsaquo;</a>
+				<a href="#" class="last" data-action="last">&raquo;</a>
+			</div>
+		</#if>
+	</div>
+</div>
+
+
+
+</@frame>
+<script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+<script type="text/javascript" src="${base}/res/bhecms/js/tree_tab.js"></script>
+<script>
+    
+window.onload=function(){
+	$(".js_article_class_resoureceid option:not(:disabled)[value='"+$("input.js_categoryid").val()+"']").attr("selected",true);
+};
+    
+	$(this).tree({
+		url: 	'${base}/admin/article/getAllArticleClass.html',
+		top:	'0',
+		select:	'js_article_class_resoureceid',
+		isselect : true,
+	});
+
+	//搜索
+	function search(){
+		var type = $('#statusselect option:selected').val();
+		var content = $('.js_txtsearch').val();
+		
+		window.location.href = '${base}/admin/article/articleIndex.html?type=' + type + '&title=' + content;
+	}
+	
+	// 条件查询
+	$('.search').click(function(){
+		 search();
+	});
+	
+    function addProInfo(){
+    	window.location.href="articleRelease.html";
+    }
+        
+	$(document).ready(function(){
+		 var type = $('#statusselect option:selected').val();
+			var content = $('.js_txtsearch').val();
+		 <#if (pageInfoMap.count>0)>
+			$('div.pagination').jqPagination({
+				current_page:'${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+				max_page:'${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+			    paged: function(page) {
+				        window.location.href="articleIndex.html?pageIndex="+page+'&type=' + type + '&title=' + content;
+			    }
+			});
+		</#if>	
+	
+		   //给标题加上背景色以及鼠标移动到某一行的事加上背景色
+		   $("table.art_table tr:first-child").css("background-color","#f3f7fb");
+		   $("table.art_table tr:not(:first-child)").hover(function(){
+										 $(this).css("background-color","#f3f7fb");
+										 },function(){
+											 $(this).css("background-color","#fff");
+										 });
+		   $("a.js-updateStatus").click(function(){
+			   if(confirm("是否删除到垃圾箱？")){
+			    var uuid=$(this).attr("uid");
+				$.post("updateArtiStatus.html", {"uuid":uuid,"status":1},
+					function(data){
+						if(data.result){
+							alert("删除成功");
+							window.location.reload(true);
+						}else{
+							alert("删除失败");
+						}
+					},"json");
+			   }
+		   })
+		   
+		   
+		   $("a.js-delete").click(function(){
+			   if(confirm("是否删除该文章？将不可恢复！")){
+			    var uuid=$(this).attr("uid");
+				$.post("deleteArticle.html", {"uuid":uuid},
+					function(data){
+						if(data.result){
+							alert("删除成功");
+							window.location.reload(true);
+						}else{
+							alert("删除失败");
+						}
+					},"json");
+			   }
+		   });
+		   
+		  
+		   
+		   $("a.js-batchDel").click(function(){
+			   if($("input:checked.js-chooseInput").length>0){
+				   if(confirm("是否删除到垃圾箱？")){
+					   var uuids="";
+					   $("input:checked.js-chooseInput").each(function (k,v) {
+						   uuids=$(v).attr("uid")+","+uuids;
+					   })
+					   uuids=uuids.substring(0,uuids.length-1);
+						$.post("updateArtiStatus.html", {"uuids":uuids,"status":1},
+							function(data){
+								if(data.result){
+									alert("删除成功");
+									window.location.reload(true);
+								}else{
+									alert("共有："+data.count+"条数据,删除失败");
+								}
+							},"json");
+					   }
+				}
+		   });
+	});
+</script>

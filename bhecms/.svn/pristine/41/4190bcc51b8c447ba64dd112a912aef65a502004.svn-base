@@ -1,0 +1,420 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/carousel.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/js/sobox/popbox-style.css">
+
+<style>
+	
+</style>
+<@frame>
+	<div class="show clear">		
+		<div class="bannerNum">
+	    	<#list data as entity>
+				<div  class="item" style="background: url('${realUrl}${entity.url}');" style="background-size:100%;background-repeat:no-repeat;"></div>
+			</#list>
+			<div class="bg_div" id="banner_id">
+				<ul class="bg">
+				<#list data as entity>
+					<#assign indx = entity_index == 0 /> 
+					<li ${indx ? string("class='nuw'" , "")} ></li>
+				</#list>
+				</ul>
+			</div>
+			
+			<!-- <div  class="item" style="height:100%;background:url(http://192.168.1.39:8081/other/2d58026f48524e178eca27bdd9d3e244/1439972903694.jpg)"></div>
+			<div  class="item" style="heig
+			<div  class="item" style="height:100%;background:url(http://192.168.1.39:8081/other/2d58026f48524e178eca27bdd9d3e244/1439972903694.jpg)"></div>
+			<div  class="item" style="height:100%;background:url(http://192.168.1.39:8081/other/2d58026f48524e178eca27bdd9d3e244/1439972903694.jpg)"></div> -->
+		</div>
+			<div class="wind1200">
+				<div class="banner">
+			    	<div class="bannerImage"><img src="${base}/res/web/images/banner01.png" width="236" height="114"></div>
+			    	<div class="bannerImage"><img src="${base}/res/web/images/banner02.png" width="236" height="114"></div>
+			    	<div class="bannerImage"><img src="${base}/res/web/images/banner03.png" width="236" height="114"></div>
+			    	<div class="bannerImage"><img src="${base}/res/web/images/banner04.png" width="236" height="114"></div>
+			    	<div class="bannerImage"><img src="${base}/res/web/images/banner05.png" width="236" height="114"></div>		    
+	    		</div>
+			</div>
+	    	
+	<div class="clear"></div>
+	</div>
+
+
+	
+	<!--新闻动态-->
+	<div class="news">
+	
+		<div class="news_top" >
+			<!-- <div class="news_top_l left">        		
+        		<div class="left_title">出售产品分类</div>
+                <div class="left_list font14">
+                	
+                	<@util.loopCategory cateList; namecn,clazzId>
+	                	<div class="line"></div>
+	                	<div class="list_left font14"><a href="${base}/web/cleanProductList.html">&nbsp;&nbsp;&nbsp;>>${namecn}</a></div>
+                	</@util.loopCategory>
+                	
+                </div>
+        	</div> -->
+			<div class="news_top_c left">
+				<div class="left_title05">
+					关于我们
+					<a href="${base}/web/article/toNewsCenter.html?code=newsCenter" class="more">&gt;更多</a>
+				</div>
+				<div  class="aboutUs" style="margin-left:16px;">
+					${aboutus.content}
+				</div>
+				
+
+
+				<div class="mart10">
+					<#--<a href="#" class="more">&gt;更多</a>-->
+				</div>
+			</div>
+
+			<div class="news_top_r right">
+				<div>
+					<div class="left_title05">
+						新闻中心
+						<a href="${base}/web/article/toNewsCenter.html?code=newsCenter" class="more">&gt;更多</a>
+					</div>
+					<div class="right_list">
+
+						<@util.loopArticle newsCenter; uuid,title>
+						<div class="line01"></div>
+						<div class="list_left font12">
+							<a href="${base}/web/article/getSingleArticle.html?uuid=${uuid}">>>${title} </a>
+						</div>
+						</@util.loopArticle>
+						<div class="line01"></div>
+						
+					</div>
+				</div>
+				<div class="mart40">
+					<div class="left_title05">联系方式</div>
+					<div class="contactwayPP">
+						${contactWay.content}
+					</div>
+					
+				</div>
+
+			</div>
+		</div>
+		<hr>
+		<div class="news_bottom">
+			<div class="keywords left">
+			</div>
+			<div class="right">
+				<span class="marr15"><input  type="text"  class="txtIndex" placeholder="请输入产品名"/></span>
+				<span class="marr15"><input  type="text"  class="txtIndex01" placeholder="价格区间"/>到<input  type="text"  class="txtIndex01"/></span>
+				<span class="marr15"><input  type="button" value="搜索" class="btnIndexSearch"/></span>
+			</div>
+			
+
+		</div>
+	</div>
+	<!--第三屏 主要产品-->
+
+	<div class="hot_pro">
+		<div class="wind1200">
+			
+				<div class="left_title05">
+					热销产品展示
+					</div>
+				<div class="pro_show">
+					<ul class="pro_showUlli">
+					<@util.loopProductListMap hotProductListMap;
+					uuid,price,namecn,brandName,productImgurl>
+						<li>
+							<div class="commonImageSize js-detail" data-uuid="${uuid}">
+								<img src="${productImgurl}" width="249" height="238" alt="产品图片">
+							</div>
+							<p class="pro_price font14">￥${price}</p>
+							<span  class="commonColor">产品名：${namecn}</span>
+							<span class="commonColor">品牌：${brandName}</span>
+							<p>
+								<a class="joinCheck js-addcar" uuid="${uuid}">加入购物车</a>
+								<a class="checkDetail js-detail" data-uuid="${uuid}">查看详情</a>
+							</p>
+						</li>
+					</@util.loopProductListMap>
+					</ul>
+				</div>
+				
+				<div class="clear">
+					<a href="javascript:void(0)" class="more js-loadMore" index="0" type="1">&gt;更多</a>
+				</div>	
+		</div>
+	<div class="clear"></div>
+	</div>
+	
+	
+	
+	
+	<!--新品上市展示-->
+	<div class="new_pro">
+		<div class="wind1200">
+			<div class="wind1175">
+				<div class="left_title05">
+					新品上市展示
+				</div>
+				<div class="pro_show">
+					<ul class="pro_showUlli">
+					<@util.loopProductListMap newProductListMap;
+					uuid,price,namecn,brandName,productImgurl>
+						<li class="pro_li">
+							<div class="commonImageSize js-detail" data-uuid="${uuid}">
+								<img src="${productImgurl}" width="249" height="238" alt="产品图片">
+							</div>
+							<p class="pro_price font14">￥${price}</p>
+							<p class="pro_text font12"><span  class="commonColor">产品名：${namecn}</span></p>
+							<p class="pro_text font12"><span  class="commonColor">品牌：${brandName}</span></p>
+							<p>
+								<a class="joinCheck js-addcar" uuid="${uuid}">加入购物车</a>
+								<a class="checkDetail js-detail" data-uuid="${uuid}">查看详情</a>
+							</p>
+						</li>
+					</@util.loopProductListMap>
+					</ul>
+				</div>
+				<div class = "clear"></div>
+				<div>
+					<a href="javascript:void(0)" class="more js-loadMore"  index="0" type="2">&gt;更多</a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="clear"></div>
+	<!--供应产品展示-->
+	<div class="giv_pro">
+		<div class="wind1200">
+			<div class="wind1175">
+				<div class="left_title05">
+					供应产品展示
+				</div>
+				<div class="pro_show">
+					<ul class="pro_showUlli">
+					<@util.loopProductListMap providedListMap ;
+					uuid,price,namecn,brandName,productImgurl>
+						<li>
+							<div class="commonImageSize js-detail" data-uuid="${uuid}">
+								<img src="${productImgurl}" width="249" height="238" alt="产品图片">
+							</div>
+							<p class="pro_price font14">￥${price}</p>
+							<p class="pro_text font12"><span  class="commonColor">产品名：${namecn}</span></p>
+							<p class="pro_text font12"><span  class="commonColor">品牌：${brandName}</span></p>
+							<p>
+								<a class="joinCheck js-addcar" uuid="${uuid}">加入购物车</a>
+								<a class="checkDetail js-detail" data-uuid="${uuid}">查看详情</a>
+							</p>
+						</li>
+					</@util.loopProductListMap>
+					</ul>
+				</div>
+				
+				<div class = "clear"></div>
+				<div>
+					<a href="javascript:void(0)" class="more js-loadMore"  index="0" type="3">&gt;更多</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<!--友情链接-->
+	<div class="giv_pro2">		
+		<div class="wind1200">
+		<div  class="wind1175">
+			<div class="left_title05">友情链接</div>	
+			<div class="customerUl">
+				<ul>
+					<@util.loopLinkListMap sysLinkList;url,logourl,name>
+					<li>
+						<a href="${logourl}"><img src="${url}" width="350"
+								height="135"></a>
+						<span class="mart15" style="display:block;">${name}</span>
+					</li>
+					</@util.loopLinkListMap>
+				</ul>
+			
+			</div>
+		
+		</div>
+	</div> 
+	</div>
+	<input type="hidden" class="js_flashviewdate" value="${flashviewdate}" />
+	
+</@frame>
+
+<script type="text/javascript" src="${base}/res/common/js/sobox/jquery.sobox.js"></script>
+	<script type="text/javascript">
+	
+
+	var items = $(".item");
+	var indexs = items.length - 1;
+	var index = 0;
+	var interval;
+	$(document).ready(function(){
+		
+		$("#js-search").click(function(){
+			window.open("${base}/web/product/toAllSearch.html");
+		})
+		$("button.js-addcar").click(function(){
+			$.ajax({
+				type:'post',
+				url:"${base}/web/product/addToCar.html",
+				async:false,
+				data:{"uuid":$(this).attr("uuid")},
+				dataType:"json",
+				success:function(data){
+					if(data.result==0){
+						$.sobox.confirm("温馨提示","您还未登陆，请先登陆后再添加，点击确定将跳转登陆页面",function(){
+							location.href="${base}/user/toLogin/loginPage.html";
+						},null); 
+					}else if(data.result==1){
+						$.sobox.pop({
+							  type : 'content', 
+							  content :'已经成功加入购物车',
+							  posType:'center',
+							  width:360,height:100,
+							  defaultShow:true,
+							  callback: function(){
+								 var time = 2;
+								 function task(){
+									 if(time>0){
+										 time=time-1;
+										 $("div.so-popbox-cont").html("已经成功加入购物车,"+time+"后自动关闭");
+										 setTimeout(task, 1000); 
+									 }else{
+										 $("span.s-sopop-close").click();
+									 }
+								 }
+								 task();
+							  }, 
+							
+						});
+					}else{
+						alert("添加失败");
+					}
+				}
+			});
+		});
+		
+		
+		$("a.js-loadMore").click(function(){
+			var _this=$(this);
+			var index = (parseInt(_this.attr("index")) + 1);
+			_this.attr("index",index);
+			$.ajax({
+				type:'post',
+				url:"${base}/web/loadMore.html",
+				async:false,
+				data:{"pageIndex":(index+1),"type":$(this).attr("type")},
+				dataType:"json",
+				success:function(data){
+					var html ="";
+					if(data.listSize>0){
+						html+='<div class="js-hideed">';
+						$(data.moreList).each(function(k,v){
+							html+='<ul class="pro_showUlli ">';
+							html+='<li>';
+							html+='<div class="commonImageSize js-detail" data-uuid="'+v.uuid+'">';
+							html+='<img src="'+v.productImgurl+'" width="249" height="238" alt="产品图片">';
+							html+='</div>';
+							html+='<p class="pro_price font14">￥'+v.price+'</p>';
+							html+='<p class="pro_text font12">产品名：'+v.namecn+'</p>';
+							html+='<p class="pro_text font12">品牌：'+v.brandName+'</p>';
+							html+='<p>';
+							html+='<a class="joinCheck js-addcar" uuid="'+v.uuid+'">加入购物车</a>';
+							html+='<a class="checkDetail js-detail" data-uuid="'+v.uuid+'">查看详情</a>';
+							html+='</p>';
+							html+='</li>';
+							html+='</ul>';
+						});
+						html+='</div>';
+						_this.parent().prev("div").append(html);
+						_this.parent().prev("div").children(":last").animate({height: 'toggle', opacity: 'toggle'}, "slow")
+						
+					}else{
+						_this.unbind("click");
+						html="<p>没有数据了</p>";
+						_this.parent().prev("div").append(html);
+					}
+				}
+			});
+		})
+
+		
+		$(".js-detail").click(function(){
+			location.href="${base}/web/product/productDetail.html?uuid="+$(this).attr("data-uuid");
+		})
+		
+		$('li.mainlevel').mousemove(function(){
+			$(this).find('ul').slideDown();//you can give it a speed
+		});
+		$('li.mainlevel').mouseleave(function(){
+			$(this).find('ul').slideUp("fast");
+		});
+	  	
+		interval = setInterval("test()",$(".js_flashviewdate").val());
+		
+	});
+
+	function test(){
+		index++;
+		var k = (index)%(indexs+1);
+		$(items).hide();
+		$(items[k]).show();
+		$($(".bg_div li")).removeClass("nuw");
+		$($(".bg_div li")[k]).addClass("nuw");
+	}
+	
+	$(".bg_div li").each(function(k,v){
+		$(this).hover(function(){
+			$(items).hide();
+			$(items[k]).show();
+			$($(".bg_div li")).removeClass("nuw");
+			$($(".bg_div li")[k]).addClass("nuw");
+			index=k;
+		});
+		$(this).hover(
+			function(){
+			 clearInterval(interval);
+			},
+			function(){
+				interval = setInterval("test()",$(".js_flashviewdate").val());
+			}
+		);
+		
+	});
+</script>
+<script type="text/javascript">
+//加载关键字 
+	$.post("${base}/web/product/searchKeywords.html", function(data){
+		$('div.keywords').append("<a href='#'>热门关键词：</a>");
+		for (var i = 0; i < data.length; i++)
+		$('div.keywords').append("<a href='${base}/web/product/productSearch.html?title="+ data[i].title +"'>" + data[i].title + "</a>")
+	},"json");
+//产品搜索/web/product/productSearch.html
+	$('.btnIndexSearch').click(function(){
+		var title = $('.txtIndex').val();
+		var startprice = $('.txtIndex01:first').val();
+		var endprice = $('.txtIndex01:last').val();
+		var reg = /^[1-9]\d*$/;
+		var count = 0;
+		
+		if (!reg.test(startprice) && startprice != '') {
+			return false;
+		} 
+		
+		if (!reg.test(endprice) && endprice != '') {
+			return false;
+		}
+		if (parseInt(endprice) < parseInt(startprice)) {
+			return false;
+		}
+		
+		window.location.href = "${base}/web/product/productSearch.html?title="+title+"&startprice="+startprice+"&endprice="+endprice;
+ 	});
+</script>

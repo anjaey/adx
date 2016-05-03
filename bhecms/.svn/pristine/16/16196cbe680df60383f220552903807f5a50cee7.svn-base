@@ -1,0 +1,50 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+
+<@frame>
+
+	
+    
+    <!--这是登录弹框页面-->
+	<div class="login01 wind1200">
+    	<div class="loginleft">
+			<div class="loginleftdiv" style="height: 60px"><label>用户名：</label><div class="usermessage"><div class="loginbg iconName1" ></div><input type="text" value="admin" class="js-login-name loginName" name="userName"/><span class="red"></span></div></div>
+			<div class="loginleftdiv"><label>登录密码：</label><div class="usermessage"><div class="loginbg password2" ></div><input type="password" class="js-login-pwd loginName" name="pwd" value="a123456"/><span class="red"></span></div></div>
+			<div class="loginleftdiv"><div class="right"><a href="#" class="blue">忘记密码</a>/<a href="${base}/user/toLogin/registIndex.html" class="blue">免费注册</a></div></div>
+			<div  style="margin-left:140px;">
+				<input type="button" value="立即登录" class="nowlogin">
+			</div>
+		</div>
+		<div class="loginright">
+			<img src="${base}/res/web/images/userloginleft.png" width="732" height="794"/>
+		</div>     
+	</div> 
+    <!--登录弹出层结束-->
+         
+
+<div class="clear"></div>
+</@frame>
+<script type="text/javascript" src="${base}/res/common/js/jquery/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${base}/res/bhecms/js/loginValidate.js"></script>
+<script type="text/javascript" src="${base}/res/common/js/json2.js"></script>
+<script>
+
+
+$(document).keydown(function (event) {
+    if (event.keyCode == 13) {
+    	$(".nowlogin").click();
+    }
+});
+
+//登陆 验证 插件调用
+var url="";
+<#if beforeLoginLastUrl??>
+	url="${base}${beforeLoginLastUrlParams}";
+	<#else>
+	url="${base}";
+</#if>
+$(".nowlogin").loginValidate({unObj:".js-login-name",pwdObj:".js-login-pwd",loginUrl:'${base}/user/toLogin/login.html',indexUrl:url});
+
+
+</script>
+

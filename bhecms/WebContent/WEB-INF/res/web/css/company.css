@@ -1,0 +1,38 @@
+/**到时候放到公共样式里面*/
+.commonLine{ color:#fff; font-size:18px; width:900px; margin-bottom:44px; height:47px; line-height:47px; background-color:#4292dc;}
+/*结束*/
+.com1200{width:1200px; margin-top:62px;}
+.bgIntroduction{background:url(../images/introduction_03_04.png) top center;min-width:1200px;height:715px;}
+.navCompany{ margin-top:62px; position:absolute; width:1200px;}
+.companyMessage{ width:1147px; height:480px; margin-top:125px; position:absolute; color:#7f7f7f; z-index:1000;}
+.companyImage{ width:439px; height:467px; background-color:#7f7f7f; margin-top:125px;}
+.companyImageUl{ margin-top:60px; } 
+.companyImageUl ul{ list-style:none; padding:0px;}
+.companyImageUl ul li{ float:left; margin:0px 4px; }
+.companybgColor{ width:1147px; height:263px; background-color:#83beef; margin:20px auto;}
+.bgColorLine{ text-align:center; margin-left:100px;}
+.bgColorP{ width:810px; height:75px; color:#fff; text-align:center; margin-left:184px;font-size:14px;}
+.mart40{ margin-top:40px; position:absolute;}
+.mart400{ margin-top:400px; position:absolute;}
+.history{ width:1180px; height:561px; background:url(../images/companyHistory_07.png) no-repeat; color:#fff; font-size:14px; margin:36px; }
+.margin50 ul li{ margin-left:110px;}
+.marl0{margin-left:0px!important;}
+.mart60{ margin-top:60px; }
+.martp60{ margin-top:60px; position:absolute;}
+/*合作品牌样式开始*/
+.brand001{ width:1200px; min-height:260px;_height:260px; border-bottom:1px dashed #d1d1d1; margin-top:40px; color:#9f9f9f;}
+.brandImg{ width:350px; height:135px; border:1px solid #ccc;}
+.brandRight{ width:820px; line-height:24px;}
+.brandRight span{ display:block;}
+.brandRightSpan{ font-size:18px; font-weight:blod;}
+/*新聞中心*/
+.newsCenter{ color:#7f7f7f; font-size:14px;}
+.newsCenter ul li{ margin:23px 0px; border-bottom:1px dashed #ccc; line-height:30px;}
+.newsCenter ul li a{ color:#7f7f7f;}
+.newsPointer{background:url(../images/newsPointer_03.png) 0px 7px repeat-x; max-width:1200px; height:24px;line-height:24px;}
+/*合作品牌样式结束*/
+/*公司介绍样式*/
+.companyDl dl{ float:left; margin:0px 48px;}
+.companyDl dl dd{  font-size:24px; color:#4292dc; text-align:center; margin-top:25px;}
+.word30{ font-size:30px; color:#575757; text-align:center;}
+.word14{ font-size:14px; color:#7f7f7f;  width:970px; margin:0px auto;}

@@ -1,0 +1,43 @@
+@charset "utf-8";
+/* CSS Document */
+.multi_title{border:solid 1px black;height:40px;background-color:#EFEFEF;line-height:40px;font-size:14px;margin:0 0;margin-bottom:10px;width:1400px;margin-top:20px;}
+.mul_title01{margin-right:470px;}
+.mul_title02{margin-left:70px;}
+.mul_title03{margin-left:100px;}
+.mul_title04{margin-left:150px;}
+.mul_img01{float:left;margin-left:10px;padding:10px 10px;}
+.mul_name{padding-top:20px;}
+.mul_pro{overflow:hidden;}
+.mul_prot{margin-left:55px;}
+.change_order{margin-top:20px;}
+.search_num input{border:solid 1px black;width:300px;height:28px;}
+.search_num button{height:30px;width:60px;}
+.one_value{border-bottom:solid 1px black;line-height:40px;overflow:hidden;}
+.value_text{width:500px;height:40px;float:left;margin-right:400px;}
+.cus_name,.cus_time{float:left;}
+.cus_name{margin-right:300px;}
+.value_content{margin-top:20px;}
+.cus_time span{margin-right:20px;}
+.multi_del{margin-right:20px;}
+.user_list{margin-bottom:20px;}
+.tab_01{width:20px;}
+.tab_02{width:250px;text-align:center;}
+.tab_03{width:400px;text-align:center;}
+.order_top{border:solid 1px #FF9900;color:#FF9900;width:98%;min-width:800px;text-indent:10px;}
+.user_list td{border-top:solid 1px black;border-bottom:solid 1px black;border-left:solid 1px black;border-right:solid 1px black;}
+.order_del{width:60px;height:28px;background-color:#00BAAD;color:white;margin-bottom:10px;}
+.check_top{background-color:#21C0B7;line-height:40px;margin:20px 0;width:98%;min-width:800px;padding-left:10px;font-size:16px;}
+.check_top span{margin-right:80px;}
+.check_order,.check_product,.change_order{width:97%;min-width:800px;padding-left:10px;margin-top:50px;position:relative;border:solid 1px black;padding-top:10px;}
+.check_order p,.check_product p,.change_order p{color:#FF6600;margin-left:10px;}
+.order_value{background-color:#EDF1F2;line-height:32px;}
+.check_order span,.check_product span{margin-right:50px;margin-left:10px;}
+.check_title{font-size:16px;position:absolute;top:-15px;left:10px;padding:0 10px;background-color:white;}
+.check_btn a{margin-top:10px;margin-right:10px;display:block;width:100px;line-height:24px;background-color:#2D9CE4;color:white;text-align:center;}
+.check_product table{border-color:#D1D1D1;text-align:center;margin:10px 0;font-size:12px;}
+.check_product table tr{line-height:40px;}
+.check_tab01{background-color:#EDF1F2;}
+.check_btn01{margin-top:40px;}
+.check_btn01 a{display:block;width:90px;line-height:28px;background-color:#00BAAD;color:white;float:left;margin-right:10px;text-align:center;}
+.change_order input{height:24px;margin-right:60px;}
+.order_num{width:60px;height:32px;}

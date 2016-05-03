@@ -1,0 +1,300 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/css/jquery.validity.css">
+<@frame> 
+
+<div class="artLocation left">
+	您当前的位置：系统设置>全局配置	
+</div>
+<div class="clear"></div>
+	<div class="wel_content">
+        <div class="sys_nav01">
+	        <a href="javascript:void(0)" class="js-switchDiv-a sys_nav01_a01">登录设置</a>
+	        <a href="javascript:void(0)" class="js-switchDiv-a">会员设置</a>
+	        <a href="javascript:void(0)" class="js-switchDiv-a">水印设置</a>
+	        <a href="javascript:void(0)" class="js-switchDiv-a">接口设置</a>
+	        <a href="javascript:void(0)" class="js-switchDiv-a">其它设置</a>
+        </div>
+        <div class="clear"></div>												
+					<!--登录设置-->
+       <form action="${base}/admin/system/updateGlobalInfo.html" method="post">                                            
+        <div class="basic js-switchDiv" style="display:display;">
+	        <div class="name">
+	        	<p class="sys_title01" style="line-height:30px;">
+	        		<label style="width:130px;">是否永久开启验证码:</label>
+	        		
+	        		<input type="radio" class="choose01 js-member-vcode" value="0" name="perpetualVCode" <@sets.setRadio loginMap.perpetualVCode.content 0/> >&nbsp;&nbsp;是
+	        	<input type="radio" class="choose01 js-member-vcode" value="1" name="perpetualVCode" <@sets.setRadio loginMap.perpetualVCode.content 1/> >&nbsp;&nbsp;否
+	             </p> 
+	        </div>
+	        <div class="suffix01 js-vcode-div"  <@sets.setShow loginMap.perpetualVCode.content 0/> >
+	        	<label>错误</label><input type="text" name="errorCountVCode" value="${loginMap.errorCountVCode.content}" style="width:60px;" class="txtAddproduct">&nbsp;&nbsp;次开启验证码
+	        </div>
+	        <div class="name">
+	        	<label>邮件服务器：</label><input type="text" name="mailServers" value="${loginMap.mailServers.content}" class="txtAddproduct">
+	        </div>
+	        <div class="name">
+	        	<label>用户名：</label><input type="text" name="mailUserName" value="${loginMap.mailUserName.content}" class="txtAddproduct">
+	        </div>
+	        <div class="name">
+	        	<label>密码：</label><input type="text" name="mailPassword" value="${loginMap.mailPassword.content}" class="txtAddproduct">
+	        </div>
+	        <div class="name">
+	        	<label>端口：</label><input type="text" name="mailPort" value="${loginMap.mailPort.content}" class="txtAddproduct">
+	        </div>
+	        <div class="name">
+	        	<label>找回密码标题：</label><input type="text" name="retrievePasswordTitle" value="${loginMap.retrievePasswordTitle.content}" class="txtAddproduct">
+	        </div> 
+	        <div class="">
+	        
+	        	<label>找回密码内容：</label>
+	        	<textarea name="retrievePasswordContent" class="sys_input02">${loginMap.retrievePasswordContent.content}</textarea>
+	        </div>   	
+	        <div class="name">
+	        	<label>会员注册标题：</label><input type="text" name="registTitle" value="${loginMap.registTitle.content}" class="txtAddproduct">
+	        	<p></p>
+	        </div> 
+	        <div class="">
+	        	<label>注册内容：</label>
+	        	<textarea name="registContent"  class="sys_input02">${loginMap.registContent.content}</textarea>
+	        </div>   	  	
+        </div>
+    	<div class="clear"></div>
+    	</form>
+        																			<!--会员设置-->
+   <form action="${base}/admin/system/updateGlobalInfo.html" method="post">    
+    <div class="vip_setting js-switchDiv" style="display:none;">
+    	<div class="name">
+        	<p class="sys_title01"><label>是否开放会员功能:</label>
+        		<input type="radio" class="choose01 js-member-open" value="0" name="disparkMember" <@sets.setRadio memberMap.disparkMember.content 0/> >&nbsp;&nbsp;是
+	        	<input type="radio" class="choose01 js-member-open" value="1" name="disparkMember" <@sets.setRadio memberMap.disparkMember.content 1/> >&nbsp;&nbsp;否
+        	</p>
+        </div>
+        <div class="name">
+        	<p class="sys_title01">
+        		<label>是否开启注册：</label>
+        		<input type="radio" class="choose01" name="disparkRegist" value="0" <@sets.setRadio memberMap.disparkRegist.content 0/> >&nbsp;&nbsp;是
+        		<input type="radio" class="choose01" name="disparkRegist" value="1" <@sets.setRadio memberMap.disparkRegist.content 1/> >&nbsp;&nbsp;否
+        	</p>
+        </div>
+        <div class="name">
+        	<p class="sys_title01">
+        		<label>是否开启审核：</label>
+        		<input type="radio" class="choose01" name="registAudit" value="0" <@sets.setRadio memberMap.registAudit.content 0/> >&nbsp;&nbsp;是
+        		<input type="radio" class="choose01" name="registAudit" value="1" <@sets.setRadio memberMap.registAudit.content 1/> >&nbsp;&nbsp;否
+        	</p>
+        </div>
+        <div class="suffix01">
+        	<p class="sys_title01"><label style="width:130px;">用户名最小长度：</label><input type="text" name="userNameLengthMin" value="${memberMap.userNameLengthMin.content}" class="auth">&nbsp;&nbsp;个字符</p>
+        </div>
+        
+        <div class="suffix01">
+        	<p class="sys_title01"><label>用户头像宽高：</label>
+        	<input name="userAvatarWH" value="" type="hidden">
+        	<input type="text" name="userAvatarWidth" alt="" value="${memberMap.userAvatarWH.content?split(",")[0]}" class="auth">X
+        	<input type="text" name="userAvatarHeight" value="${memberMap.userAvatarWH.content?split(",")[1]}" class="auth">px&nbsp;&nbsp;个字符
+        	</p>
+        </div>
+        <div class="suffix01">
+        	<p class="sys_title01">
+        		<label>密码最小长度：</label>
+        		&nbsp;&nbsp;<input type="text" name="passwordlengthMin" value="${memberMap.passwordlengthMin.content}" class="auth">&nbsp;&nbsp;个字符</p>
+        </div>
+        <div class="name">
+        	<p class="sys_title01">
+        		<label>用户名保留字：</label>
+	        	<input type="text" name="userNameRetention" value="${memberMap.userNameRetention.content}" class="txtAddproduct">
+        	</p>
+        </div>
+    </div>
+   	</form>																	       <!--水印设置-->
+    
+    <form action="${base}/admin/system/updateGlobalInfo.html" method="post">
+    <div class="watermark js-switchDiv"  style="display:none;">
+    	<div class="name">
+        	<p class="sys_title01" style="line-height:30px;">
+        		<label>是否开启水印：</label>
+        		<input type="radio" class="choose01 js-open-waterPrint" value="0" name="watermarkOpen" <@sets.setRadio waterMap.watermarkOpen.content 0/> >&nbsp;&nbsp;是
+        		<input type="radio" class="choose01 js-open-waterPrint" value="1" name="watermarkOpen" <@sets.setRadio waterMap.watermarkOpen.content 1/> >&nbsp;&nbsp;否
+        	</p>
+        </div>
+        
+        <div class="js-waterPrint-div" <@sets.setShow waterMap.watermarkOpen.content 0/>>
+	        <div class="suffix01">
+	        	<p class="sys_title01"><label>水印宽高:</label>
+	        	<input name="watermarkWH" value="" type="hidden">
+	        	<input type="text" name="watermarkWidth" value="${waterMap.watermarkWH.content?split(",")[0]}" class="auth">X
+	        	<input type="text" name="watermarkHeight" value="${waterMap.watermarkWH.content?split(",")[1]}" class="auth">&nbsp;&nbsp;像素
+	        	</p>
+	        </div>
+	        <div class="suffix01">
+	        	<p class="sys_title01"><label>水印类型：</label>
+		        	<select name="watermarkType" class="js-effect-type">
+			        	<option value="0" <@sets.setSelected waterMap.watermarkType.content "0" /> >文字效果</option>
+			        	<option value="1" <@sets.setSelected waterMap.watermarkType.content "1" /> >图片效果</option>
+		        	</select>
+	        	</p>
+	        </div>
+	        <div class="suffix01">
+	        	<p class="sys_title01">
+	        		<label>透明度：</label>
+	        		<input type="text" name="watermarkLucid" value="${waterMap.watermarkLucid.content}" class="auth">%&nbsp;&nbsp;
+	        	</p>
+	        </div>
+	        <div class="suffix01">
+	        	<p class="sys_title01">
+	        		<span>水印起点位置：</span>
+		        	<select name="watermarkLocate">
+			        	<option value="1" <@sets.setSelected waterMap.watermarkLocate.content "1" /> >右下</option>
+			        	<option value="2" <@sets.setSelected waterMap.watermarkLocate.content "2" /> >左上</option>
+			        	<option value="3" <@sets.setSelected waterMap.watermarkLocate.content "3" /> >左下</option>
+			        	<option value="4" <@sets.setSelected waterMap.watermarkLocate.content "4" /> >右上</option>
+			        	<option value="5" <@sets.setSelected waterMap.watermarkLocate.content "5" /> >居中</option>
+		        	</select>
+	        	</p>
+	        </div>
+	        
+	        <div class="suffix02 js-waterType-word" <@sets.setShow waterMap.watermarkType.content 0/>>
+	        	<p class="sys_title01"><label>水印文字信息</label><input type="text" name="watermarkText" value="${waterMap.watermarkText.content}" class="sys_input01"></p>
+	            <p class="sys_title01"><label>字体大小</label><input type="text" name="watermarkFontSize" value="${waterMap.watermarkFontSize.content}" class="auth">&nbsp;px</p>
+	            <p class="sys_title01"><label>字体颜色</label><input type="text" name="watermarkColor" value="${waterMap.watermarkColor.content}" class="auth"></p>
+	        	
+	        </div>
+	        
+	        <div class="suffix01 js-waterType-image" <@sets.setShow waterMap.watermarkType.content 1/>>
+	        	<p class="sys_title01">
+	        	图片：<input type="text" value="${waterMap.watermarkImg.content}" name="watermarkImg">
+	        	<input type="file" class="upload js-img-imgurls" multiple="true">
+	        	<span></span>
+	        	</p>
+	        </div>
+        </div>
+    </div>
+   </form>																				<!--接口设置-->	
+    	
+    	
+   <form action="${base}/admin/system/updateGlobalInfo.html" method="post">				
+    <div class="port js-switchDiv"  style="display:none;">
+    	<div>
+        	<p class="sys_title01">登录接口开放：</p>
+        	<p class="sys_title01">QQ登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开放地址名称：<input type="text" name="qqLogin" value="${portMap.qqLogin.content}" class="txtAddproduct"></p>
+            <p class="sys_title01">微博登录&nbsp;&nbsp;&nbsp;&nbsp;开放地址名称：<input type="text" name="microblogLogin" value="${portMap.microblogLogin.content}" class="txtAddproduct"></p>
+            <p class="sys_title01">微信登录&nbsp;&nbsp;&nbsp;&nbsp;开放地址名称：<input type="text" name="weChatLogin" value="${portMap.weChatLogin.content}" class="txtAddproduct"></p>
+        </div>	
+    	<div class="suffix03">
+        	<p class="sys_title01">
+        		<span class="distance">是否开放本站接口：</span>
+        		<input type="radio" class="choose01 js-open-local" value="0" name="webSitePort" <@sets.setRadio portMap.webSitePort.content 0/> >&nbsp;&nbsp;是
+        	<input type="radio" class="choose01 js-open-local" value="1" name="webSitePort" <@sets.setRadio portMap.webSitePort.content 1/> >&nbsp;&nbsp;否
+        	</p>
+        	<p <@sets.setShow portMap.webSitePort.content 0/> class="js-open-local-p sys_title04">开放地址名称：
+        		<input type="text" name="webSiteUrl" value="${portMap.webSiteUrl.content}" class="txtAddproduct"></p>
+        </div>	
+    </div>
+   </form>	
+    	
+    																				<!--其它设置-->
+    <div class="other js-switchDiv"></div>  
+    
+    <div class="save">
+		<button class="js-save-form save_btn">保存</button>
+	</div> 
+                                                                                    
+    </div>
+    
+     
+</@frame> 
+
+ <script type="text/javascript" src="${base}/res/common/js/jquery/jquery.validity.js"></script>
+ 
+ <script type="text/javascript">
+	
+	$(function() {
+		$("a.js-switchDiv-a").click(function(){
+			$("div.js-switchDiv").hide(); 
+			var _index = $(this).index();
+			$("div.js-switchDiv").eq(_index).show(); 
+		})
+        $("form.js-form").validity(function() {
+           //$("input.required").require("不能为空");
+        });
+		
+		$("input.js-member-vcode").click(function(){
+			if($(this).val()==0){
+				$("div.js-vcode-div").show();
+			}else{
+				$("div.js-vcode-div").find("input").val("");
+				$("div.js-vcode-div").hide();
+			}
+		});
+		$("input.js-open-waterPrint").click(function(){
+			if($(this).val()==0){
+				$("div.js-waterPrint-div").show();
+			}else{
+				$("div.js-waterPrint-div").hide();
+			}
+		});
+		
+		$("select.js-effect-type").change(function(){
+			if($(this).val()==1){
+				$("div.js-waterType-word").hide();
+				$("div.js-waterType-image").show();
+			}else{
+				$("div.js-waterType-word").show();
+				$("div.js-waterType-image").hide();
+			}
+		})
+		
+		$("input.js-open-local").click(function(){
+			if($(this).val()==0){
+				$("p.js-open-local-p").show();
+			}else{
+				$("p.js-open-local-p").hide();
+			}
+		});
+		
+		
+		$("button.js-save-form").click(function(){
+			var w = $("input[name=watermarkWidth]").val();
+			var h = $("input[name=watermarkHeight]").val();
+			if(w!=""&&h!=""){
+				$("input[name=watermarkWH]").val(w+","+h);			
+			}
+			
+			var w2 = $("input[name=userAvatarWidth]").val();
+			var h2 = $("input[name=userAvatarHeight]").val();
+			if(w2!=""&&h2!=""){
+				$("input[name=userAvatarWH]").val(w2+","+h2);			
+			}
+			
+			$("div.js-switchDiv:visible").parent("form").submit();
+		});
+		
+		
+		$('input.js-img-imgurls').change(function () {
+		    var _this=$(this);
+			var formData = new FormData();
+		    formData.append('imgurls', _this.get(0).files[0]);
+		    
+		    $.ajax({
+		        url: '${base}/admin/system/uploadWaterImg.html',
+		        type: 'POST',
+		        data: formData,
+		        processData: false,
+		        contentType : false, 
+		        dataType:'json',
+		        success:function(re){
+		        	if(re.result==0){
+			        	_this.prev("input").val(re.fileName);
+		        		_this.next("span").text("上传成功！");
+		        	}else{
+		        		_this.next("span").text("上传失败！");
+		        	}
+		        }
+		    });
+		});
+		
+	})
+	
+ 
+ </script>

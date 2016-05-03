@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bhe.dao.mybatis.mapper.ArticleClassEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.bhe.dao.mybatis.model.ArticleClassEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="nameCn" property="namecn" jdbcType="VARCHAR" />
+    <result column="showInNav" property="showinnav" jdbcType="INTEGER" />
+    <result column="parentId" property="parentid" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="resoureceid" property="resoureceid" jdbcType="BIGINT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="nameEn" property="nameen" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, nameCn, showInNav, parentId, type, resoureceid, description, nameEn
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bhe.dao.mybatis.model.ArticleClassEntityCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_article_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_article_class
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_article_class
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bhe.dao.mybatis.model.ArticleClassEntityCriteria" >
+    delete from t_article_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bhe.dao.mybatis.model.ArticleClassEntity" >
+    insert into t_article_class (id, nameCn, showInNav, 
+      parentId, type, resoureceid, 
+      description, nameEn)
+    values (#{id,jdbcType=BIGINT}, #{namecn,jdbcType=VARCHAR}, #{showinnav,jdbcType=INTEGER}, 
+      #{parentid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{resoureceid,jdbcType=BIGINT}, 
+      #{description,jdbcType=VARCHAR}, #{nameen,jdbcType=VARCHAR})
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.bhe.dao.mybatis.model.ArticleClassEntity" >
+    insert into t_article_class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="namecn != null" >
+        nameCn,
+      </if>
+      <if test="showinnav != null" >
+        showInNav,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="resoureceid != null" >
+        resoureceid,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="nameen != null" >
+        nameEn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="namecn != null" >
+        #{namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="showinnav != null" >
+        #{showinnav,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="resoureceid != null" >
+        #{resoureceid,jdbcType=BIGINT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="nameen != null" >
+        #{nameen,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterType="com.bhe.dao.mybatis.model.ArticleClassEntityCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_article_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_article_class
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.namecn != null" >
+        nameCn = #{record.namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showinnav != null" >
+        showInNav = #{record.showinnav,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentid != null" >
+        parentId = #{record.parentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.resoureceid != null" >
+        resoureceid = #{record.resoureceid,jdbcType=BIGINT},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameen != null" >
+        nameEn = #{record.nameen,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_article_class
+    set id = #{record.id,jdbcType=BIGINT},
+      nameCn = #{record.namecn,jdbcType=VARCHAR},
+      showInNav = #{record.showinnav,jdbcType=INTEGER},
+      parentId = #{record.parentid,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      resoureceid = #{record.resoureceid,jdbcType=BIGINT},
+      description = #{record.description,jdbcType=VARCHAR},
+      nameEn = #{record.nameen,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bhe.dao.mybatis.model.ArticleClassEntity" >
+    update t_article_class
+    <set >
+      <if test="namecn != null" >
+        nameCn = #{namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="showinnav != null" >
+        showInNav = #{showinnav,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="resoureceid != null" >
+        resoureceid = #{resoureceid,jdbcType=BIGINT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="nameen != null" >
+        nameEn = #{nameen,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bhe.dao.mybatis.model.ArticleClassEntity" >
+    update t_article_class
+    set nameCn = #{namecn,jdbcType=VARCHAR},
+      showInNav = #{showinnav,jdbcType=INTEGER},
+      parentId = #{parentid,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      resoureceid = #{resoureceid,jdbcType=BIGINT},
+      description = #{description,jdbcType=VARCHAR},
+      nameEn = #{nameen,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_article_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

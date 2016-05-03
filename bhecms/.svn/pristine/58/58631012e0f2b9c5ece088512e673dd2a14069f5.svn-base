@@ -1,0 +1,87 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/articleManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+<@frame> 
+	<div class="artLocation">您当前的位置：系统管理>登陆日志</div>
+	<div class="wel_content">
+	
+  		<!--操作日志-->
+		<!--登录日志-->
+	<div class="login_note">
+		<p>用户名/标题 : <input type="text" value="${param}" class="js_txtsearch txtAddproduct"><button class="btnsearch search">搜索</button></p>
+		<table width="98%" min-width="800" border="1" cellspacing="0" cellpadding="0" class="art_table">
+            	<tr class="user_list_nav">
+            		<td style="display:none">选中</td>
+            		<td style="display:none">ID</td>
+            		<td>用户名</td>
+            		<td>时间</td>
+            		<td>IP</td>
+            	    <td>标题</td>
+            	    <td style="display:none">操作</td>
+            	</tr>
+            	<#if (pageInfoMap.count>0)>
+	       		<#assign entityList=pageInfoMap.list />                                              
+	            	<#list entityList as entity>
+            	<tr>
+            		<td style="display:none"><input type="checkbox" ></td>
+            		<td style="display:none">${entity_index}</td>
+            		<td>${entity.username}</td>
+            		<td>
+            			<#if (entity.createtime)??>
+	        				${entity.createtime?string("yyyy-MM-dd HH:mm:ss")}
+		        		</#if>
+            		</td>
+            		<td>${entity.ip}</td>
+            		<td>${entity.title}</td>
+            		<td style="display:none">删除</td>
+            	
+            	</tr>
+          	</#list>
+           </#if>
+		</table>
+		
+		<#---
+	    <div class="login_note_con">
+	    	<p class="login_note_title01"><span>ID</span><span>用户</span><span>时间</span><span>IP</span><span>标题</span><span>内容</span></p>
+	        <p class="login_note_list"><span><input type="checkbox">ID</span><span>张三</span><span>2015-07-20</span><span>192.168.1.01</span><span>钱已经归还</span><span>今天已经将钱归还...</span><span>删除</span></p>
+	        <p class="login_note_list"><span><input type="checkbox">ID</span><span>张三</span><span>2015-07-20</span><span>192.168.1.01</span><span>钱已经归还</span><span>今天已经将钱归还...</span><span>删除</span></p>
+	         <p class="login_note_list"><span><input type="checkbox">ID</span><span>张三</span><span>2015-07-20</span><span>192.168.1.01</span><span>钱已经归还</span><span>今天已经将钱归还...</span><span>删除</span></p>
+	         <p class="login_note_list"><span><input type="checkbox">ID</span><span>张三</span><span>2015-07-20</span><span>192.168.1.01</span><span>钱已经归还</span><span>今天已经将钱归还...</span><span>删除</span></p>
+	         <p class="login_note_list"><span><input type="checkbox">ID</span><span>张三</span><span>2015-07-20</span><span>192.168.1.01</span><span>钱已经归还</span><span>今天已经将钱归还...</span><span>删除</span></p>
+	    </div>
+	    
+	    -->
+	    <div class="paging"><button style="display:none">批量删除</button>
+	    	 <div class="pagination right">
+			    <a href="#" class="first" data-action="first">&laquo;</a>
+			    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+			    <input type="text" readonly="readonly" data-max-page="${pageInfoMap.countpage}" />
+			    <a href="#" class="next" data-action="next">&rsaquo;</a>
+			    <a href="#" class="last" data-action="last">&raquo;</a>
+		</div>
+	    </div>
+	</div>
+
+
+</div>
+</@frame>
+<script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"  ></script>
+<script>
+
+$('.pagination').jqPagination({
+	current_page:'${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+	max_page:'${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+    paged: function(page) {
+    	window.location.href = "${base}/admin/system/logManage.html?pageIndex="
+			+ page + "&param="+$('.js_txtsearch').val()}
+});
+//条件查询
+$('.search').click(function(){
+	var param = $('.js_txtsearch').val();
+	
+	window.location.href = '${base}/admin/system/logManage.html?&param=' + param;
+	 
+});
+</script>

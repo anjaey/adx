@@ -1,0 +1,261 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/individualUser.css">
+
+<@frame>
+<div class="container" style="margin-top: 137px;">
+
+	<div class="content">
+		<div class="contentLeft">
+			<dl>
+				<dt>
+					<img src="${base}/res/web/images/user_center.png">
+					
+				</dt>
+				<dd>
+					<span class="font14 red">${entity.username}</span>
+				</dd>
+			</dl>
+			<h3 class="font18">帐号管理</h3>
+			<ul>
+				<li><a href="${base}/account/toAccountCenter.html" class="font14 gray"<@sets.setCurr currIndex 1 />>安全设置</a></li>
+				<li><a href="${base}/account/toOrderForm.html?orderType=0" class="font14 gray"<@sets.setCurr currIndex 2 />>订单详情</a></li>
+				<li><a href="${base}/account/toPersonalinfo.html" class="font14 gray"<@sets.setCurr currIndex 3 />>个人信息</a></li>
+				<li><a href="${base}/account/toShippingAddress.html" class="font14 gray"<@sets.setCurr currIndex 4 />>收货地址</a></li>
+<!-- 				<li><a href="${base}/account/toStationLetter.html" class="font14 gray"<@sets.setCurr currIndex 5 />>站内信息</a></li> -->
+			</ul>
+		</div>
+		<div class="contentRight">
+			<p class="font14 fontWeight">收货地址</p>
+			<p class="font12">
+				<a class="colorOrange">新增收货地址</a>电话号码、手机号选填一项,其余均为必填项
+			</p>
+			<div class="left conDetail colorGary shippingAddress" >
+				<form class="js_useraddress">
+					<input name="id" type="hidden" />
+					<p>
+	                	<span>*个人所在地：</span><select class="addressSelect js-dataEle" name="province"  id="s_province" data-name="province"><option>省份</option></select>
+	                    <select class="addressSelect js-dataEle" id="s_city" name="city"  data-name="city"><option>地级市</option></select>
+	                    <select class="addressSelect js-dataEle" id="s_county" name="districts" data-name="districts"><option>市、县级市</option></select>
+	                </p>
+	                <p><span class="letterDistance01">详细地址：</span><textarea  class="detailAddress js-detailAddress" name="address" data-name="address"></textarea></p>
+	                <p><span class="letterDistance01">邮编：</span><input type="text" value="" name="zipcode" class="middleInput js-dataEle" data-name="zipCode"></p>
+	                <p><span class="letterDistance">*收货人姓名：</span><input type="text" value="" name="username" class="middleInput js-dataEle"  data-name="username"></p>
+	                <p><span class="letterDistance01">*手机号码：</span><input type="text" value="" name="mobile" class="longInput js-mobile"><a class="red">（手机、固定电话至少填写一个）</a></p>
+	                <p><span>固定电话：</span><input type="text" value="区号" class="shortInput js-dataPhone">——<input type="text" value="电话号码" class="middleInput js-dataPhone">——<input type="text" value="分机号" class="shortInput js-dataPhone"></p>
+	                <p class="defaultAdd"><input type="checkbox" class="select_box js-isdefault" name="isdefault" value="1"><span>设置为默认地址</span></p>
+				</form>
+                <p><button class="sureBtn ensure js-subAddress">确认收货信息</button></p>
+            </div>  
+			
+			<table width="1008" border="0" cellpadding="0" cellspacing="0" class="addressTable">
+				<tr>
+					<th><span>收货人</span></th>
+					<th>所在地区</th>
+					<th>详细地址</th>
+					<th>邮编</th>
+					<th>电话/手机</th>
+					<th>操作</th>
+					<th>&nbsp;</th>
+				</tr>
+				<#list entityList as entity>
+					<tr>
+						<td>${entity.username}</td>
+						<td>${entity.province} ${entity.city} ${entity.districts}</td>
+						<td>${entity.address}</td>
+						<td>${entity.zipcode}</td>
+						<td>${entity.mobile}</td>
+						<td><a href="javascript:void(0);" class="js_toUpduseraddress" id="${entity.id}">修改/</a><a href="javascript:void(0);" class="js_doDeluseraddress" id="${entity.id}">删除</a></td>
+						<#if entity.isdefault == 1>
+							<td></td>
+						<#else>
+							<td><button class="js_doUpddefault" id="${entity.id}">默认地址</button></td>
+						</#if>
+					</tr>
+				</#list>
+			</table>
+		</div>
+	</div>
+</div>
+</@frame>
+<script type="text/javascript" src="${base}/res/common/js/area.js"></script>
+<script>
+	<#if !userAddressList?has_content>
+	_init_area();
+	</#if>
+</script>
+<script>
+$(".js_doDeluseraddress").click(function(){
+	if(confirm("是否删除？")){
+		var data = doDeluseraddress($(this).attr("id"));
+		if(data.rst == 1){
+			window.location.reload();
+		}else{
+			alert("删除失败");
+		}
+	}
+});
+
+$(".js_doUpddefault").click(function(){
+	var data = doUpddefault($(this).attr("id"));
+	if(data.rst == 1){
+		window.location.reload();
+	}else{
+		alert("修改失败");
+	}
+});
+
+$(".js_toUpduseraddress").click(function(){
+	$(".js_useraddress")[0].reset();
+	var data = toUpduseraddress($(this).attr("id"));
+	$(".js-dataPhone").each(function(k,v){
+		$(this).val(data.phone.split("-")[k]);
+	});
+	$(".js_useraddress select").each(function(k,v){
+		$(this).children("option[value="+data.province+"]").attr("selected",true).change();
+		$(this).children("option[value="+data.city+"]").attr("selected",true).change();
+		$(this).children("option[value="+data.districts+"]").attr("selected",true).change();
+	});
+	
+	$.each(data,function(k,v){
+		if($.trim(v) != ""){
+			$(".js_useraddress input[name="+k+"][type=radio][value='"+v+"']").click();
+			$(".js_useraddress input[name="+k+"][type=checkbox][value='"+v+"']").click();
+			$(".js_useraddress input[name="+k+"][type=text]").val(v);
+			$(".js_useraddress textarea[name="+k+"]").text(v);
+			$(".js_useraddress input[name="+k+"][type=hidden]").val(v);
+		}
+	});
+});
+</script>
+<script>
+	/* ajax */
+	function toUpduseraddress(id){
+		$.ajax({
+			type:"post",
+			url:"${base}/account/getUserAddressById.html",
+			dataType:"json",
+			data:{
+				id:id,
+			},
+			async:false,
+			success:function(json){
+				data = json;
+			},
+			error:function(){
+				alert("获取数据失败");
+			}
+		});
+		return data;
+	}
+	
+	function doDeluseraddress(id){
+		var data;
+		$.ajax({
+			type:"post",
+			url:"${base}/account/doDelUserAddress.html",
+			dataType:"json",
+			data:{
+				id:id,
+			},
+			async:false,
+			success:function(json){
+				data = json;
+			},
+			error:function(){
+				alert("删除失败");
+			}
+		});
+		return data;
+	}
+	
+	function doUpddefault(id){
+		var data;
+		$.ajax({
+			type:"post",
+			url:"${base}/account/doUpdDefault.html",
+			dataType:"json",
+			data:{
+				id:id,
+			},
+			async:false,
+			success:function(json){
+				data = json;
+			},
+			error:function(){
+				alert("修改失败");
+			}
+		});
+		return data;
+	}
+	
+</script>
+<script>
+$(function(){
+	$("button.js-subAddress").click(function(){
+		var obj={};
+		$("select.js-dataEle").each(function(k,v){
+			var name=$(this).attr("data-name");
+			var val=$(this).val();
+			obj[name]=val;
+		});
+		$("input.js-dataEle").each(function(k,v){
+			var name=$(this).attr("data-name");
+			var val=$(this).val();
+			obj[name]=val;
+		});
+		var phone="";
+		$("input.js-dataPhone").each(function(k,v){
+			phone+=v.value+"-";
+		});
+		phone=phone.substring(0,phone.length-1);
+		obj.phone=phone;
+		obj.id = $(".js_useraddress input[name=id]").val();
+		obj.mobile=$("input.js-mobile").val();
+		obj.address=$("textarea.js-detailAddress").val();
+		if($("input.js-isdefault").prop("checked")){
+			obj.isDefault=1;
+		}else{
+			obj.isDefault=0;
+		}
+		
+		$.post("${base}/web/product/updateShippingAddress.html",obj,function(data){
+				if(data.result==1){
+					window.location.reload();
+				}else if(data.result==-1){
+					alert("数据已达上限");
+				}else{
+					alert("操作失败！");
+				}
+			},"json");
+	
+	});
+	
+	$("button.js-subOrder").click(function(){
+		if(confirm("确定提交？")){
+			var valueMap = '${valueMap}';
+			var otherInfo={};
+			otherInfo.addId=$("input[name=addressId]:checked").val();
+			otherInfo.detailContent=$("textarea.js-detailContent").val();
+				var turnForm = document.createElement("form");   
+			    //一定要加入到body中！！   
+			    document.body.appendChild(turnForm);
+			    turnForm.method = 'post';
+				 turnForm.action = 'saveOrder.html';
+				// turnForm.target = '_blank';
+				//创建隐藏表单
+				var newElement = document.createElement("input");
+			    newElement.setAttribute("name","valueMap");
+			    newElement.setAttribute("type","hidden");
+			    newElement.setAttribute("value",valueMap);
+			    turnForm.appendChild(newElement);
+				newElement = document.createElement("input");
+			    newElement.setAttribute("name","otherInfo");
+			    newElement.setAttribute("type","hidden");
+			    newElement.setAttribute("value",$.toJSON(otherInfo));
+			    turnForm.appendChild(newElement);
+			    turnForm.submit();
+			}
+	});
+})
+</script>

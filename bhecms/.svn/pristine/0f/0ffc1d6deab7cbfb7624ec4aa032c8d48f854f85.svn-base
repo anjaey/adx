@@ -1,0 +1,116 @@
+@charset "utf-8";
+/* CSS Document */
+img{border:0px;}
+.select_nav{border-bottom:dashed 1px #ccc;margin:10px 0;height:25px;line-height:25px; text-indent:10px;}
+.ps_title{margin-bottom:20px;!important}
+.select_nav a{margin:0 10px;color:#00b165;}
+.select_nav span{color:#7f7f7f;}
+.ps_title01{margin-top:20px;margin-bottom:40px;}
+.sale_line{overflow:hidden;margin-bottom:60px;}
+.sale_main{margin:0 auto;}
+.pro_sale{width:900px;}
+.sale_one{width:248px;margin-right:52px;}
+.sale_img{border:solid 1px #ccc;width:248px;height:236px;}
+.sale_price{color:red;}
+.gray{color:#7f7f7f;}
+.sale_intro{border-top:solid 1px #CDCCCC;border-bottom:solid 1px #CDCCCC;line-height:22px;padding:5px 0;}
+/* .sale_buy button{width:117px;height:32px;background-color:#ee4800;margin-right:14px;color:white;float:left;} */
+/* .sale_buy a{display:block;width:117px;line-height:32px;background-color:#4292dc;float:left;text-align:center;color:white;} */
+
+.bannerBg{background:url(${picurl}) no-repeat center; background-size:100%;min-width:1200px;height:560px; z-index:1;}
+.line_last{margin-right:0;}
+.service{width:215px;height:174px;background-color:#006e9e;position:absolute;top:850px;right:-180px;}
+.conslut{margin-left:22px;padding-top:12px;position:relative;}
+.online{height:28px;background-image:url(../images/ps_user.png);background-repeat:no-repeat;}
+.online_text{margin-left:38px;line-height:28px;}
+.con_text{width:88px;width:100px;line-height:21px;background-color:white;box-shadow:4px 4px #373737;margin:8px 0;text-align:center;
+color:#ff8a00;}
+.model{position:absolute;left:90px;bottom:-18px;}
+.change01{position:absolute;left:850px;top:650px;}
+.change01 .black01_btn,.change01 .gray01_btn{display:block;width:19px;height:19px;margin:0 15px;float:left;}
+.change01 .black01_btn{background-image:url(../images/banner_btn01.png);}
+.change01 .gray01_btn{background-image:url(../images/banner_btn02.png);}
+.article_list{width:1200px;margin:0px auto;overflow:hidden;}
+.article_title{color:#006e9e;margin-bottom:20px;}
+.art_content a{color:#7f7f7f;font-size:16px;}
+.art_content li{margin-bottom:10px;padding-bottom:5px;}
+.art_btn{float:right;}
+.art_btn a{display:block;width:100px;margin:0 10px;color:#7f7f7f;background-color:#E5E4E4;line-height:40px;text-align:center;}
+.content_title{color:#006e9e;text-align:center;border-bottom:solid 4px #006e9e;line-height:42px;font-size:20px;}
+.art_time{margin-top:10px;}
+.art_content{margin-top:60px;}
+.article_list p{text-indent:2em;font-size:14px;}
+.article_list2 p{text-indent:0px;}
+.hei340{ height:350px;  color:#7f7f7f;}
+.js-prodcutList li{ width:248px; float:left; margin-top:26px; margin:0px 26px; height:500px;}
+.productListUlli{ margin-top:35px;}
+.js-nav-left{margin-top:22px;}
+.navLeftUlLi{background-color:#83beef; width:253px;height:38px;display:block;font-size:14px; color:#fff;line-height:38px; text-indent:35px; font-weight:blod; cursor:pointer;}
+
+/*产品对比页面*/
+.myCompareDiv{ width:250px; height:215px;}
+.myCompareDiv2{ margin-top:5px;}
+.myCompare ul li{  float:left; margin:21px; text-align:center;}
+.compareBG{background-color:#83beef;}
+.compareTalbe{ margin-top:21px;}
+.compareTalbe table{ width:852px; border:1px solid #ccc; margin-left:24px;text-align:center; color:#686868;}
+.compareTalbe table tr td{  border:1px solid #ccc; height:46px;}
+.bgccc{ background-color:#f0f1f2;}
+.bgCompare{ height:30px; background-color:#4292dc; color:#fff; line-height:30px; font-size:14px;}
+.compareBounced{ width:183px; height:220px; border:1px solid #ccc; text-indent:5px; position:fixed; right:8%; top:70%; background-color:#fff;}
+.compareBounced001{ width:171px; height:44px; border-bottom:1px solid #ccc; color:#7f7f7f; margin-left:5px; padding-top:10px;}
+.bounced{ width:135px; float:left;}
+.btnCompare{ width:76px; height:20px;line-height:20px; color:#fff; text-align:center; background-color:#4292dc;border-radius:4px; float:right; margin-right:5px;border:none;}
+.bounced01{ width:9px; height:10px; background:url(../images/close.png) no-repeat -43px -7px; display:block;float:right;}
+.news_price{ height:30px;line-height:30px;}
+/*解决方案样式开始*/
+.pro_name2{ float:right;}
+.solutionList{ margin:24px 9px; text-align:16px;}
+.left_titlePP p{ text-align:16px;}
+.solutionListTable tr td{ border:1px solid #83beef; width:231px;height:38px; text-indent:4px; color:#7f7f7f;}
+.solutionListTable tr td a{ color:#7f7f7f;}
+.manUser{ font-size:14px; color:#fff;  margin-top:20px;height:30px;background-color:#7f7f7f; line-height:30px;text-indent:9px; width:700px; }
+.contract{ margin-top:20px; height:100px; width:900px;}
+.contract ul,.champion ul{list-style:none; }
+.contract ul li{width:196px;height:100px; line-height:98px; float:left; margin:10px; border:1px solid #ccc;}
+.contract ul li img{ vertical-align:middle;}
+.champion{ margin-top:20px;}
+/* .champion ul li{ float:left; margin:10px; width:196px;} */
+.champion ul li{ float:left; margin:16px 23px;} 
+.solutionDiv{ width:196px; height:184px;border:1px solid #ccc;}
+.recommended{ width:79px; height:25px; border:1px solid #4292dc;font-size:14px; color:#fff; background-color:#4292dc; line-height:25px; text-align:center; margin-top:21px;}
+.recommended02{ color:#4292dc;}
+.js-detail:hover{cursor: pointer;}
+/*解决方案样式结束*/
+.namecn{ text-align:center; display:block; margin-top:5px; color:#323232;}
+.numberDetail{ width:38px; height:22px; border:1px solid #ccc; text-align:center; float:left;}
+
+/*我要询价弹框*/
+.xunPrice{ width:646px;height:437px; background-color:#fff; color:#686868;}
+.txtprice{ width:430px; height:37px; border:1px solid #4292dc; margin-left:25px;}
+.btnPrice{ width:97px; height:36px;text-align:center; line-height:36px; border-radius:4px; color:#fff; background-color:#4292dc; border:none; font-size:14px; float:right; margin-left:23px;}
+.txtareaprice2{ width:430px; height:97px; border:1px solid #4392dc; margin-left:25px;}
+.closeaa{ margin-right:5px; color:#fff;}
+.sale_buy{margin-top:17px;}
+/*下拉列表*/
+.openclose{
+	    width: 20px;
+	    height: 20px;
+	    cursor: pointer;
+	    position: absolute;
+	    margin: 10px 0px 0px 10px;
+	    background: url(../images/img_0002.png) no-repeat -19px 0px;
+	}
+	
+.openclosechange{
+		background: url(../images/img_0002.png) no-repeat 0px 0px;
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+<@frame> 
+
+	<div class="wel_content">
+    	<div class="sys_title">角色添加</div>
+     	<#include "admin/user/nav.html">
+        <div class="clear"></div>	
+	
+                                                        <!--角色添加-->                                                   
+        <div class="name">
+        	<p class="sys_title01">上级部门：</p>
+        	<p><input type="text" value="" class="sys_input01"></p>
+        </div>
+        <div class="name">
+        	<p class="sys_title01">部门名称：</p>
+        	<p><input type="text" value="" class="sys_input01"></p>
+        </div>
+        <div class="suffix01">
+        	<p class="sys_title01">部门排序:&nbsp;&nbsp;<input type="text" value="" class="auth"></p>
+		</div>
+      	<div class="suffix01">
+        	<p class="sys_title01">留言审核权限:
+            	<select><option>普通</option><option>投诉</option></select>
+            </p>
+		</div>
+	</div>
+	
+</@frame> 

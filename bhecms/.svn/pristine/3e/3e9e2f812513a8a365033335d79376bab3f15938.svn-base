@@ -1,0 +1,359 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/web/css/productInformation.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/web/css/productSale.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/common/jqpagination/css/jqpagination.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/common/js/sobox/popbox-style.css">
+
+<@frame>
+
+<div class="SafetyProtectionBg"
+	style="background: url(${picurl}) no-repeat center; width: 100%; height: 560px; z-index: 1;"></div>
+
+
+<!--第二屏 -->
+<div class="pi_content mart60">
+	<div class="pi_left left">
+		
+		<div class="left_title">出售产品分类</div>
+		<ul class="js-nav-left">
+			<#list cateList as nav>
+			<li cateid='${nav.id}'><span class="openclose"></span><span
+				class="navLeftUlLi">${nav.namecn}</span></li> </#list>
+		</ul>
+		<div class="left_title" style="margin-top: 30px;">宇田推荐产品</div>
+		<#list recomendList as entity>
+		<div class="left_pro s-detail" data-uuid="${entity.uuid}">
+			<div class="commonImageSize">
+				<a alt="推荐产品" href="productDetail.html?uuid=${entity.uuid}"><img
+					src="${entity.productImgurl}" width="228" height="179"></a>
+			</div>
+			<div class="left_text font14 js-detail" data-uuid="${entity.uuid}">${entity.modelname}
+				${entity.namecn}</div>
+		</div>
+		</#list>
+		<div class="left_title" style="margin-top: 30px;">联系方式</div>
+		<p class="font12 contact" style="text-indent: inherit;">公司全称：重庆宇田丹增机电技术有限公司</p>
+		<p class="font12 contact" style="text-indent: inherit;">地址：重庆市渝北区加州花园A4栋1-3号</p>
+		<p class="font12 contact" style="text-indent: inherit;">联系电话：023-67627211/67625227（技术支持）</p>
+		<p class="font12 contact" style="text-indent: inherit;">传真：（023）67620867</p>
+		<p class="font12 contact" style="text-indent: inherit;">
+			邮箱：cqyutian@163.com<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cfd626@163.com（销售）<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2575005954@qq.com（销售）
+		</p>
+	</div>
+	<!--第二屏右 -->
+	<div class="pi_right right">
+		
+		<div class="left_title05">筛选导航</div>
+		<div class="" style="margin-top:15px;">
+				<span class="marr15"><input  type="text" placeholder="请输入产品名" class="txtIndex js_productname"/></span>
+				<span class="marr15"><input  type="text" placeholder="价格区间"  class="txtIndex01 js_pricemin"/>到<input  type="text" placeholder="价格区间" class="txtIndex01 js_pricemax"/></span>
+				<span class="marr15"><input  type="button" value="搜索" class="btnIndexSearch js_search"/></span>
+		</div>
+		<div class="js-search-navinfo navscreening"></div>
+
+		<div class="js-search-nav searchnav clear"></div>
+
+		
+		
+		
+		<div class="sale_main">
+			<!-- -产品列表 ，js填充---- -->
+			<ul class="js-prodcutList productListUlli">
+			</ul>
+
+		</div>
+
+	</div>
+
+	<div class="pagination right mart15"></div>
+</div>
+
+
+<div class="clear"></div>
+</@frame>
+<script type="text/javascript"
+	src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+<script type="text/javascript"
+	src="${base}/res/common/js/sobox/jquery.sobox.js"></script>
+
+<script>
+
+//保存导航值
+var searchNavParam = [];
+var searchparam = [];
+$(".js_search").click(function(){
+	var param = {};
+	var productname =  $(".js_productname").val() == "" ? null : $(".js_productname").val();
+	var pricemin = $(".js_pricemin").val()== "" ? null : $(".js_pricemin").val();
+	var pricemax = $(".js_pricemax").val()== "" ? null : $(".js_pricemax").val();
+		param.productname = productname;
+		param.fileName = "search";
+		param.pricemin = pricemin;
+		param.pricemax = pricemax;
+	for (var i = 0; i <  searchparam.length; i++) {
+		var fileNamevar = searchparam[i].fileName;
+		if ("search" == fileNamevar) {
+			searchparam.splice(i,1);
+		}
+	}
+	if(productname == null && pricemin == null && pricemax == null){
+		return;
+	}else{
+		searchparam.push(param);
+	}
+	getProductList();
+});
+
+//id 表示分类id
+var sortid = "";
+
+$(function(){
+	var pageInfo = {};
+	var pid='${pid}';
+	var cid='${cid}';
+	
+	
+	//获取子导航，并且绑定获取列表方法
+	$("ul.js-nav-left li").find("span").click(function(){
+		var _parent=$(this).parent();
+		if(_parent.attr("loaded")==undefined){
+			$.ajax({type:"post",
+					url:"${base}/web/product/getChildTree.html",
+					async:false,
+					data:{parentId:_parent.attr("cateid")},
+					dataType:"json",
+					success:function(data){
+					if(data.length>0){
+						_parent.attr("loaded",true);
+						var html="";
+							html+='<ul class="nav_child">';
+							$.each(data,function(k,v){
+								html+="<li cateid="+v.id+"><span>"+v.namecn+"</span></li>";
+							})
+							html+="</ul>"
+							_parent.append(html);
+							
+							_parent.find("ul li").on("click",function(){ //绑定点击
+								$("li.active").removeClass("active");
+								$(this).addClass("active"); 
+								$("div.js-rigthTitle").text($(this).find("span").text());//标题
+								cid=$(this).attr("cateid");
+								var pageInfo = getProductList(cid);
+								setPageAction(pageInfo);
+							});;	
+					}
+			}});
+		}else if(_parent.attr("loaded")=="true"){
+			_parent.find("ul").slideToggle("slow");
+		}
+	});
+	
+	
+	if (pid==""&&cid=="") {//默认初始化第一个 一级导航
+		$("ul.js-nav-left li:eq(0)").find("span:eq(1)").click(); 
+		 cid=$("ul.nav_child:eq(0) li:eq(0)").addClass("active").attr("cateid");
+		 $("div.js-rigthTitle").text($("ul.nav_child:eq(0) li:eq(0)").text());
+		 pageInfo = getProductList(cid);
+		 setPageAction(pageInfo);
+	}else if (pid != "" && cid != "") {//从详情页面跳转回来
+		$("ul.js-nav-left li[cateid="+pid+"]").find("span").click();
+		 $("div.js-rigthTitle").text($("ul.js-nav-left li[cateid="+cid+"]").find("span").text());
+		 $("li[cateid='"+cid+"']").addClass("active");
+		 pageInfo = getProductList(cid);
+		 setPageAction(pageInfo);
+	}
+	
+	
+	function setPageAction(pageInfo){
+ 		if(pageInfo==null||pageInfo.count==0){
+			$('div.pagination').html("");
+			return;
+		}
+		var html='';
+		html+='<a href="#" class="first" data-action="first">&laquo;</a>';
+		html+='<a href="#" class="previous" data-action="previous">&lsaquo;</a>';
+		html+='<input type="text" readonly="readonly" data-max-page="" />';
+		html+='<a href="#" class="next" data-action="next">&rsaquo;</a>';
+		html+='<a href="#" class="last" data-action="last">&raquo;</a>';
+		$('div.pagination').html(html);
+		$('div.pagination').jqPagination({
+			current_page:pageInfo.pageIndex+1,
+			max_page:pageInfo.countPage,
+		    paged: function(page) {
+		    	getProductList(cid,page,9); 
+		    }
+		});
+	}
+});	
+
+//查询产品数据
+function getProductList(id,pageIndex,pageSize){
+	if (id == undefined || id == '' || id == null) {
+		id = sortid;
+	} else {
+		sortid = id;
+	}
+	
+	
+	var returnData = {};
+	var sendData = {};
+	sendData.id=id;
+	if(pageIndex!=undefined){
+		sendData.pageIndex=pageIndex;
+	}
+	if(pageSize!=undefined){
+		sendData.pageSize=pageSize;
+	}
+	
+	//获取筛选导航数据
+	var param = JSON.stringify(searchNavParam);
+	var search_param = JSON.stringify(searchparam);
+	sendData.param = param;
+	sendData.searchparam = search_param;
+	$.ajax({
+		type:'post',
+		url:"getProductList.html",
+		async:false,
+		data:sendData,
+		dataType:"json",
+		success:function(data){
+			var html="";
+			var productListMap = data.productListMap;
+			returnData = data.productBd;
+			if(productListMap!=null){
+				$.each(productListMap,function(k,v){
+					html+='<li>';
+					html+='<a href="productDetail.html?uuid='+v.uuid+'"><div class="commonImageSize"><img src="'+v.productImgurl+'" width="245" height="230"></div></a>';
+					if(v.isrent){
+						html+='<p class="sale_price font16"><img src="${base}/res/web/images/zu.png" >￥'+v.price.toFixed(2)+'</p>';
+					}else{
+						html+='<p class="sale_price font16">￥'+v.price.toFixed(2)+'</p>';
+					}
+// 					html+='<p class="gray font14"><span>产品名：'+v.namecn+'</span><br><span>品牌:'+v.brandName+'</span></p>';
+					html+='<p class="gray font14"><span class="commonColor">产品名：'+v.namecn+'</span><span class="commonColor">品牌:'+v.brandName+'</span></p>';
+					var str =v.introduce;
+					str=str.substring(0,50);
+					html+='<div class="sale_intro gray font14">'+str+'...</div>'; 
+					html+='<p class="sale_buy"><a class="js-addcar joinCheck" uuid="'+v.uuid+'">加入购物车</a><a href="productDetail.html?uuid='+v.uuid+'" class="checkDetail">查看详情</a></p>';
+					html+='</li>';
+				})
+				$("ul.js-prodcutList").html(html);
+			}else{
+				$("ul.js-prodcutList").html("没有查询到相关产品");
+				
+			}
+			
+			//获取筛选导航
+			var pfelistmap = data.pfelistmap;
+			if (pfelistmap != null) {
+				var html = "";
+				for (var i = 0; i < pfelistmap.length; i++) {
+					html += '<div class="select_nav font14">'
+				         +'<span>'+pfelistmap[i].name+'：</span>'
+				         +'';
+				    var pfelist = pfelistmap[i].pfelist;
+				    for (var n = 0; n < pfelist.length; n++) {
+					     html += '<a id = '+ pfelist[n].uuid +' fileName = "'+
+					     pfelist[n].filename +'" value = "'+ pfelist[n].value +'" attvalue = "'+ pfelist[n].attvalue +'" state = "'+
+					     pfelist[n].state +'" minvalue = "'+ pfelist[n].valuemin +'" maxvalue = "'+ pfelist[n].valuemax +
+					     '" href="javaScript:searchnav(\''+ pfelist[n].uuid +'\')">'+ pfelist[n].attvalue +'</a>';
+				    }
+				    html += '</div>';
+				}
+				$(".js-search-nav").html(html);
+			}
+	
+			$("a.js-addcar").click(function(){
+				$.ajax({
+					type:'post',
+					url:"addToCar.html",
+					async:false,
+					data:{"uuid":$(this).attr("uuid")},
+					dataType:"json",
+					success:function(data){
+						if(data.result==0){
+							$.sobox.confirm("温馨提示","您还未登陆，请先登陆后再添加，点击确定将跳转登陆页面",function(){
+								location.href="${base}/user/toLogin/loginPage.html";
+							},null); 
+						}else if(data.result==1){
+							$.sobox.pop({
+								  type : 'content', 
+								  content :'已经成功加入购物车',
+								  posType:'center',
+								  width:360,height:100,
+								  defaultShow:true,
+								  callback: function(){
+									 var time = 2;
+									 function task(){
+										 if(time>0){
+											 time=time-1;
+											 $("div.so-popbox-cont").html("已经成功加入购物车,"+time+"后自动关闭");
+											 setTimeout(task, 1000); 
+										 }else{
+											 $("span.s-sopop-close").click();
+										 }
+									 }
+									 task();
+								  }, 
+								
+							});
+						}else{
+							alert("添加失败");
+						}
+					}
+				});
+			});
+			
+		}
+	});
+	return returnData;
+}
+	
+
+//筛选导航管理
+function searchnav(uuid) {
+	var value = $("#"+uuid).attr("value");
+	var state = $("#"+uuid).attr("state");
+	var minvalue = $("#"+uuid).attr("minvalue");
+	var maxvalue = $("#"+uuid).attr("maxvalue");
+	var fileName = $("#"+uuid).attr("fileName");
+	var attvalue = $("#"+uuid).attr("attvalue");
+	var param = {};
+	param.value = value;
+	param.minvalue = minvalue;
+	param.maxvalue = maxvalue;
+	param.fileName = fileName;
+	param.state = state;
+	searchNavParam.push(param);
+	//隐藏当前选中的导航
+	$("#"+uuid).parent().hide();
+	/* $(".js-search-navinfo").append("<span id = '"+uuid+"span'>"+attvalue+"<a href = 'javaScript:delsearchnav(\""+ uuid +"\",\""+fileName+"\")'>X</a></span>"); */
+	$(".js-search-navinfo").append("<span id = '"+uuid+"span'>"+attvalue+"<a href = 'javaScript:delsearchnav(\""+ uuid +"\",\""+fileName+"\")' '><img src='${base}/res/web/images/XXList.png'  width='12' height='12' style='margin-top:-3px; '></a></span>");
+	getProductList(sortid);
+}
+
+//删除
+function delsearchnav(uuid, fileName) {
+	$("#"+uuid+"span").remove();
+	for (var i = 0; i <  searchNavParam.length; i++) {
+		var fileNamevar = searchNavParam[i].fileName;
+		if (fileName == fileNamevar) {
+			searchNavParam.splice(i,1);
+			$("#"+uuid).parent().show();
+		}
+	}
+	
+	getProductList(sortid);
+}	
+
+$(".js-detail").click(function(){
+	location.href="${base}/web/product/productDetail.html?uuid="+$(this).attr("data-uuid");
+})
+
+</script>

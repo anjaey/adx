@@ -1,0 +1,129 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/bhecms/css/admin/productManage.css">
+<@frame>
+	<div class="welcom">
+	<#if (states == 0)>
+		<div class="nav_position">您当前位置：<a href="${base}/admin/navigatebar/toNavigateBarIndex.html">内容管理</a>><a href="${base}/admin/navigatebar/toAddProductSearch.html">商品关键字搜索管理</a>>添加</div>
+	</#if>
+	<#if (states == 1)>
+		<div class="nav_position">您当前位置：<a href="${base}/admin/navigatebar/toNavigateBarIndex.html">内容管理</a>><a href="${base}/admin/navigatebar/toAddProductSearch.html">商品关键字搜索管理</a>>编辑</div>
+	</#if>
+	
+    	<div class="wel_content" >
+        	<form class="js_from_addProSearch" > 
+                <input  type="hidden" class="js_id" value="${id}"/> 	           
+                <p class="release">
+                    <label>标题：</label>
+                    <input  type="text"  class="js_pro_title txtAddproduct txtAddproduct2" name="title" value="${proSearch.title}"/>           
+                </p>
+                <p class="release">
+                    <label>最小价格：</label>
+                   <input  type="text" class="js_pro_beginpic txtAddproduct txtAddproduct2" name="beginpic" value="${proSearch.beginpic}" onblur="checkPri(this)"/><span class="js_minPri_err"></span>        
+                </p>
+                <p class="release">
+                    <label>最大价格：</label>
+                   <input  type="text" class="js_pro_endpic txtAddproduct txtAddproduct2"  name="endpic" value="${proSearch.endpic}" onblur="checkPri(this)" /><span class="js_maxPri_err"></span>         
+                </p>
+                <p class="release">
+                    <label>搜索次数：</label>
+                   <input  type="number" class="js_pro_count txtAddproduct txtAddproduct2" name="count" value="${proSearch.count}" /> 
+                </p>
+                 <div class="clear"></div> 
+                 <div style="margin-left:120px;">
+                 	<input class="js_submit btnsearch" type="button" value="提交"/>
+                 	<#if (states == 0)>
+	               	 <input type="reset" value="重置" class="js_reset btnsearch"/>
+	                </#if>  
+	               <!--  <input type="button" value="定时提交" class="btnsearch" style="width:70px;" /> -->
+                 </div>                  
+                
+            </form>
+        </div>
+    </div>
+</@frame>
+<script>
+	var result = 0;
+	function checkPri(_this){
+		//$.trim($('.js_pro_beginpic').val())
+		var price = $.trim($(_this).val());
+		var reg = /^(0|[1-9]\d*)$/;
+		if(price != null || price !=""){
+			if (!reg.test(price)) {
+				result++;
+				alert("请输入正确的数字!");
+			}else{
+				checkTwoPri();
+			}
+		}
+	} 
+	function checkTwoPri(){
+		var min = $.trim($('.js_pro_beginpic').val());
+		var max = $.trim($('.js_pro_endpic').val());
+		if(min != "" && max != ""){
+			if(parseInt(min)>=parseInt(max)){
+				result++;
+				alert("请输入正确的价格区间!");
+			}else{
+				result = 0;
+			}
+		}
+	}
+	
+	$(".js_reset").click(function(){
+		window.location.reload(true);
+	});
+	
+	$(".js_submit").click(function(){
+		if(result == 0){
+			if(${states} == 0){
+				$.ajax({
+	                type: "POST",
+	                url:"${base}/admin/navigatebar/addProductSearch.html",
+	                data:$('.js_from_addProSearch').serialize(),
+	                dataType:'json',
+	                async: false,
+	                error: function(request) {
+	                    alert("操作失败");
+	                },
+	                success: function(data) {
+	                	if(data.result == 1){
+	                		alert("添加成功!");
+	                   		 window.location.href="${base}/admin/navigatebar/toProductSearchManage.html";
+	                	}else{
+	                		alert("操作失败!");
+	                	}
+	                }
+	            });
+			}else{
+				$.ajax({
+	                type: "POST",
+	                url:"${base}/admin/navigatebar/updateProductSearch.html",
+	                data:{
+	                	id:$('.js_id').val(),
+	                	title:$('.js_pro_title').val(),
+	                	beginpic:$('.js_pro_beginpic').val(),
+	                	endpic:$('.js_pro_endpic').val(),
+	                	count:$('.js_pro_count').val()
+	                	},
+	                dataType:'json',
+	                async: false,
+	                error: function(request) {
+	                    alert("操作失败");
+	                },
+	                success: function(data) {
+	                	if(data.result == 1){
+	                		alert("编辑成功!");
+	                   		 window.location.href="${base}/admin/navigatebar/toProductSearchManage.html";
+	                	}else{
+	                		alert("操作失败!");
+	                	}
+	                }
+	            });
+			}
+		}else{
+			alert("请检查您输入的数据是否有误!");
+		}
+	});
+	
+</script>

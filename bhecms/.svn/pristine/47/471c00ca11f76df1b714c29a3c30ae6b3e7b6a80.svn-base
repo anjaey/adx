@@ -1,0 +1,198 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/productInformation.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/productSale.css">
+
+<style>
+	.openclose{
+	    width: 20px;
+	    height: 20px;
+	    cursor: pointer;
+	    position: absolute;
+	    margin: 10px 0px 0px 10px;
+	    background: url(../../res/images/img_0001.png) -147px -102px;
+	}
+	.navLeftUlLi{
+	    padding-left: 15px;
+    	width: 238px;
+    	background-color: #83beef;
+	    height: 40px;
+	    display: block;
+	    font-size: 16px;
+	    color: #fff;
+	    line-height: 40px;
+	    text-indent: 13px;
+	    cursor: pointer;
+	}
+	.openclosechange{
+		background: url('../../res/images/img_0001.png') -110px -95px;
+	}
+</style>
+<@frame>
+<div class="everyTopImage">
+	<img src="${base}/res/web/images/top111_01.png" width="1920" height="721"/>	
+</div>
+<div class="pi_content">
+	<div class="pi_left left">
+	   <div class="news_bottom_rInformation" style="margin-bottom:50px;">
+        	<div class="news_search mar0 height45" >
+            	<a class="pro_name">产品名</a>
+                <div class="search_k" >
+                <img src="${base}/res/web/images/search02.png" class="search01">
+                <input type="text"  class="theKey" value="请输入关键词">
+                </div>
+             </div>			 
+            <div class="news_price">
+            	<a class="pro_name">价格</a>
+                <input type="text" value="" class="price_k left" style="width:68px;">
+                <a>&nbsp;&nbsp;到&nbsp;&nbsp;</a>
+                <input type="text" value="" class="price_k" style="width:68px;">
+            </div>
+       </div>
+      
+	   
+      <div class="left_title mart15" >出售产品分类</div>
+      
+        <ul class="js-nav-left">
+	      <#list cateList as nav> 
+	      	<#if nav.id=cateEntity.parentid>
+	      	<li cateid='${nav.id}'><span class="openclose"></span><span  class="navLeftUlLi">${nav.namecn}</span>
+				<ul class="nav_child">
+					<#list brotherCateList as cate>
+				      	<li cateid='${cate.id}'><span>${cate.namecn}</span></li>
+					</#list>
+				</ul>	      	
+	      	<li>
+	      	<#else>
+	      	<li cateid='${nav.id}'><span class="openclose"></span><span  class="navLeftUlLi">${nav.namecn}</span><li>
+	      	
+	      	</#if>
+	      </#list> 
+        </ul>
+        
+        <div class="left_title mart15" >宇田推荐产品</div>
+        <#if recomendList?has_content>
+        	<#list recomendList as entity>
+		        <div class="left_pro">
+		        	<div class="left_img"><a alt="推荐产品" href="productDetail.html?uuid=${entity.uuid}"><img src="${entity.productImgurl}" width="237" height="137"></a></div>
+		            <div class="left_text font14">${entity.modelname} &nbsp; ${entity.brandName}</div>
+		        </div>
+        	</#list>
+        </#if>
+       <div class="left_title mart15">联系方式</div>
+        	<p class="font12 contact">公司：重庆宇田丹增机电技术有限公司</p>
+            <p class="font12 contact">地址：重庆市渝北区加州花园A4栋1-3号</p>
+            <p class="font12 contact">联系电话：023-6762721167625227（技术支持）</p>
+            <p class="font12 contact">传真：（023）67620867</p>
+            <p class="font12 contact">邮箱：cqyutian@163.com<br>cfd626@163.com（销售）<br>2575005954@qq.com（销售）</p>
+    </div>
+	<div class="pi_right right">
+		 <div class="left_title" >我的对比</div>		 		 
+		<div class="compareTalbe clear">
+			<table>
+				<tr>
+					<td class="bgccc">产品</td>
+					<td class="js-detail" data-uuid="${map.entity1.uuid}">
+						<div class="myCompareDiv">
+			 				<img  src="${map.entity1.url}" width="250" height="215"/>
+			 			</div>
+			 			<div class="myCompareDiv2">${map.entity1.namecn}</div>
+		 			</td>
+						<td class="js-detail" data-uuid="${map.entity2.uuid}">
+						<div class="myCompareDiv">
+			 				<img  src="${map.entity2.url}" width="250" height="215"/>
+			 			</div>
+			 			<div class="myCompareDiv2">${map.entity2.namecn}</div>
+		 			</td>
+		 				<td class="js-detail" data-uuid="${map.entity3.uuid}">
+						<div class="myCompareDiv">
+			 				<img  src="${map.entity3.url}" width="250" height="215"/>
+			 			</div>
+			 			<div class="myCompareDiv2">${map.entity3.namecn}</div>
+		 			</td>
+				</tr>
+				<tr>
+					<td class="bgccc">品牌</td>
+					<td>${map.entity1.brandname}</td>
+					<td>${map.entity2.brandname}</td>
+					<td>${map.entity3.brandname}</td>
+				</tr>
+				<tr>
+					<td class="bgccc">价格(￥)</td>
+					<td>${map.entity1.price}</td>
+					<td>${map.entity2.price}</td>
+					<td>${map.entity3.price}</td>
+				</tr>
+				<tr>
+					<td class="bgccc">适应场地</td>
+					<td>${map.entity1.appliesfield}</td>
+					<td>${map.entity2.appliesfield}</td>
+					<td>${map.entity3.appliesfield}</td>
+				</tr>
+				<tr>
+					<td class="bgccc">工作宽度</td>
+					<td>${map.entity1.workwidth}</td>
+					<td>${map.entity2.workwidth}</td>
+					<td>${map.entity3.workwidth}</td>
+				</tr>
+				<tr>
+					<td class="bgccc">转速</td>
+					<td>${map.entity1.rotatingspeed}</td>
+					<td>${map.entity2.rotatingspeed}</td>
+					<td>${map.entity3.rotatingspeed}</td>
+				</tr>
+				<tr>
+					<td class="bgccc">动力</td>
+					<td>${map.entity1.power}</td>
+					<td>${map.entity2.power}</td>
+					<td>${map.entity3.power}</td>
+				</tr>
+				<tr>
+					<td class="bgccc">马达功率</td>
+					<td>${map.entity1.motivation}</td>
+					<td>${map.entity2.motivation}</td>
+					<td>${map.entity3.motivation}</td>
+				</tr>
+				<tr>
+					<td class="bgccc">噪音</td>
+					<td>${map.entity1.noise}</td>
+					<td>${map.entity2.noise}</td>
+					<td>${map.entity3.noise}</td>
+				</tr>
+			
+			</table>		
+		</div>
+		
+		<!-- <div class="compareBounced">
+			<div class="bgCompare">[2/3]机型对比</div>
+			<div class="compareBounced001">
+				<div class="bounced">
+					BR-2000-DC 高速地面洗地机
+				</div>
+				<a class="bounced01"></a>
+			</div>
+			<div class="compareBounced001">
+				<div class="bounced">
+					BR-2000-DC 高速地面洗地机
+				</div>
+				<a class="bounced01"></a>
+			</div>
+			<div class="compareBounced001" style="border:0px;">
+				<div class="bounced">
+					BR-2000-DC 高速地面洗地机
+				</div>
+				<a class="bounced01"></a>
+			</div>
+			<input  type="button" value="进行对比" class="btnCompare"/>
+		</div> -->
+		
+		
+	</div>
+</div>
+<div class="clear"></div>
+</@frame>
+<script type="text/javascript"> 
+		$(".js-detail").click(function(){
+			location.href="${base}/web/product/productDetail.html?uuid="+$(this).attr("data-uuid");
+		})
+</script>

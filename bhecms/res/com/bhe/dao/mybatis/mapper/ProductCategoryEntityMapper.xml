@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bhe.dao.mybatis.mapper.ProductCategoryEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.bhe.dao.mybatis.model.ProductCategoryEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="nameCn" property="namecn" jdbcType="VARCHAR" />
+    <result column="nameEn" property="nameen" jdbcType="VARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="parentId" property="parentid" jdbcType="BIGINT" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="isShow" property="isshow" jdbcType="INTEGER" />
+    <result column="resourceid" property="resourceid" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="templateid" property="templateid" jdbcType="BIGINT" />
+    <result column="picUrl" property="picurl" jdbcType="VARCHAR" />
+    <result column="picHdUrl" property="pichdurl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, nameCn, nameEn, keywords, description, parentId, rank, unit, isShow, resourceid, 
+    type, templateid, picUrl, picHdUrl
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bhe.dao.mybatis.model.ProductCategoryEntityCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_product_category
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_category
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_product_category
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bhe.dao.mybatis.model.ProductCategoryEntityCriteria" >
+    delete from t_product_category
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bhe.dao.mybatis.model.ProductCategoryEntity" >
+    insert into t_product_category (id, nameCn, nameEn, 
+      keywords, description, parentId, 
+      rank, unit, isShow, 
+      resourceid, type, templateid, 
+      picUrl, picHdUrl)
+    values (#{id,jdbcType=BIGINT}, #{namecn,jdbcType=VARCHAR}, #{nameen,jdbcType=VARCHAR}, 
+      #{keywords,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{parentid,jdbcType=BIGINT}, 
+      #{rank,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}, #{isshow,jdbcType=INTEGER}, 
+      #{resourceid,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{templateid,jdbcType=BIGINT}, 
+      #{picurl,jdbcType=VARCHAR}, #{pichdurl,jdbcType=VARCHAR})
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.bhe.dao.mybatis.model.ProductCategoryEntity" >
+    insert into t_product_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="namecn != null" >
+        nameCn,
+      </if>
+      <if test="nameen != null" >
+        nameEn,
+      </if>
+      <if test="keywords != null" >
+        keywords,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="rank != null" >
+        rank,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="isshow != null" >
+        isShow,
+      </if>
+      <if test="resourceid != null" >
+        resourceid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="templateid != null" >
+        templateid,
+      </if>
+      <if test="picurl != null" >
+        picUrl,
+      </if>
+      <if test="pichdurl != null" >
+        picHdUrl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="namecn != null" >
+        #{namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameen != null" >
+        #{nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=BIGINT},
+      </if>
+      <if test="rank != null" >
+        #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null" >
+        #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="resourceid != null" >
+        #{resourceid,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="templateid != null" >
+        #{templateid,jdbcType=BIGINT},
+      </if>
+      <if test="picurl != null" >
+        #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="pichdurl != null" >
+        #{pichdurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterType="com.bhe.dao.mybatis.model.ProductCategoryEntityCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_product_category
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_product_category
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.namecn != null" >
+        nameCn = #{record.namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameen != null" >
+        nameEn = #{record.nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keywords != null" >
+        keywords = #{record.keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null" >
+        parentId = #{record.parentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.rank != null" >
+        rank = #{record.rank,jdbcType=INTEGER},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isshow != null" >
+        isShow = #{record.isshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.resourceid != null" >
+        resourceid = #{record.resourceid,jdbcType=BIGINT},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.templateid != null" >
+        templateid = #{record.templateid,jdbcType=BIGINT},
+      </if>
+      <if test="record.picurl != null" >
+        picUrl = #{record.picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pichdurl != null" >
+        picHdUrl = #{record.pichdurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_product_category
+    set id = #{record.id,jdbcType=BIGINT},
+      nameCn = #{record.namecn,jdbcType=VARCHAR},
+      nameEn = #{record.nameen,jdbcType=VARCHAR},
+      keywords = #{record.keywords,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      parentId = #{record.parentid,jdbcType=BIGINT},
+      rank = #{record.rank,jdbcType=INTEGER},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      isShow = #{record.isshow,jdbcType=INTEGER},
+      resourceid = #{record.resourceid,jdbcType=BIGINT},
+      type = #{record.type,jdbcType=INTEGER},
+      templateid = #{record.templateid,jdbcType=BIGINT},
+      picUrl = #{record.picurl,jdbcType=VARCHAR},
+      picHdUrl = #{record.pichdurl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bhe.dao.mybatis.model.ProductCategoryEntity" >
+    update t_product_category
+    <set >
+      <if test="namecn != null" >
+        nameCn = #{namecn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameen != null" >
+        nameEn = #{nameen,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=BIGINT},
+      </if>
+      <if test="rank != null" >
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null" >
+        isShow = #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="resourceid != null" >
+        resourceid = #{resourceid,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="templateid != null" >
+        templateid = #{templateid,jdbcType=BIGINT},
+      </if>
+      <if test="picurl != null" >
+        picUrl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="pichdurl != null" >
+        picHdUrl = #{pichdurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bhe.dao.mybatis.model.ProductCategoryEntity" >
+    update t_product_category
+    set nameCn = #{namecn,jdbcType=VARCHAR},
+      nameEn = #{nameen,jdbcType=VARCHAR},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      parentId = #{parentid,jdbcType=BIGINT},
+      rank = #{rank,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=VARCHAR},
+      isShow = #{isshow,jdbcType=INTEGER},
+      resourceid = #{resourceid,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      templateid = #{templateid,jdbcType=BIGINT},
+      picUrl = #{picurl,jdbcType=VARCHAR},
+      picHdUrl = #{pichdurl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_product_category
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

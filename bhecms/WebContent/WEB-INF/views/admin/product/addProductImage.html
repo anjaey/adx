@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新增产品图片</title>
+<link  href="css/adminIndex.css" rel="stylesheet" type="text/css"/>
+<link  href="css/articleManage.css" rel="stylesheet" type="text/css"/>
+<script src="js/jquery-1.8.3.min.js"></script>
+</head>
+<script>
+	$(document).ready(function(){
+							   //给标题加上背景色以及鼠标移动到某一行的事加上背景色
+							   $(".art_table tr:first-child").css("background-color","#f3f7fb");
+							   $(".art_table tr:not(:first-child)").hover(function(){
+															 $(this).css("background-color","#f3f7fb");
+															 },function(){
+																 $(this).css("background-color","#fff");
+															 });
+							   //切换选项卡							 
+								$(".art_list_all>.artListAll001:not(:first-child)").hide();
+								$('.art_header ul li').click(function(){										
+										$(this).addClass('art_on').siblings().removeClass('art_on');
+										$('.art_list_all>div:eq('+$(this).index()+')').show().siblings().hide();	
+									});
+							
+							   $(".art_header ul li:first-child").addClass("art_on");
+							   
+							   
+							   });
+
+</script>
+
+<body>
+	<div class="welcom">
+    	<div class="wel_content">
+        		<form>
+        		<div class="productImage">
+                	<p>
+                    	<label>主图：</label>
+                        <input  type="file" class="filevalue"/>
+                       	<div class="imageDiv">
+                        	<img src="image/tfboystwo.jpg" width="180" height="180"/>
+                        </div>                  	
+                    </p>
+                    <div class="clear"></div>
+                    <p>
+                    	<label>组图：</label>
+                        <input  type="file" class="filevalue"/>
+                        <div class="imageAll">
+                            <div class="imageDiv">
+                                <img src="image/tfboystwo.jpg" width="180" height="180"/>
+                            </div>
+                            <div class="imageDiv">
+                                <img src="image/tfboystwo.jpg" width="180" height="180"/>
+                            </div> 
+                            <div class="imageDiv">
+                                <img src="image/tfboystwo.jpg" width="180" height="180"/>
+                            </div>
+                        </div>                   	
+                    </p>
+                    <div class="clear"></div>
+                    <p>
+                    	<label>审核状态：</label>
+                        <select>
+                        	<option>请选择</option>
+                            <option>草稿</option>
+                            <option>待审核</option>
+                            <option>已审核</option>
+                        </select>
+                    </p>
+                    <div class="clear"></div>
+                     <p>
+                    	<label>绑定模板：</label>
+                        <input  type="text" class="txtvalue"/>
+                    </p>
+                 <input type="submit" value="提交" />
+                <input  type="reset" value="重置"/>
+                <input  type="button" value="定时提交"/>
+                
+                </div>
+                </form>
+        </div>
+    
+    </div>
+
+
+
+
+
+</body>
+</html>

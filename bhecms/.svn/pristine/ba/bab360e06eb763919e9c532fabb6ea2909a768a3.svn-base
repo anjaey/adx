@@ -1,0 +1,120 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/bhecms/css/admin/productManage.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/bhecms/css/articleManage.css">
+<@frame>
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/common/jqpagination/css/jqpagination.css">
+<div class="welcom">
+	<div class="artLocation">您当前的位置：商品管理>商品品牌</div>
+	<div class="wel_content">
+		<div class="art_list">
+			<div class="art_list_all">
+
+				<div class="artListAll001">
+
+					<div class="productSearchall">
+						<div class="left marb10">
+							搜索品牌 <input type="text" class="txtsearch" value="${namecn}" /><input type="button"
+								class="btnsearch js_search" value="搜索" />
+						</div>
+						<div class="right marr10">
+							<input onclick="toaddProInfo()" type="button" value="新增品牌"
+								class="btnsearch" />
+						</div>
+
+					</div>
+					<div class="clear"></div>
+					<table width="98%" border="0" cellspacing="0" cellpadding="0"
+						class="art_table productTable">
+
+						<tr>
+							<th>行号</th>
+							<th>品牌名称</th>
+							<th>排序</th>
+							<th>商品数</th>
+							<th>操作</th>
+						</tr>
+						<#assign entityList=pageInfoMap.list /> <#list entityList as entity>
+						<tr>
+							<td>${entity.rowno}</td>
+							<td>${entity.namecn}</td>
+							<td>${entity.rank}</td>
+							<td>${entity.procount}</td>
+							<td><a href="${base}/admin/product/proBrandInfo.html?id=${entity.id}&namecn=${entity.namecn}">编辑</a> | <a
+								href='javascript:delProBran("${entity.id}")'>删除</a></td>
+						</tr>
+						</#list>
+					</table>
+					<div class="mart15">
+						<div class="pagination right">
+							<a href="#" class="first" data-action="first">&laquo;</a> <a
+								href="#" class="previous" data-action="previous">&lsaquo;</a> <input
+								type="text" readonly="readonly"
+								data-max-page="${pageInfoMap.countpage}" /> <a href="#"
+								class="next" data-action="next">&rsaquo;</a> <a href="#"
+								class="last" data-action="last">&raquo;</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+</@frame>
+<script type="text/javascript"
+	src="${base}/res/bhecms/js/admin/product/productBrand .js"></script>
+<script type="text/javascript"
+	src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+<script type="text/javascript" src="${base}/res/bhecms/js/admin/base.js"></script>
+<script>
+function delProBran(id){
+	
+	if (confirm("确认删除吗?")) {
+			$.ajax({
+						type : "post",
+						url : "${base}/admin/product/delProBrand.html",
+						data : {
+							nos : id
+						},
+						dataType : 'json',
+						success : function(data) {
+							if (data.returned == 0) {
+								alert(data.msg);
+							} else {
+								window.location.href = "${base}/admin/product/productBrandManage.html";
+							}
+						}
+
+					});
+
+		} else {
+			return false;
+		}
+	}
+
+
+	$('.pagination')
+			.jqPagination(
+					{
+						current_page : '${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+						max_page : '${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+						paged : function(page) {
+							window.location.href = "${base}/admin/product/productBrandManage.html?pageindex="
+									+ page + "&pagesize=15&param="+$('.txtsearch').val();
+						}
+					});
+
+	function toaddProInfo() {
+		location.href = "${base}/admin/product/toaddProBrand.html";
+	}
+	
+	//条件查询
+	$('.js_search').click(function(){
+		var param = $('.txtsearch').val();
+		window.location.href = '${base}/admin/product/productBrandManage.html?&param=' + param;
+		 
+	});
+</script>

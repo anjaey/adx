@@ -1,0 +1,324 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/admin/productManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/js/treetable/vsStyle/jquery.treeTable.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/js/sobox/popbox-style.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/articleManage.css">
+
+<@frame>
+<div class="artLocation">
+	<div class="left">您当前的位置：商品管理>商品分类</div>
+	<div class="right">
+		<input type="button" value="添加分类" class="btnsearch js_toadd_top_productcategory">
+		
+	</div>
+</div>
+<div class="clear"></div>
+<div class="welcom mart15">
+	<div class="wel_content">		
+		<div class="art_list">
+			<div class="artListAll001">
+				<table id="treeTable" width="98%" border="0" cellspacing="0" style = "text-align: left" cellpadding="0"  class="art_table">
+					<tr>
+						<th>类型名称</th>
+						<th>序号</th>
+						<th>操作</th>
+					</tr>
+
+					<#list data as entity>
+					<tr hasChild="true" id='${entity.id}' pid='${entity.parentid}'>
+						<td>${entity.namecn}</td>
+						<td>${entity.id}</td>
+						<td><a href="javascript:void(0);" id="${entity.id}" class="js_toadd_productcategory">添加子级</a> | <a href="javascript:void(0);" id="${entity.id}" class="js_toupd_productcategory">编辑</a> | <a href="javascript:void(0);" id="${entity.id}" class="js_dodel_productcategory">删除</a></td>
+					</tr>
+					</#list>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="so-popbox">
+	<div class="h2-sopop">
+		<h2 class="left">添加分类</h2>
+		<a href="#" class="ss-close s-sopop-close">[关闭]</a>
+	</div>
+	<div class="so-popbox-cont">
+		<form id="js_productcategory">
+			<input type="hidden" name="id" />
+			<input type="hidden" name="parentid" />
+			<input type="hidden" id="namecn" />
+			<p>
+				<label>名称：</label><input value="" type="text" name="namecn" id="js_pro_namecn" class="txtAddproduct txtAddproduct5"/>
+			</p>
+			<p>
+				<label>英文名称：</label><input type="text" name="nameen" class="txtAddproduct txtAddproduct5" />
+			</p>
+			<p>
+				<label>关键字</label><input type="text" name="keywords"  class="txtAddproduct txtAddproduct5"/>
+			</p>
+			<p>
+				<label>描述：</label><input type="text" name="description"  class="txtAddproduct txtAddproduct5"/>
+			</p>
+			<p>
+				<label>排序：</label><input type="number" name="rank"  class="txtAddproduct txtAddproduct5"/>
+			</p>
+			<p>
+				<label>分类单位：</label><input type="text" name="unit"  class="txtAddproduct txtAddproduct5"/>
+			</p>
+			<p style="line-height:30px;">
+				<label style="width:121px;">是否显示在导航栏上：</label> <input value="1" type="radio" checked="checked" name="isshow">是 <input value="0" type="radio" name="isshow" />否
+			</p>
+			<p>
+				<label>所属栏目：</label><select name="resourceid" class="js_resourceid"></select>
+			</p>
+			<p style="line-height:30px;">
+				<label>类型：</label> <input value="1" type="radio" name="type" checked="checked" />系统 <input value="2" type="radio" name="type" />外部 
+			</p>
+		</form>
+		<p class="p-so-popBtn">
+			<input type="button" class="btnsearch js_doadd_productcategory" value="确定">
+			
+		</p>
+	</div>
+</div>
+
+	</@frame>
+	<script type="text/javascript" src="${base}/res/bhecms/js/admin/product/productManage.js"></script>
+	<script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+	<script type="text/javascript" src="${base}/res/bhecms/js/admin/base.js"></script>
+	<script type="text/javascript" src="${base}/res/common/js/treetable/jquery.treeTable.js"></script>
+	<script type="text/javascript" src="${base}/res/common/js/sobox/jquery.sobox.js"></script>
+	<script type="text/javascript" src="${base}/res/bhecms/js/tree_tab.js"></script>
+
+	<script>
+		$(this).tree({
+			url : '${base}/admin/navigatebar/getNavigateBarBySubToMap.html',
+			top : '0',
+			select : 'js_resourceid',
+		});
+
+		$(".js_toadd_top_productcategory").click(function() {
+			$("#js_productcategory")[0].reset();
+			$("input[name=parentid]").val(0);
+			$(".js_resourceid option:not(:disabled):first").attr("selected", true);
+			$.sobox.pop({
+				popTarget:'div.so-popbox',
+				wrapTarget:false,
+				maskClick : false,
+				title:"添加顶级分类",
+			});
+		});
+		
+		//检查名称是否重复
+		function ajaxCheckNameCn(){
+			var result = 1;
+			var newnamecn = $("#js_pro_namecn").val();
+			var oldnamecn = $("#namecn").val();
+			if(newnamecn != oldnamecn){
+				$.ajax({
+					type : 'POST',
+					url : "${base}/admin/product/checkCategroyNameCn.html",
+					data : {namecn:$("#js_pro_namecn").val()},
+					dataType : "json",
+					async : false,
+					success : function(json) {
+						result = json;
+					}
+				});
+			}
+			return result;
+		}
+		
+		$(document).on("click",".js_doadd_productcategory",function() {
+			if($("#js_productcategory input[name=namecn]").val() == null || $("#js_productcategory input[name=namecn]").val() == ""){
+				alert("标题不能为空");
+			}else{
+				var result = ajaxCheckNameCn();
+				if (result.status == 0) {
+					alert("当前商品名称已存在，请换一个!");
+				} else {
+					var data = ajaxAddProductCategory();
+					if (data.msg == 1) {
+						window.location.reload();
+					} else {
+						alert("添加失败");
+					}
+				}
+			}
+			
+		});
+
+		$(document).on("click", ".js_toadd_productcategory", function() {
+			$("#js_productcategory")[0].reset();
+			$("input[name=parentid]").val($(this).attr("id"));
+			$(".js_resourceid option:not(:disabled):first").attr("selected", true);
+			$.sobox.pop({
+				popTarget:'div.so-popbox',
+				wrapTarget:false,
+				maskClick : false,
+				title:"添加子级分类",
+			});
+		});
+
+		$(document).on("click", ".js_dodel_productcategory", function() {
+			if (confirm("是否删除")) {
+				var data = ajaxDelProductCategory($(this).attr("id"));
+				if (data.msg == 1) {
+					window.location.reload();
+				} else if (data.msg == -1) {
+					alert("存在子级分类，不能删除");
+				} else {
+					alert("删除失败");
+				}
+			}
+		});
+
+		$(document).on("click", ".js_toupd_productcategory", function() {
+			var dataDetail = ajaxUpdProductCategory($(this).attr("id"));
+			$("#js_productcategory")[0].reset();
+			$.each(dataDetail.data, function(k, v) {
+				if ($.trim(v) != "") {
+					$("#" + k).val(v);
+					$("#js_productcategory input[name=" + k + "][type=radio][value='" + v + "']").click();
+					$("#js_productcategory input[name=" + k + "][type=text]").val(v);
+					$("#js_productcategory input[name=" + k + "][type=hidden]").val(v);
+					$("#js_productcategory input[name=" + k + "][type=number]").val(v);
+					$("#js_productcategory select[name=" + k + "] option[value=" + v + "]").attr("selected", true);
+				}
+			});
+			$.sobox.pop({
+				popTarget:'div.so-popbox',
+				wrapTarget:false,
+				maskClick : false,
+				title:"修改分类",
+			});
+		});
+
+		//加载产品列表
+		$('.pagination').jqPagination({
+			current_page : '${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+			max_page : '${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+			paged : function(page) {
+				window.location.href = "${base}/admin/product/productManage.html?pageindex=" + page + "&pagesize=15";
+			}
+		});
+
+		$(function() {
+			var option = {
+				theme : 'vsStyle',
+				expandLevel : 1,
+				beforeExpand : function($treeTable, id) {
+
+					//判断id是否已经有了孩子节点，如果有了就不再加载，这样就可以起到缓存的作用
+					if ($('.' + id, $treeTable).length) {
+						return;
+					}
+
+					//获取数据
+					$.ajax({
+						type : 'POST',
+						url : "${base}/admin/product/finidProCateSub.html",
+						data : "parentid=" + id + "",
+						dataType : "json",
+						async : false,
+						success : function(data) {
+							var datas = data.data;
+							if ($('.' + id, $treeTable).length) {
+								return;
+							}
+							var html = '';
+							for (var i = 0; i < datas.length; i++) {
+								if (ajaxSub(datas[i].id)) {
+									html += '<tr hasChild = "true" id='+datas[i].id+' pId="'+id+'">';
+								} else {
+									html += '<tr id='+datas[i].id+' pId="'+id+'">';
+								}
+								html += '<td style="text-align: left;">' + datas[i].namecn + '</td>' + '<td>' + datas[i].id + '</td>' + '<td>' + '<a href="javascript:void(0);" id="' + datas[i].id + '" class="js_toadd_productcategory">添加子级</a> | ' + '<a href="javascript:void(0);" id="' + datas[i].id + '" class="js_toupd_productcategory">编辑</a> | ' + '<a href="javascript:void(0);" id="' + datas[i].id + '" class="js_dodel_productcategory">删除</a>' + '</td>' + '</tr>';
+
+							}
+							$treeTable.addChilds(html);
+						},
+						error : function(e) {
+							alert(e.status);
+						}
+					});
+				},
+				onSelect : function($treeTable, id) {
+					window.console && console.log('onSelect:' + id);
+				}
+			}
+			$('#treeTable').treeTable(option);
+		});
+	</script>
+	<script>
+		/* ajax */
+		function ajaxSub(id) {
+			var flag = false;
+			$.ajax({
+				type : 'POST',
+				url : "${base}/admin/product/finidProCateSub.html",
+				data : "parentid=" + id + "",
+				dataType : "json",
+				async : false,
+				success : function(json) {
+					if (json.data == '') {
+						flag = false;
+					} else {
+						flag = true;
+					}
+				}
+			});
+			return flag;
+		}
+
+		function ajaxAddProductCategory() {
+			var data;
+			$.ajax({
+				type : 'POST',
+				url : "${base}/admin/product/doAddProductCategory.html",
+				data : $("#js_productcategory").serialize(),
+				dataType : "json",
+				async : false,
+				success : function(json) {
+					data = json;
+				}
+			});
+			return data;
+		};
+
+		function ajaxDelProductCategory(id) {
+			var data;
+			$.ajax({
+				type : 'POST',
+				url : "${base}/admin/product/doDelProductCategory.html",
+				data : {
+					id : id,
+				},
+				dataType : "json",
+				async : false,
+				success : function(json) {
+					data = json;
+				}
+			});
+			return data;
+		};
+
+		function ajaxUpdProductCategory(id) {
+			var data;
+			$.ajax({
+				type : 'POST',
+				url : "${base}/admin/product/getProductCategory.html",
+				data : {
+					id : id,
+				},
+				dataType : "json",
+				async : false,
+				success : function(json) {
+					data = json;
+				}
+			});
+			return data;
+		};
+		
+	</script>

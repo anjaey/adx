@@ -1,0 +1,666 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/admin/productManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/articleManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/js/uploadify3.2.1/uploadify.css">
+<@frame>
+
+<div class="welcom">
+	<div class="artLocation">
+		<#if (states == 0)>
+		<div class="left">
+			您当前的位置：<a href="${base}/admin/product/productManage.html/">商品管理</a>>发布商品
+		<br/><br/><br/>
+		</div>
+		</#if> 
+		<#if (states == 1)>
+		<div class="left">
+			您当前的位置：<a href="${base}/admin/product/productManage.html/">商品管理<a />>编辑
+		</div>
+		</#if>
+		<div class="right">
+			<!-- <input type="button" class="btnRelease" value="发布" /> <input type="button" class="btnCancel" value="取消" /> -->
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="wel_content">
+		<div class="art_list_all">
+
+			<div class="artListAll001">
+				<div>
+					<div class="productUl clear">
+						<ul class="js_product_list">
+							<li fieldId="js_file_proInfo" class="productSpeLi"><i>*</i> 基本信息</li>
+							<li fieldId="js_file_proimg">商品图片</li>
+							<li fieldId="js_file_proAttribute">属性设置</li>
+							<li fieldId="js_file_proParam">技术参数</li>
+							<li fieldId="js_file_proRent">租赁说明</li>
+							<li fieldId="js_file_proSpec">规格与下载</li>
+							<!-- <li fieldId="js_file_proMore"><i>*</i> 更多设置</li> -->
+							<input type="hidden" id="uuid" value="${uuid}" />
+						</ul>
+					</div>
+					<div class="fieldDiv">
+						<fieldset id="js_file_proInfo" class="fieldProduct">
+							<legend>基本信息</legend>
+							<p>
+								<label><i>*</i> 商品名称:</label> <input value="${bdpemap.namecn}" type="text" id="js-pro-name" class="txtAddproduct" /> <span></span>(注：带<i>*</i>的为必填选项)
+
+							</p>
+							<p>
+								<label>搜索关键字:</label> <input value="${bdpemap.keywords}" id="js-pro-key" type="text" class="txtAddproduct" />(多个用空格隔开)
+							</p>
+							<div class="clear"></div>
+							<p>
+								<input type="hidden" class="js_clazzid" value="${bdpemap.clazzid}"/>
+								<label><i>*</i> 商品分类:</label> <select id="js_pro_clazzid" class="js_pro_clazzid"></select>
+							</p>
+							
+							<p>
+								<label><i>*</i> 归属品牌:</label> <select id="js-pro-brandid"> 
+								<#assign entityList = probrandlistmap /> 
+								<#list entityList as entity>
+									<option value="${entity.id}">${entity.namecn}</option> 
+								</#list>
+								</select>
+							</p>
+							
+							<div class="clear"></div>
+							<p style="color: red">
+								<label>归属在租赁服务:</label> <input name="js-pro-rent" type="radio" value="1" <@sets.setRadio bdpemap.isrent 1 0/>/>是 <input type="radio" name="js-pro-rent" value="0" <@sets.setRadio bdpemap.isrent 0 0/>/> 否
+							</p>
+							<div class="clear"></div>
+							<p>
+								<label><i>*</i> 商品型号:</label> <input value="${bdpemap.modelname}" id="js-pro-model" type="text" class="txtAddproduct txtAddproduct2" /><span></span>
+							</p>
+							<p>
+								<label><i>*</i> 库存数量:</label> <input value="${bdpemap.count}" id="js-pro-count" type="text" class="txtAddproduct txtAddproduct2" /><span></span>
+							</p>
+							<div class="clear"></div>
+							<p>
+								<label><i>*</i> 市场价（元）:</label> <input value="${bdpemap.price}" id="js-pro-price" type="text" class="txtAddproduct txtAddproduct2" /><span></span>
+							</p>
+							<p>
+								<label><i>*</i> 单位:</label> <input type="text" value="${bdpemap.unit}" id="js-pro-unit" class="txtAddproduct txtAddproduct2" /><span></span>
+							</p>
+							<!-- <div class="clear"> -->
+							<!-- 	<p>
+								<label><i>*</i>所在地址:</label> <input value="${bdpemap.price}" id="js-pro-address" type="text"
+									class="txtAddproduct txtAddproduct2" />
+							</p> -->
+							<p>
+								<label><i>*</i>排序值:</label> <input value="${bdpemap.level}" id="js-pro-level" type="text" class="txtAddproduct txtAddproduct2" /><span></span>（数字越大，排名越靠前）
+							</p>
+							
+							
+							<div class="clear"></div>
+							
+							<p>
+								<label><i>*</i>是否上架:</label> <input  type="radio" name="js-pro-status" <@sets.setRadio bdpemap.status 1/> value="1" /> 是 <input name="js-pro-status" type="radio" <@sets.setRadio bdpemap.status 0/> value="0" /> 否   <font color="red">(上架后前台页面可以显示)</font>
+							</p>
+							<p>
+								<label><i>*</i>是否推荐产品:</label> <input  type="radio" <@sets.setRadio bdpemap.showtype 1/> name="js-pro-showtype" value="1" /> 是 <input name="js-pro-showtype"  <@sets.setRadio bdpemap.showtype 0/> type="radio" value="0" /> 否   <font color = "red">(页面左侧的推荐产品)</font>
+							</p>
+							<div class="clear"></div>
+							<p>
+								<label><i>*</i>是否为热销产品:</label> <input  type="radio" <@sets.setRadio bdpemap.topopular 1/> name="js-pro-topopular" value="1" /> 是 <input name="js-pro-topopular" type="radio" value="0"  <@sets.setRadio bdpemap.topopular 0/> /> 否<font color = "red">(首页中部的热销产品展示)</font>
+							</p>
+							<p>
+								<label><i>*</i>是否展示到首页:</label> <input  type="radio" <@sets.setRadio bdpemap.toshowproduct 1/> name="js-pro-toshowproduct" value="1" /> 是 <input name="js-pro-toshowproduct"  <@sets.setRadio bdpemap.toshowproduct 0/> type="radio" value="0" /> 否<font color = "red">(首页底部的供应产品展示)</font>
+							</p>
+							<div class="clear"></div>
+							<p>
+								<label><i>*</i>简介:</label>
+								<textarea id="js-pro-introduce" rows="10" cols="50">${bdpemap.introduce}</textarea><span></span>
+							</p>
+							<div class="clear"></div>
+							<div>
+								<script id="editor" type="text/plain" style="width: 1024px; height: 500px;">${bdpeDetailmap.description}</script>
+							</div>
+
+							<div class="clear"></div>
+
+
+						</fieldset>
+
+						<fieldset class="fieldProduct" style="display: none"
+							id="js_file_proAttribute">
+							<legend>属性设置</legend>
+							<span> </span>
+							<div class="clear"></div>
+							<p>
+								<label> 工作效率(m² /h):</label> <input value="${bdpemap.productivity}" id="js-pro-productivity" type="text" class="txtAddproduct txtAddproduct2" />
+							</p>
+							<p>
+								<label> 适用场地:</label> <input value="${bdpemap.appliesfield}" id="js-pro-appliesField" type="text" class="txtAddproduct txtAddproduct2" />
+							</p>
+							<p>
+								<label> 通用分类:</label> 
+								<input type="hidden" class="js_consortid" value="${bdpemap.commonsort}" />
+								
+								<select id="js-pro-consortid" class="js-pro-consortid">
+									<option value="国产" >国产</option> 
+									<option value="进口">进口</option> 
+								</select>
+							</p>
+							<p>
+								<label>功率(KW):</label> <input value="${bdpemap.power}" id = "js-pro-power" type="text"
+									class="txtAddproduct txtAddproduct2" />
+							</p>
+							<p>
+								<label>转速（rpm/min）:</label> <input value="${bdpemap.rotatingspeed}" id = "js-pro-rotatingspeed" type="text"
+									class="txtAddproduct txtAddproduct2" />
+							</p>
+							<p>
+								<label>压力（bar）:</label> <input value="${bdpemap.pressure}" id = "js-pro-pressure" type="text"
+									class="txtAddproduct txtAddproduct2" />
+							</p>
+							<p>
+								<label>干燥时间(H):</label> <input value="${bdpemap.dryingtime}" id = "js-pro-dryingtime" type="text"
+									class="txtAddproduct txtAddproduct2" />
+							</p>
+							<p>
+								<label>容量(L)：</label> <input value="${bdpemap.capacity}" id = "js-pro-capacity" type="text"
+									class="txtAddproduct txtAddproduct2" />
+							</p>
+							<p>
+								<label>工作宽度(mm)：</label> <input value="${bdpemap.workwidth}" id = "js-pro-workwidth" type="text"
+									class="txtAddproduct txtAddproduct2" />
+							</p>
+							<p>
+								<label>动力(如：电源...)：</label> <input value="${bdpemap.motivation}" id = "js-pro-motivation" type="text"
+									class="txtAddproduct txtAddproduct2" />
+							</p>
+							<p>
+								<label>噪音(LdBA)：</label> <input value="${bdpemap.noise}" id = "js-pro-noise" type="text"
+									class="txtAddproduct txtAddproduct2" />
+							</p>
+							<!-- <p class="productApplicable">
+								<label><i>*</i>适用场地:</label> <span> 
+								<input type="text" class="txtAddproduct txtAddproduct2" />
+								<input
+									type="checkbox" value = "任何场地"/> 任何场地 <input type="checkbox" value = "任何场地" /> 工业厂房 <input
+									type="checkbox" value = "办公楼 " /> 办公楼 <input type="checkbox" value = "任何场地" /> 银行 <input
+									type="checkbox" value = "学校" /> 学校 <input type="checkbox" value = "任何场地" /> 机场候机楼 <input
+									type="checkbox" value = "飞行区" /> 飞行区 <input type="checkbox" value = "任何场地" /> 市政道路 <input
+									type="checkbox" value = "广场" /> 广场
+								</span> <span> <input type="checkbox" value = "任何场地" /> 商业步行街 <input
+									type="checkbox" value = "车站" /> 车站 <input type="checkbox" value = "任何场地" /> 公园 <input
+									type="checkbox" value = "医院" /> 医院 <input type="checkbox" value = "任何场地" /> 商场 超市 <input
+									type="checkbox" value = "酒店 游轮" /> 酒店 游轮 <input type="checkbox" value = "任何场地" /> 水利发电 <input
+									type="checkbox" value = "火力发电" /> 火力发电 <input type="checkbox" value = "任何场地" /> 码头
+								</span> <span class="speProductSpan"> <input type="checkbox" value = "任何场地" />
+									物流仓储 <input type="checkbox"  value = "电子厂房 GMP厂房" /> 电子厂房 GMP厂房 <input
+									type="checkbox" value = "任何场地" /> 冶炼 铝业 <input type="checkbox" value = "任何场地" /> 矿山 建筑工地 <input
+									type="checkbox" value = "任何场地" /> 食品 饮料厂 <input type="checkbox" value = "任何场地" /> 停车库
+								</span>
+							</p> -->
+						</fieldset>
+						
+						<fieldset class="fieldProduct" style="display: none" id="js_file_proParam">
+							<legend>技术参数</legend>
+							<div>
+								<script id="editor1" type="text/plain" style="width: 1024px; height: 500px;">${bdpeDetailmap.param}</script>
+							</div>
+						</fieldset>
+						<fieldset class="fieldProduct" style="display: none" id="js_file_proSpec">
+							<legend>规格与下载</legend>
+
+							<div>
+								<label>标题：</label> <input id="js-pro-profiletitle" type="text" class="txtAddproduct" />(字数限制在30字以内)
+							</div>
+							<div>
+								<label>选择文件：</label>
+
+								<div style="margin-left: 130px; margin-top: 10px">
+									<div id="upload1"></div>
+									<input type="file" id="file_upload1" />
+								</div>
+							</div>
+							<div style="height: 50px">
+								<input type="button" onclick="subProductSpec()" value="提交" class="btnRelease left">
+							</div>
+
+							<div>
+								<ul id="js-profile-upload" style="margin-top: 20px;">
+									<#assign entityList = bdpeFilSpecemap /> <#list entityList as entity>
+									<li id='${entity.uuid}'>${entity.title} <a href='javascript:void("${entity.url}")'>下载</a> &nbsp;&nbsp;&nbsp;<a href='javascript:deleteProSpec("${entity.uuid}")'>删除</a>
+									</li> </#list>
+								</ul>
+							</div>
+							<!-- <p>
+								<div>
+								    <script id="editor2" type="text/plain" style="width:1024px;height:500px;"></script>
+								</div>
+							</p> -->
+
+						</fieldset>
+						<!-- <fieldset class="fieldProduct" style="display: none"
+							id="js_file_proMore">
+							<legend>更多设置</legend>
+							<div class="clear"></div>
+							<p>
+								<label><i> * </i> 商品属性：</label> <input type="radio" /> 默认 <input
+									type="radio" /> 推荐 <input type="radio" /> 特价<input
+									type="radio" /> 新款 <input type="radio" /> 热销 <input
+									type="radio" /> 赠品 <input type="radio" /> 缺货
+							</p>
+							<div class="clear"></div>
+							<p>
+								<label><i>*</i>排序值:</label> <input type="text"
+									class="txtAddproduct txtAddproduct2" />（数字越大，排名越靠前）
+							</p>
+							<div class="clear"></div>
+							<p>
+								<label><i>*</i>是否上架:</label> <input type="radio" value="是" /> 是
+								<input type="radio" value="否" /> 否
+							</p>
+						</fieldset> -->
+						<fieldset class="fieldProduct" style="display: none" id="js_file_proRent">
+							<div>
+								<script id="editor3" type="text/plain" style="width: 1024px; height: 500px;">${bdpeDetailmap.lease}</script>
+							</div>
+
+						</fieldset>
+
+						<fieldset class="fieldProduct" style="display: none" id="js_file_proimg">
+							<p>
+								<label>商品图片：</label>
+							<div class="productImg" style="overflow: auto; height: 500px">
+								<div class="mart15">
+									<div style="float: left;">
+										<div id="upload"></div>
+										<input type="file" id="file_upload" />
+									</div>
+
+									<div style="float: left;">
+										<label>提示：</label> 1.上传图片的大小建议为250*240<br /> 2.请选择一张为主图
+									</div>
+								</div>
+								<div class="clear"></div>
+								<div class="imgUpload">
+									<ul id="js-profile-upload" style="margin-top: 20px;">
+										<#assign entityList = bdpeFilemap/> <#list entityList as entity>
+										<li id='${entity.uuid}'><img id='${entity.uuid}' width='100px' height='120px' src="${entity.url}"> <a href='javascript:setMainPic("${entity.uuid}")'>设置为主图</a> &nbsp;&nbsp;&nbsp; <a href='javascript:deletePids("${entity.uuid}")'>删除 </a></li> </#list>
+									</ul>
+								</div>
+							</div>
+							</p>
+
+						</fieldset>
+
+						<input type="button" onclick="addProInfo()" value="保存" class="btnRelease right">
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+</div>
+</@frame>
+<script type="text/javascript" charset="utf-8" src="${base}/res/common/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/common/js/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="${base}/res/common/js/uploadify3.2.1/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="${base}/res/bhecms/js/tree_tab.js"></script>
+
+<script>
+window.onload = function(){
+	$(".js-pro-consortid option[value="+$(".js_consortid").val()+"]").attr("selected",true);
+	$(".js_pro_clazzid option[value="+$(".js_clazzid").val()+"]").attr("selected",true);
+}
+</script>
+
+<script>
+$.ajax({
+	type: "post",
+	url: "${base}/admin/product/getProductCategoryForTree.html",
+	data:{
+	},
+	dataType:'json',
+	success:function(data){
+		for(var i = 0 ; i < data[0].length ; i++){
+			data1=data[0][i];
+			$(".js_pro_clazzid").append("<optgroup label="+data1.namecn+"></optgroup >")
+			if(data[data1.id] != undefined){
+				for ( var j = 0 ; j < data[data1.id].length ; j++) {
+					$(".js_pro_clazzid").append("　<option value="+data[data1.id][j].id+" namecn="+data[data1.id][j].namecn+">----"+data[data1.id][j].namecn+"</option>")
+				}
+			}
+		}
+	}
+});
+</script>
+<script>
+	//实例化编辑器    文章详情
+	var editor = UE.getEditor('editor');
+	var editor3;
+	var editor1;
+	window.setTimeout(function() {
+		//实例化编辑器   产品技术
+		editor1 = UE.getEditor('editor1');
+	}, 1000);
+
+	window.setTimeout(function() {
+		//实例化编辑器  租赁说明
+		editor3 = UE.getEditor('editor3');
+	}, 1000);
+
+	//初始化UUID
+	var uuid = $("#uuid").val();
+
+	//初始化 
+	var proFileuuid = "";
+
+	$(function() {
+		initimg();
+		$(".js_product_list li").click(function() {
+			$(".js_product_list li").removeClass("productSpeLi");
+			$("fieldset").hide();
+			$(this).addClass("productSpeLi");
+			var id = $(this).attr("fieldId");
+			$("#" + id).show();
+		});
+	})
+
+	function initimg() {
+		$("#file_upload").uploadify({
+			'swf' : '${base}/res/common/js/uploadify3.2.1/uploadify.swf',
+			'uploader' : '${base}/admin/product/addFle.html?uuid=' + uuid,
+			'fileObjName' : 'file',
+			'fileSizeLimit' : '10000000',
+			'buttonClass' : 'btn btn-info',
+			'height' : '40px',
+			'folder' : 'upload',
+			'buttonText' : '上传文件',
+			'cancelImg' : '${base}/res/common/js/uploadify3.2.1/cancel.png',
+			'auto' : true,
+			'multi' : true,
+			'removeCompleted' : true,
+			'fileTypeExts' : '*.jpg;*.bmp;*.png;*.gif;*.jpeg;', // 控制可上传文件的扩展名，启用本项时需同时声明fileDesc
+			'fileTypeDesc' : '*.jpg;*.bmp;*.png;*.gif;*.jpeg;',
+			'method' : 'Post',
+			'onUploadStart' : function(file) {
+				$("#js-picimg-pagehead-img").uploadify("settings", "formData");
+			},
+			'onUploadSuccess' : function(file, data, response) {
+				var uuidurl = eval("[" + data + "]");
+				if (uuidurl.length > 0) {
+					var url = uuidurl[0].returned.url;
+					$(".imgUpload ul").append("<li id='"+uuidurl[0].returned.uuid+"'><img id='"+uuidurl[0].returned.uuid+"' width='100px' height='120px' src="+url
+							+"><a href='javascript:setMainPic(\"" + uuidurl[0].returned.uuid + "\")'>设置为主图</a> &nbsp;&nbsp;&nbsp; <a href='javascript:deletePids(\"" + uuidurl[0].returned.uuid + "\")'>删除</a></li>");
+				} else {
+					alert("上传失败！");
+				}
+
+			},
+			'onUploadComplete' : function(file, data, response) {
+
+			},
+			'onUploadError' : function(file, errorCode, errorMsg, errorString) {
+				console.log(file + errorCode + errorMsg + errorString);
+				$(".js-upload-img-to").html("上传失败!");
+			}
+		});
+
+		$("#file_upload1").uploadify({
+			'swf' : '${base}/res/common/js/uploadify3.2.1/uploadify.swf',
+			'uploader' : '${base}/admin/product/uploadProSpec.html?uuid=' + uuid,
+			'fileObjName' : 'file',
+			'fileSizeLimit' : '10000000',
+			'buttonClass' : 'btn btn-info1',
+			'height' : '40px',
+			'folder' : 'upload1',
+			'buttonText' : '上传文件',
+			'cancelImg' : '${base}/res/common/js/uploadify3.2.1/cancel.png',
+			'auto' : true,
+			'multi' : false,
+			'removeCompleted' : true,
+			/* 'fileTypeExts' : '*.jpg;*.bmp;*.png;*.gif;*.jpeg;', // 控制可上传文件的扩展名，启用本项时需同时声明fileDesc
+			'fileTypeDesc' : '*.jpg;*.bmp;*.png;*.gif;*.jpeg;', */
+			'method' : 'Post',
+			'onUploadStart' : function(file) {
+				$("#js-picimg-pagehead-img").uploadify("settings", "formData");
+			},
+			'onUploadSuccess' : function(file, data, response) {
+				var uuidurl = eval("[" + data + "]");
+				if (uuidurl.length > 0) {
+					var url = uuidurl[0].returned.url;
+					proFileuuid = uuidurl[0].returned.uuid;
+				} else {
+					alert("上传失败！");
+				}
+
+			},
+			'onUploadComplete' : function(file, data, response) {
+
+			},
+			'onUploadError' : function(file, errorCode, errorMsg, errorString) {
+				console.log(file + errorCode + errorMsg + errorString);
+				$(".js-upload-img-to").html("上传失败!");
+			}
+		});
+	}
+
+	//添加商品信息
+	function addProInfo() {
+		//获取基本信息
+		var proinfo = {};
+		proinfo.namecn = $("#js-pro-name").val()
+		proinfo.keywords = $("#js-pro-key").val();
+		proinfo.clazzid = $("#js_pro_clazzid").val();
+		proinfo.brandid = $("#js-pro-brandid").val();
+		proinfo.commonsort = $("#js-pro-consortid").val();
+		proinfo.productivity = $("#js-pro-productivity").val();
+		proinfo.appliesfield = $("#js-pro-appliesField").val();
+		proinfo.modelname = $("#js-pro-model").val();
+		proinfo.count = $("#js-pro-count").val();
+		proinfo.price = $("#js-pro-price").val();
+		proinfo.unit = $("#js-pro-unit").val();
+		proinfo.level = $("#js-pro-level").val();
+		proinfo.isrent = $('input:radio[name="js-pro-rent"]:checked').val();
+		proinfo.introduce = $("#js-pro-introduce").val();
+		proinfo.status = $('input:radio[name="js-pro-status"]:checked').val();
+		proinfo.showtype = $('input:radio[name="js-pro-showtype"]:checked').val();
+		proinfo.toshowproduct = $('input:radio[name="js-pro-toshowproduct"]:checked').val();
+		proinfo.topopular = $('input:radio[name="js-pro-topopular"]:checked').val();
+		proinfo.uuid = uuid;
+		proinfo.power = $("#js-pro-power").val();   //动力
+		proinfo.features = $("#js-pro-features").val();   //功能
+		proinfo.rotatingspeed = $("#js-pro-rotatingspeed").val();  //转速
+		proinfo.pressure = $("#js-pro-pressure").val();  //压力
+		proinfo.dryingtime = $("#js-pro-dryingtime").val();   //干燥时间
+		proinfo.capacity = $("#js-pro-capacity").val();   //容量
+		
+		proinfo.workwidth = $("#js-pro-workwidth").val();   //工作宽度
+		proinfo.motivation = $("#js-pro-motivation").val();   //动力  
+		proinfo.noise= $("#js-pro-noise").val();   //噪音
+		
+		
+		//校验商品名称
+		if($.trim(proinfo.namecn) == ""){
+			$("#js-pro-name").next("span").text("商品名称不能为空");
+			return;
+		}
+		//校验商品型号
+		if($.trim(proinfo.modelname) == ""){
+			$("#js-pro-model").next("span").text("商品型号不能为空");
+			return;
+		}
+		//校验库存数量
+		$("#js-pro-count").next("span").text("");
+		if($.trim(proinfo.count) == ""){
+			$("#js-pro-count").next("span").text("不能为空");
+			return;
+		}else{
+			 var regx = /^[0-9]{1,20}$/;
+			 var bool = regx.test($.trim(proinfo.count));
+			 if(!bool){
+				$("#js-pro-count").next("span").text("格式不正确");
+				return;
+			 }
+		}
+		//校验市场价
+		if($.trim(proinfo.price) == ""){
+			$("#js-pro-price").next("span").text("不能为空");
+			return;
+		}else{
+			 var regx = /^\d+(\.\d{2})?$/;
+			 var bool = regx.test($.trim(proinfo.price));
+			 if(!bool){
+				$("#js-pro-price").next("span").text("");
+				$("#js-pro-price").next("span").text("格式不正确");
+				return;
+			 }
+		}
+		//校验单位
+		if($.trim(proinfo.unit) == ""){
+			$("#js-pro-unit").next("span").text("不能为空");
+			return;
+		}
+		//校验排序值
+		if($.trim(proinfo.level) == ""){
+			$("#js-pro-level").next("span").text("不能为空");
+			return;
+		}else{
+			 var regx = /^[0-9]{1,20}$/;
+			 var bool = regx.test($.trim(proinfo.level));
+			 if(!bool){
+				$("#js-pro-level").next("span").text("");
+				$("#js-pro-level").next("span").text("格式不正确");
+				return;
+			 }
+		}
+		//校验简介
+		if($.trim(proinfo.introduce) == ""){
+			$("#js-pro-introduce").next("span").text("不能为空");
+			return;
+		}
+		
+		
+		 
+		
+		var proDetailed = {};
+		proDetailed.uuid = uuid;
+		if (editor) { 
+			//介绍
+			proDetailed.description = editor.getContent();
+		}
+		//获取技术参数
+		if (editor1) {
+			proDetailed.param = editor1.getContent();
+		}
+
+		if (editor3) {
+			//租赁说明
+			proDetailed.lease = editor3.getContent();
+		}
+
+	
+
+		var product = {};
+		product.pro = proinfo;
+		product.detailed = proDetailed;
+
+		var jsonstr = JSON.stringify(product);
+		if( confirm("确认保存？")){
+		$.ajax({
+			type : "post",
+			url : "${base}/admin/product/addproinfo.html",
+			data : {
+				param : jsonstr
+			},
+			dataType : 'json',
+			success : function(data) {
+				if (data.returned == 0) {
+					alert(data.msg);
+				} else {
+					alert("保存成功！");
+					window.location.href = "${base}/admin/product/productManage.html";
+				}
+			}
+
+		});
+			}else{ 
+				return false;
+			}
+
+		//提交商品图片
+
+	}
+
+	//提交商品规格的文件
+	function subProductSpec() {
+		//标题
+		var title = $("#js-pro-profiletitle").val();
+		$.ajax({
+			type : "post",
+			url : "${base}/admin/product/updateProFile.html",
+			data : {
+				uuid : proFileuuid,
+				title : title
+			},
+			dataType : 'json',
+			success : function(data) {
+				$("#js-profile-upload").append("<li id='"+proFileuuid+"'>" + title + "<a href='javascript:void(\"" + proFileuuid + "\")'>下载</a>&nbsp;&nbsp;&nbsp;<a href='javascript:deleteProSpec(\"" + proFileuuid + "\")'>删除</a></li>");
+			}
+		});
+	}
+
+	//设置主图片
+	function setMainPic(fileuuid) {
+		$.ajax({
+			type : "post",
+			url : "${base}/admin/product/setMainPicPro.html",
+			data : {
+				fileid : fileuuid,
+				ismain : 1,
+				prouuid : uuid
+			},
+			dataType : 'json',
+			success : function(data) {
+
+				alert("成功");
+				//设置主图的边框为红色
+				//$(".imgUpload").find("img").removeClass("mainimgcolor").addClass("notmainimgcolor");
+				//$("#"+fileuuid).css("style","border: 1px solid red");
+			}
+		});
+	}
+
+	//删除产品附件
+	function deletePids(fileuuid) {
+		$.ajax({
+			type : "post",
+			url : "${base}/admin/product/delProFile.html",
+			data : {
+				fileid : fileuuid
+			},
+			dataType : 'json',
+			success : function(data) {
+				//删除li  图片
+				$("#" + fileuuid).remove();
+			}
+		});
+	}
+
+	//提交上传产品附件
+
+	//删除产品规格附件
+	function deleteProSpec(fileuuid) {
+		$.ajax({
+			type : "post",
+			url : "${base}/admin/product/delProFile.html",
+			data : {
+				fileid : fileuuid
+			},
+			dataType : 'json',
+			success : function(data) {
+				//删除li  图片
+				$("#" + fileuuid).remove();
+			}
+		});
+	}
+	
+	
+</script>

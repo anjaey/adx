@@ -1,0 +1,168 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+<@frame> 
+    <div class="nav_position">您当前位置：<a href="${base}/admin/user/userIndex.html">用户管理</a>>管理员管理</div>
+	<div class="wel_content">
+	
+                                                        <!--会员列表管理-->
+       <div class="user_top">
+    			<button class="user_top_02 right js-add">添加管理员</button>
+    	</div>	
+        <div class="basic">
+	        <div class="vip_title">
+	        <table border="0" cellspadding="0px" cellspcing="0px" class="user_list">
+            	<tr class="user_list_nav">
+            		<td>选中</td>
+            		<td>ID</td>
+            		<td>用户名</td>
+            		<td>电子邮件</td>
+            		<td>会员组</td>
+            	    <td>最后登录时间</td>
+            	    <td>登录次数</td>
+            	    <td>状态</td>
+            	    <td>操作</td>
+            	</tr>
+            	<#if (pageInfoMap.count>0)>
+	       		<#assign entityList=pageInfoMap.list />                                              
+	            	<#list entityList as entity>
+		            	<tr class="user_list_content">
+		            		<td><input type="checkbox" class="js-chooseInput" uid="${entity.uuid}"></td>
+		            		<td>${entity_index}</td>
+		            		<td>${entity.username}</td>
+		            		<td>${entity.email}</td>
+		            		<td>经常购物</td>
+		            		<td>
+		            			<#if (entity.lastlogintime)??>
+			        				${entity.lastlogintime?string("yyyy-MM-dd HH:mm:ss")}
+				        		</#if>
+					        </td>
+		            		<td>${entity.logincount!"0"}次</td>
+		            		<td>
+		            			<#switch entity.status>
+									<#case 0>
+									正常
+									<#break>
+									<#case 1>
+									禁用
+									<#break>
+									<#case 2>
+									永久冻结
+									<#break>
+									<#case 2>
+									时间冻结
+									<#break>
+									<#default>
+									临时帐号
+								</#switch>
+		            		</td>
+		            		<td><span class="top_title02"><a class="operate js-edit"  uid="${entity.uuid}">修改</a>
+								<#if entity.status!=1>
+			            			<a class="operate js-operate" uid="${entity.uuid}" opera="disable">禁用</a>
+			            			<#else>
+			            			<a class="operate js-operate" uid="${entity.uuid}" opera="open">开启</a>
+			            		</#if>
+								</span></td>
+		            	</tr>
+            		</#list>
+           	 	</#if>	
+            </table>
+	        </div>
+	        <div class="suffix01">
+	        	<p class="user_content">
+	        	<input type="checkbox" class="js-chooseAll">&nbsp;&nbsp;全选
+	        	<button class="js-operateAll" opera="disable">禁用</button>
+	        	<button class="js-operateAll" opera="open">开启</button>
+	        </p>
+	        </div>
+	        
+	        <div class="pagination right">
+			    <a href="#" class="first" data-action="first">&laquo;</a>
+			    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+			    <input type="text" readonly="readonly" data-max-page="${pageInfoMap.countpage}" />
+			    <a href="#" class="next" data-action="next">&rsaquo;</a>
+			    <a href="#" class="last" data-action="last">&raquo;</a>
+			</div>
+    	 </div>
+    
+    </div>
+</@frame>
+
+<script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+<script>
+
+	$(function(){
+
+		$('.pagination').jqPagination({
+			current_page:'${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+			max_page:'${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+		    paged: function(page) {
+			        window.location.href="${base}/admin/user/adminList.html?pageindex="+page;
+		    }
+		});
+		
+		$("button.js-add").click(function(){
+			window.location.href="${base}/admin/user/adminEdit.html";
+		});
+		
+		$(".js-edit").click(function(){
+			window.location.href="${base}/admin/user/adminEdit.html?uuid="+$(this).attr("uid");
+			
+		});
+		
+		
+		 $("button.js-operateAll").click(function(){
+			   if($("input:checked.js-chooseInput").length>0){
+				   if(confirm("是否执行操作？")){
+					   var status="";
+						if($(this).attr("opera")=="disable"){
+							status=1;
+						}else{
+							status=0;
+						}
+					   var uuids="";
+					   $("input:checked.js-chooseInput").each(function (k,v) {
+						   uuids=$(v).attr("uid")+","+uuids;
+					   })
+					   uuids=uuids.substring(0,uuids.length-1);
+						$.post("updateUserInfo.html", {"uuids":uuids,"status":status},
+							function(data){
+								if(data.result){
+									window.location.reload(true);
+								}else{
+									alert("共有："+data.count+"条数据,操作失败");
+								}
+							},"json");
+					   }
+				}
+		   });
+		
+		 $("a.js-operate").click(function(){
+				if(confirm("是否执行操作？")){
+					var status="";
+					if($(this).attr("opera")=="disable"){
+						status=1;
+					}else{
+						status=0;
+					}
+					$.post("updateUserInfo.html",{"uuid":$(this).attr("uid"),"status":status},
+							function(data){
+								if(data.result){
+									location.reload(true);
+								}else{
+									alert("操作失败！");
+									
+								}
+							},"json");
+					
+				}
+				
+			});
+		
+		
+	});
+
+</script>
+
+ 

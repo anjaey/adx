@@ -1,0 +1,236 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+
+<@frame>
+
+
+    
+    <!--这是登录弹框页面-->
+	<div class="login01 wind1200">
+    	<div class="loginleft register">
+			<div class="loginleftdiv"><span class="js_errorUserName errorusername" ></span><label><i>*</i>用户名：</label><div class="usermessage"><div class="loginbg iconName1" ></div><input type="text" value="" id="js-user-username" class="loginName" onblur="validateName(this)"/></div></div>
+			<div class="loginleftdiv"><span class="js_errorNewPwd errorusername"></span><label><i>*</i>登录密码：</label><div class="usermessage"><div class="loginbg password2" ></div><input type="password" id="js-user-newPwd" class="loginName " /></div></div>
+			<div class="loginleftdiv"><span class="js_errorConfirmPwd errorusername"></span><label><i>*</i>确认密码：</label><div class="usermessage"><div class="loginbg password2" ></div><input type="password" id="js-user-confirmPwd" class="loginName" /></div></div>
+			<div class="loginleftdiv"><span class="js_errorEmail errorusername"></span><label><i>*</i>邮箱：</label><div class="usermessage"><div class="loginbg iconEmail" ></div><input type="text" id="js-user-email" class="loginName"/></div></div>
+			<div class="loginleftdiv"><span class="js_errorPhone errorusername"></span><label><i>*</i>手机号码：</label><div class="usermessage"><div class="loginbg iconPhone" ></div><input type="text" id="js-user-phone" class="loginName"/></div></div>
+			<div class="loginleftdiv"><label>姓名：</label><div class="usermessage"><div class="loginbg iconName2" ></div><input type="text" id="js-user-namecn" class="loginName"/></div></div>
+			<div class="loginleftdiv"><label>公司名称：</label><div class="usermessage"><div class="loginbg iconCompany" ></div><input type="text" id="js-user-company" class="loginName"/></div></div>
+			<br/>
+			<div class="myAgree">
+				<div><input type="radio"/>我已阅读并同意<a href="#"  class="colorRed">《注册协议》</a>条款</div>
+				<div class="mart15" style="">
+					<input type="button" onclick="regist()" value="立即注册" class="nowlogin" />
+				<!-- <a href="${base}/user/toLogin/loginPage.html" style = "color: red">去登陆</a> -->
+				</div>
+				
+			</div>
+		</div>
+		<div class="loginright">
+			 <div class="loginrightlogin">已有账号？|<a href="${base}/user/toLogin/loginPage.html" class="colorRed">免费登录</a></div>
+			<img src="${base}/res/web/images/register.png" width="756" height="794"/>
+		
+		</div>
+     
+	</div> 
+    <!--登录弹出层结束-->
+         
+
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+
+</@frame>
+
+<script>
+	var result = 0; 
+	//验证用户名
+	function validateUserName(userName){
+		$(".js_errorUserName").text("");
+		if(userName == ""){
+			$(".js_errorUserName").text("用户名不能为空");
+			result++;
+			
+		}else{
+			$.post("checkUserName.html", {"username":userName},
+					function(data){
+						if(data.result){
+							result++;
+							$(".js_errorUserName").text("用户名已存在");
+							$("#js-user-username").val("");//清空输入框
+						}
+					},"json");
+		}
+	}
+	//验证用户名
+	function validateName(_this){
+		$(".js_errorUserName").text("");
+		if($.trim($(_this).val()) == ""){
+			$(".js_errorUserName").text("用户名不能为空");
+		}else{
+			$.post("checkUserName.html", {"username":$.trim($(_this).val())},
+					function(data){
+						if(data.result){
+							$(".js_errorUserName").text("用户名已存在");
+							$("#js-user-username").val("");//清空输入框
+						}
+					},"json");
+		}
+	}
+	//验证密码
+	function validateNewPwd(pwd) {
+		if (pwd == "") {
+			pwdErrorMsg("密码不能为空");
+			result++;
+		} else {
+			var reg = /^(?![^a-zA-Z]+$)(?!\D+$).{6,16}$/;
+			if (!reg.test(pwd)) {
+				pwdErrorMsg("密码是数字和字母的组合，长度为6-16位");
+				result++;
+			} else {
+				pwdErrorMsg();
+			}
+		}
+	}
+	var pwdErrorMsg = function(text) {
+		if (text != undefined) {
+			$(".js_errorNewPwd").text(text);
+			result++;
+		} else {
+			$(".js_errorNewPwd").text("");
+		}
+	}
+	//验证确认的密码
+	function validateConfirmPwd(pwd) {
+		if (pwd == "") {
+			ConfirmpwdErrorMsg("密码不能为空");
+			result++;
+		} else {
+			var reg = /^(?![^a-zA-Z]+$)(?!\D+$).{6,16}$/;
+			if (!reg.test(pwd)) {
+				ConfirmpwdErrorMsg("密码是数字和字母的组合，长度为6-16位");
+				result++;
+			} else {
+				ConfirmpwdErrorMsg();
+			}
+		}
+	}
+	var ConfirmpwdErrorMsg = function(text) {
+		if (text != undefined) {
+			$(".js_errorConfirmPwd").text(text);
+			result++;
+		} else {
+			$(".js_errorConfirmPwd").text("");
+		}
+	}
+ 	
+		//邮箱，电话的验证
+		function validateEmailAndPhone(){
+			$(".js_errorPhone").text("");
+			$(".js_errorEmail").text("");
+					var phone = $.trim($("#js-user-phone").val());
+					if(phone != ""){
+						var mRegx=/^0?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/ig;
+						if(!mRegx.test(phone)){
+							unErroPhone("请输入正确的手机号!");
+						}else{
+							unErroPhone();
+						}
+					} else{
+						unErroPhone("手机号不能为空!");
+						
+					}
+					var email = $.trim($("#js-user-email").val());
+					if(email != ""){
+						var emailRegx=/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/;
+						if(!emailRegx.test(email)){
+							unErroEmail("请输入正确的邮箱!");
+						}else{
+							unErroEmail();
+						}
+					}else{
+						unErroEmail("邮箱不能为空!");
+						
+					}
+		}
+	
+	
+	//Phone错误提示
+	var unErroPhone = function(text){
+	if(text!=undefined){
+		result++;
+		$(".js_errorPhone").text(text);
+		
+	}else{
+		$("#js_errorPhone").text();
+	}
+	}
+	//Email错误提示
+	var unErroEmail = function(text){
+	if(text!=undefined){
+		result++;
+		$(".js_errorEmail").text(text);
+	}else{
+		$(".js_errorEmail").text();
+	}
+	}
+		
+	 
+	//注册
+	function regist(){
+		result = 0;
+		validateUserName($.trim( $("#js-user-username").val()));
+		validateNewPwd($.trim( $("#js-user-newPwd").val()));
+		validateConfirmPwd($.trim( $("#js-user-confirmPwd").val()));
+		validateEmailAndPhone();
+		if(result == 0){
+			if($.trim( $("#js-user-newPwd").val())== $.trim( $("#js-user-confirmPwd").val())){
+				//基本信息
+				var userinfo = {};
+				userinfo.username = $("#js-user-username").val();
+				userinfo.password = $("#js-user-newPwd").val();
+				userinfo.email = $("#js-user-email").val();
+				userinfo.phone = $("#js-user-phone").val();
+				//详细信息
+				var userDetailed = {};
+				userDetailed.namecn = $("#js-user-namecn").val();
+				userDetailed.companyname = $("#js-user-company").val();
+				
+				var user = {};
+				user.info = userinfo;
+				user.detailed = userDetailed;
+
+				var jsonstr = JSON.stringify(user);
+				$.ajax({
+					type : "post",
+					url : "${base}/user/toLogin/regist.html",
+					data : {
+						param : jsonstr
+					},
+					dataType : 'json',
+					success : function(data) {
+						if (data.returned == 0) {
+							alert(data.msg);
+						} else {
+							alert("注册成功!");
+							window.location.reload(true);
+						}
+					}
+
+				});
+			}else{
+				alert("两次输入的密码不一致!");	
+				$("#js-user-newPwd").val("");//清空输入框
+				$("#js-user-confirmPwd").val("");//清空输入框
+			}
+			
+		}
+		
+	}
+
+</script>

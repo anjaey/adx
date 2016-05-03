@@ -1,0 +1,289 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/admin/productManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/articleManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/js/sobox/popbox-style.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+<@frame>
+<div class="welcom">
+	<div class="artLocation">您当前的位置：商品管理>筛选排序</div>
+	<div class="wel_content">
+		<select class="js_categoryid">
+			<option value="-1">全部</option>
+		</select>
+		<div class="right marr10">
+			<input type="button" value="新增筛选" class="btnsearch js_toadd_productfilter" />
+			
+		</div>
+		<div class="clear"></div>
+		<table width="98%" border="0" cellspacing="0" cellpadding="0" class="art_table productTable">
+			<tr>
+				<th rowspan="2">所属类型</th>
+				<th rowspan="2">属性名称</th>
+				<th colspan="2">值</th>
+				<th rowspan="2">单位</th>
+				<th rowspan="2">创建人</th>
+				<th rowspan="2">操作</th>
+			</tr>
+			<tr>
+				<th>最小值</th>
+				<th>最大值</th>
+			</tr>
+			<#list data as entity>
+			<tr>
+				<td>${entity.categoryname}</td>
+				<td>${entity.name}</td> <#if entity.value == null>
+				<td>${entity.valuemin}</td>
+				<td>${entity.valuemax}</td> <#else>
+				<td colspan="2">${entity.value}</td> </#if>
+				<td>${entity.attvalue}</td>
+				<td>${entity.username}</td>
+				<td><a href="javascript:void(0);" uuid="${entity.uuid}" class="js_toupd_productfilter">修改</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a href="javascript:void(0);" uuid="${entity.uuid}" class="js_dodel_productfilter">删除</a></td>
+			</tr>
+			</#list>
+		</table>
+		<div class="pagination right mart15">
+			<a href="#" class="first" data-action="first">&laquo;</a>
+			<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+			<input type="text" readonly="readonly" data-max-page="${countPage}" />
+			<a href="#" class="next" data-action="next">&rsaquo;</a>
+			<a href="#" class="last" data-action="last">&raquo;</a>
+		</div>
+	</div>
+</div>
+
+<div class="so-popbox">
+	<div class="h2-sopop">
+		<span class="s-sopop-title">标题</span> <span class="ss-close s-sopop-close">[关闭]</span>
+	</div>
+	<div class="so-popbox-cont">
+		<form id="js_productfilter">
+			<input type="hidden" class="js_categoryid" value="${categoryid}" />
+			<input type="hidden" name="uuid" />
+			<p>
+				<label>所属类型：</label> 
+				<select name="categoryid" class="js_categoryid_param">
+				</select>
+			</p>
+			<p>
+				<label>属性名称：</label><input type="text" name="name" class="txtAddproduct txtAddproduct5">
+			</p>
+			<p>
+				<label>排序：</label><input name="rank" type="number"  class="txtAddproduct txtAddproduct5"/>
+			</p>
+			<div class="clear"></div>
+			<p style="line-height:30px;">
+				<label>属性形式：</label><input type="radio" value="0" name="valueform" checked="checked" />固定&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="valueform" value="1" />范围
+			</p>
+			<div class="clear"></div>
+			<p class="js_valuefixed">
+				<label>固定值：</label><input name="value" type="text" class="txtAddproduct txtAddproduct5"/>
+			</p>
+			<div class="clear"></div>
+			<div class="js_valuescope">
+				<p>
+					<label>最小值：</label><input name="valuemin" type="number" />
+				</p>
+				<div class="clear"></div>
+				<p>
+					<label>最大值：</label><input name="valuemax" type="number" />
+				</p>
+			</div>
+			<div class="clear"></div>
+			
+			<p>
+				<label>属性值：</label><input name="attvalue" type="text" class="txtAddproduct txtAddproduct5" />
+			</p>
+			<div class="clear"></div>
+			<p>
+				<label>属性排序：</label><input name="attrank" type="number" class="txtAddproduct txtAddproduct5"/>
+			</p>
+			<div class="clear"></div>
+			<p>
+				<label>字段名称：</label>
+				<select name="filename">
+					<option value="price">价格</option>
+					<option value="productivity">工作效率</option>
+					<option value="appliesField">使用场地</option>
+					<option value="commonSort">通用分类</option>
+					<option value="brandid">品牌</option>
+				</select>
+			</p>
+			<div class="clear"></div>
+			<p style="line-height:30px;">
+				<label>是否前台显示：</label><input name="isshow" type="radio" value="0" checked="checked" />否<input name="isshow" type="radio" value="1" />是
+			</p>
+		</form>
+		<p class="p-so-popBtn js_doadd_productfilter">
+			<input type="button" class="btnsearch" value="确定">
+		</p>
+	</div>
+</div>
+
+
+</@frame>
+<script type="text/javascript" src="${base}/res/common/js/sobox/jquery.sobox.js"></script>
+<script type="text/javascript" src="${base}/res/bhecms/js/tree_tab.js"></script>
+<script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+<script>
+$('.pagination').jqPagination({
+	  link_string : "javascript:void(0);",
+	  current_page: '${pageIndex}', //设置当前页 默认为1
+	  max_page : '${countPage}', //设置最大页 默认为1
+	  page_string : '当前第{current_page}页,共{max_page}页',
+	  paged : function(page) {
+		  window.location.href="${base}/admin/product/toProductFilter.html?categoryid="+$(".js_categoryid").val()+"&pageIndex="+page;
+	      //回发事件。。。
+	      }
+	});
+</script>
+
+
+<script>
+
+	$(this).tree({
+		url: 	'${base}/admin/product/getAllProductForTree.html',
+		top:	'0',
+		select:	'js_categoryid',
+	});
+	$(this).tree({
+		url: 	'${base}/admin/product/getAllProductForTree.html',
+		top:	'0',
+		select:	'js_categoryid_param',
+	});
+
+	/* 属性形式切换 */
+	$("#js_productfilter input[name=valueform]").click(function(){
+		if($(this).val() == 0){
+			$("#js_productfilter .js_valuescope").hide();
+			$("#js_productfilter .js_valuescope input[name=valuemin]").val("");
+			$("#js_productfilter .js_valuescope input[name=valuemax]").val("");
+			$("#js_productfilter .js_valuescope").hide();
+			$("#js_productfilter .js_valuefixed").show();
+		}else if($(this).val() == 1){
+			$("#js_productfilter .js_valuefixed input[name=value]").val("");
+			$("#js_productfilter .js_valuefixed").hide();
+			$("#js_productfilter .js_valuescope").show();
+		}
+	});
+	
+	$(".js_categoryid").change(function() {
+		window.location.href = "${base}/admin/product/toProductFilter.html?categoryid=" + $(this).val();
+	});
+
+	$(".js_toadd_productfilter").click(function() {
+		$("#js_productfilter")[0].reset();
+		$(".js_categoryid_param option:not(:disabled):first").attr("selected",true);
+		$("#js_productfilter input[name=valueform][value=0]").click();
+		$.sobox.pop({
+			popTarget : 'div.so-popbox',
+			wrapTarget : false,
+			maskClick : false,
+			title : "添加筛选",
+		});
+	});
+	
+	$(document).on("click",".js_doadd_productfilter",function(){
+		var data = ajaxAddProductFilter();
+		if(data.rst == -1){
+			alert("参数错误");
+		}else if(data.rst == 1){
+			window.location.reload();
+		}else{
+			alert("添加失败");
+		}
+	});
+
+	$(".js_dodel_productfilter").click(function() {
+		if(confirm("是否删除")){
+			var data = ajaxDelProductFilter($(this).attr("uuid"));
+			if(data.rst == 1){
+				window.location.reload();
+			}else{
+				alert("删除失败");
+			}
+		}
+	});
+
+	$(".js_toupd_productfilter").click(function() {
+		$("#js_productfilter")[0].reset();
+		$(".js_categoryid_param option:not(:disabled):first").attr("selected",true);
+		$("#js_productfilter input[name=valueform][value=0]").click();
+		var data = ajaxUpdlProductFilter($(this).attr("uuid"));
+		$.each(data.single,function(k,v){
+			if(k == "valuemin"){
+				if(v != null && v != ""){
+					$("#js_productfilter input[name=valueform][value=1]").click();
+				}
+			}
+			if($.trim(v) != ""){
+				$("#js_productfilter input[name="+k+"][type=radio][value='"+v+"']").click();
+				$("#js_productfilter input[name="+k+"][type=number]").val(v);
+				$("#js_productfilter input[name="+k+"][type=text]").val(v);
+				$("#js_productfilter input[name="+k+"][type=hidden]").val(v);
+				$("#js_productfilter select[name="+k+"] option[value='"+v+"']").attr("selected",true);
+			}
+		});
+		
+		$.sobox.pop({
+			popTarget : 'div.so-popbox',
+			wrapTarget : false,
+			maskClick : false,
+			title : "修改筛选",
+		});
+	});
+	
+	window.onload=function(){
+		$(".js_categoryid option:not(:disabled)[value='"+$("input.js_categoryid").val()+"']").attr("selected",true);
+	};
+</script>
+<script>
+	/* ajax */
+	function ajaxAddProductFilter(){
+		var data = false;
+		$.ajax({
+			type: 'POST', 
+    		url: "${base}/admin/product/doAddProductFilter.html" , 
+    		data: $("#js_productfilter").serialize(),
+    		dataType: "json",
+    		async:false,
+    		success:function(json) {
+    			data = json;
+    		}
+		});
+		return data;
+	}
+	
+	function ajaxDelProductFilter(uuid){
+		var data = false;
+		$.ajax({
+			type: 'POST', 
+    		url: "${base}/admin/product/doDelProductFilter.html" , 
+    		data: {
+    			uuid:uuid,
+    		},
+    		dataType: "json",
+    		async:false,
+    		success:function(json) {
+    			data = json;
+    		}
+		});
+		return data;
+	}
+	
+	function ajaxUpdlProductFilter(uuid){
+		var data = false;
+		$.ajax({
+			type: 'POST', 
+    		url: "${base}/admin/product/getProductFilter.html" , 
+    		data: {
+    			uuid:uuid,
+    		},
+    		dataType: "json",
+    		async:false,
+    		success:function(json) {
+    			data = json;
+    		}
+		});
+		return data;
+	}
+</script>

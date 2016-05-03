@@ -1,0 +1,41 @@
+@charset "utf-8";
+/* CSS Document */
+.main{min-width:980px;}
+.rightDiv{min-height:1619px;background-color:#EDF1F2;overflow:hidden;width:88%;}
+.nav_position{line-height:60px;margin-left:30px;font-size:14px;}
+.top{height:60px;background-color:#01A2AA;width:100%;min-width:980px;}
+.nav{margin-left:12%;}
+.nav a{display:block;height:60px;width:10%;color:white;font-size:16px;text-align:center;line-height:60px;float:left;}
+.nav .nav_color{background-color:#01747A;}
+.menu{width:12%;background-color:#3A5161;float: left;min-height:1619px;}
+.article_title{background-color:white;border-bottom:solid 2px #E1E1E1;padding-left:30px;line-height:36px;font-size:16px;}
+.list01{border-bottom:solid 1px #006e9e;line-height:32px;background-color:white;text-align:center;font-size:14px;}
+.list01 .curr{color:#01747A;}
+.footer{background-color:#3A5161;line-height:36px;text-align:center;font-size:14px;color:#E2F8FF;min-width:980px;}
+.exit{margin-top:20px;margin-right:10px;}
+.exit a{color:white;display:block;margin-right:10px;}
+.saf_exit{color:red;width:80px;height:22px;margin-left:10px;border-radius:5px;}
+.wel_content{margin-left:30px;background-color:white;padding-top:10px;padding-left:20px;min-height:1500px;width:93%;overflow:hidden;}
+.save{margin-left:300px;margin-top:30px;margin-bottom:10px;}
+.save_btn{color:white;width:100px;height:32px;background-color:2D9CE4;line-height:32px;border-radius:5px;font-weight:700;}
+.sys_nav01{margin:20px 0;width:94%;}
+.sys_nav01 a{display:block;text-decoration:none;margin-right:20px;float:left;font-size:14px;}
+.sys_nav01 .sys_01_a{color:#2D9CE4;text-decoration:underline;}
+/*文本框公用样式开始*/
+.txtAddproduct{ width:668px; height:33px!important; border:1px solid #ccc; text-indent:5px;}
+.txtAddproduct2{ width:258px;}
+.txtAddproduct3{ width:248px; height:43px!important;border:1px solid #b5b5b5;}
+.txtAddproduct4{ width:560px;}
+.txtAddproduct5{ width:180px;}
+.txtAddproduct6{ width:500px; height:33px}
+.commonSelect{ width:180px; height:30px; border:1px solid #ccc;} 
+/*文本框公用样式结束*/
+.mar5{ margin:5px 0px;}
+.marl15{ margin-left:15px;}
+.paddt9{padding-top:9px;}
+.mart5{margin-top:5px;}
+/*通用label标签*/
+label{	width:110px; height:33px; line-height:33px;	text-align:right;display:block;	float:left;	padding-right:5px; }
+
+.hidemenu{display:none}
+.article_title:hover{background-color:#eee; cursor: pointer;}

@@ -1,0 +1,71 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/carousel.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/productInformation.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/productSale.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/company.css">
+
+<@frame>
+<div class="topbg"></div>
+<div class="bgIntroduction">
+	<div class="wind1200">
+		<div class="left_title martp60  wind1200">${title}</div>
+		<div class="companyMessage left">
+			<p>重庆宇田丹增机电技术有限公司最早成立于1991年，从1995年开始，公司开始专业经营清洁设备，酒店用品，公司 注册资金316万元，流动奖金2300万元。公司有关联企业：重庆宇田环卫工程有限公司，注册资金510万元；重庆梅 履泰安防技术有限公司，注册资金128万元。</p>
+			<p>2007年，与有144年制造经验的美国坦能TENNANT清洁设备公司合作，成为中国地区的战略经销商。公司还与行业巨 头佛山市嘉得力清洁科技股份有限公司、东莞汇乐环保股份有限公司、无锡市华信安全设备有限公司紧密合作。 公司已经累计为重庆及周边地区的工厂、环卫、酒店、物业销售、租赁出3万余台清洁设备、环卫设备、高压清洗 机等，为3900余位客户服务。特别是近五年来，公司的保洁工程、清洗工程、租赁服务和个人安全防护用品销售 有了较快的发展。</p>
+			<p>公司经过20余年的发展，已经成为重庆地区清洁设备、环卫设备、工业吸尘器、烟尘净化器、高压清洗机、个人 安全防护用品、保洁最有实力的公司之一。我们为客户提供销售、租赁、工程承包系列服务，公司拥有租赁、保 洁设备1610万元。公司将在下一个5年计划末期，营业额超过1亿元</p>
+			<p>公司始终坚持经营三原则：“诚信守法，处事光明，立业贸易”，始终致力于环境、清洁、健康、安全技术的的 传播者和践行者。</p>
+			<p>
+				公司管理架构：<br>法务办、顾问办、行政办、人力资源部、财务部、仓储物流部（普洛斯仓库、金紫山仓库）、清洁环卫设备销售 部、安防用品销售部、设备租赁部、维修部、保洁工程部、成都办事处、贵阳办事处、西安办事处。
+			</p>
+		</div>
+		<div class="companyImage right">这里是放一张图片</div>
+	</div>
+
+</div>
+<div class="wind1200">
+	<div class="">
+		<div class="companyImageUl">
+			<ul>
+				<li><img src="${base}/res/web/images/companynva_05.png" width="290" height="161" /></li>
+				<li><img src="${base}/res/web/images/companynva_07.png" width="290" height="161" /></li>
+				<li><img src="${base}/res/web/images/companynva_09.png" width="290" height="161" /></li>
+				<li><img src="${base}/res/web/images/companynva_11.png" width="290" height="161" /></li>
+
+			</ul>
+		</div>
+		<div class="clear"></div>
+		<div class="companybgColor">
+			<div class="mart40">
+				<p class="white bgColorLine font18">环境、清洁、健康、安全的技术</p>
+				<p class="bgColorP">作为环境、清洁、健康、安全技术的国际先行者，宇田公司提供了值得信赖的创新设备和解决方案。“技术” 意味着不仅仅确保技术上的优越性，还要承担起拯救环境的责任，造福那些使用和信任我们产品的人们。以技术改善环境既是我们的宗旨亦是核心挑战，是我们灵感和动力之源，是公司文化和核心优势。</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="left_title wind1200 mart60">公司历史</div>
+	<div class="history mart60">
+		<p class="bgColorP mart400">1991年，雷先生开始创业；1996年，成为清洁设备、酒店设备专业供应商；如今，宇田公司经过20余年的发展，已经成为一家提供联合技术、多元产品的公司，为客户提供销售、租赁、工程承包、分期付款业务。纵观其历史，宇田公司通过不断追求新技术、并营造鼓励创新的公司文化。</p>
+	</div>
+
+
+	<div class="companyImageUl margin50">
+		<ul>
+			<li class="marl0"><img src="${base}/res/web/images/ccl_05.png" width="320" height="370" /></li>
+			<li><img src="${base}/res/web/images/ccl_07.png" width="320" height="370" /></li>
+			<li><img src="${base}/res/web/images/ccl_09.png" width="320" height="370" /></li>
+		</ul>
+	</div>
+</div>
+<div class="clear"></div>
+</@frame>
+<script>
+	$(document).ready(function() {
+		$('li.mainlevel').mousemove(function() {
+			$(this).find('ul').slideDown();//you can give it a speed
+		});
+		$('li.mainlevel').mouseleave(function() {
+			$(this).find('ul').slideUp("fast");
+		});
+	});
+</script>

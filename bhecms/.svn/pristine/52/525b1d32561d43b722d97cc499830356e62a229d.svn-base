@@ -1,0 +1,207 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/common.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+
+
+<@frame> 
+	
+	<div class="artLocation">
+	
+		您当前位置：用户管理>会员管理
+		<input id = "js-add" class="btnsearch right js-add"  type="button" style="width:110px;" value="新增用户"/>
+	</div>
+	<div class="wel_content mart15">	
+	
+    	<!-- <div class="user_top">
+    		<p>
+    			<span>筛选：</span>
+    			
+    			<select class="js-select commonSelect"><option value="1">所有会员</option><option value="2">所有用户</option><option value="3">在线用户</option><option value="4">被禁用</option></select>
+    			<span class="marl15">输入用户名/手机号/邮箱：</span><input type="text" value="" class="txtAddproduct txtAddproduct5">
+    			<button class="user_top_01 js-search">搜索</button>
+    			<button class="user_top_02 right js-add">新增用户</button>
+    		</p>
+    	</div>	 -->										
+                                                       
+        <div class="basic">
+	        <div class="vip_title">
+            <table border="0" cellpadding="0px" cellspacing="0px" class="user_list">
+            	<tr class="user_list_nav">
+            		<td><input type="checkbox" class="js-chooseAll"></td>
+            		<td>序号</td>
+            		<td>用户名</td>
+            		<td>手机号</td>            		
+            		<td>邮箱</td>
+            	    <td>上次登录时间</td>
+            	    <td>登录次数</td>
+            	    <td>状态</td>
+            	    <td>操作</td>
+            	</tr>
+            	<#if (pageInfoMap.count>0)>
+	       		<#assign entityList=pageInfoMap.list />                                              
+	            	<#list entityList as entity>
+            	
+            	<tr class="user_list_content">
+            		<td><input type="checkbox" class="js-chooseInput" uid="${entity.uuid}"></td>
+            		<td>${entity_index}</td>
+            		<td>${entity.username}</td>
+            		<td>${entity.phone}</td>
+            		<td>${entity.email}</td>
+            		<td>
+            			<#if (entity.lastlogintime)??>
+	        				${entity.lastlogintime?string("yyyy-MM-dd HH:mm:ss")}
+		        		</#if>
+			        </td>
+            		<td>${entity.logincount!"0"}</td>
+            		<td>
+            			<#switch entity.status>
+							<#case 0>
+							正常
+							<#break>
+							<#case 1>
+							禁用
+							<#break>
+							<#case 2>
+							永久冻结
+							<#break>
+							<#case 2>
+							时间冻结
+							<#break>
+							<#case 3>
+							临时帐号
+							<#break>
+							<#default>
+							正常
+						</#switch>
+            		</td>
+            		<td><span class="top_title02"><a class="operate js-edit"  uid="${entity.uuid}">修改</a>
+	            		<#if entity.status!=1>
+	            			<a class="operate js-operate" uid="${entity.uuid}" opera="disable">禁用</a>
+	            			<#else>
+	            			<a class="operate js-operate" uid="${entity.uuid}" opera="open">开启</a>
+	            		</#if>
+            		</span>
+            		</td>
+            	</tr>
+            	
+            		</#list>
+           	 	</#if>	
+            </table>
+            
+	        </div>
+	        <p class="user_content">
+	        	<a class="js-operateAll" opera="disable">&nbsp;&nbsp;禁用</a>
+	        	<a class="js-operateAll" opera="open">&nbsp;&nbsp;开启</a>
+	        </p>
+	        
+	        
+<#-- 	        <div class="paging"><button>首页</button><button>1</button><span>转到</span><input type="text"><button>GO</button></div> -->
+	        
+	        <#if (pageInfoMap.count>0)>
+		        <div class="pagination right">
+				    <a href="#" class="first" data-action="first">&laquo;</a>
+				    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				    <input type="text" readonly="readonly" data-max-page="${pageInfoMap.countpage}" />
+				    <a href="#" class="next" data-action="next">&rsaquo;</a>
+				    <a href="#" class="last" data-action="last">&raquo;</a>
+				</div>
+			</#if>
+			
+    	 </div>
+    
+    </div>
+</@frame>
+
+<script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+<script>
+
+	$(function(){
+
+		$("#js-add").click(function(){
+			window.location.href="${base}/admin/user/userEdit.html";
+		});
+		
+		<#if (pageInfoMap.count>0)>
+			$('div.pagination').jqPagination({
+				current_page:'${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+				max_page:'${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+			    paged: function(page) {
+				        window.location.href="${base}/admin/user/userIndex.html?pageIndex="+page+"&pageSize=15";
+			    }
+			});
+		</#if>
+		
+		
+		$("button.change_btn").change(function(){
+			
+			
+		});
+		
+		$("a.js-edit").click(function(){
+			window.location.href="${base}/admin/user/userEdit.html?uuid="+$(this).attr("uid");
+			
+		});
+		
+		$("a.js-operate").click(function(){
+			if(confirm("是否执行操作？")){
+				var status="";
+				if($(this).attr("opera")=="disable"){
+					status=1;
+				}else{
+					status=0;
+				}
+				$.post("updateUserInfo.html",{"uuid":$(this).attr("uid"),"status":status},
+						function(data){
+							if(data.result){
+								location.reload(true);
+							}else{
+								alert("操作失败！");
+								
+							}
+						},"json");
+				
+			}
+			
+		});
+		
+		 $("button.js-operateAll").click(function(){
+			   if($("input:checked.js-chooseInput").length>0){
+				   if(confirm("是否执行操作？")){
+					   var status="";
+						if($(this).attr("opera")=="disable"){
+							status=1;
+						}else{
+							status=0;
+						}
+					   var uuids="";
+					   $("input:checked.js-chooseInput").each(function (k,v) {
+						   uuids=$(v).attr("uid")+","+uuids;
+					   })
+					   uuids=uuids.substring(0,uuids.length-1);
+						$.post("updateUserInfo.html", {"uuids":uuids,"status":status},
+							function(data){
+								if(data.result){
+									window.location.reload(true);
+								}else{
+									alert("共有："+data.count+"条数据,操作失败");
+								}
+							},"json");
+					   }
+				}
+		   });
+		
+		 $("button.js-search").click(function(){
+				var text = $(this).prev("input").val();
+				if($.trim(text)!=''){
+					location.href="userIndex.html?searchKey="+text;
+				}
+				
+		
+		   });
+	});
+
+</script>
+
+ 

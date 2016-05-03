@@ -1,0 +1,29 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<@frame> 
+	<div class="wel_content">
+		<form class="js-msg-form">
+	       <div class="name">
+	       	<p class="sys_title01">
+	       	<#if msgType=="receive">
+	       		发件人：
+	       		<#elseif msgType=="send">
+	       		收件人：
+	       		<#else>
+	       		收件人：
+	       	</#if>
+	       	${userName}
+	       	</p>
+	      </div>
+	      <div class="name">
+	       	<p class="sys_title01">标题：<input type="text" value="${entity.title}" class="sys_input01 js-title"></p>
+	      </div>
+	      <div class="suffix01">
+	      	<p class="sys_title01">正文：</p>
+	     </div>
+	     <textarea class="email js-content">${entity.content}</textarea>
+	     </form>
+	     <div class="clear"></div>
+	</div>
+</@frame> 

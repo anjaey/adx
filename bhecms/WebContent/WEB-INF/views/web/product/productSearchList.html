@@ -1,0 +1,180 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/web/css/productInformation.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/web/css/productSale.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/common/jqpagination/css/jqpagination.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/common/js/sobox/popbox-style.css">
+<@frame>
+	<div class="wind1200" style="margin-top:100px;">
+		<div >
+			<div class="keywords left">
+			</div>
+			<div class="right">
+				<span class="marr15"><input  type="text" class="txtIndex" placeholder="请输入产品名"/></span>
+				<span class="marr15"><input  type="text" class="txtIndex01" placeholder="价格区间"/>到<input  type="text" value="" class="txtIndex01"/></span>
+				<span class="marr15"><input  type="button" value="搜索" class="btnIndexSearch"/></span>
+			</div>	
+		</div>
+	
+	<!--第三屏 主要产品-->
+		<div class="clear"></div>	
+		<div>			
+				<div class="left_title05">
+					搜索结果
+				</div>
+				<div class="pro_show">
+					<ul class="pro_showUlli">
+						<#assign entityList=data.list /> 
+	    				<#list entityList as entity>
+						<li>
+							<div class="commonImageSize js-detail" data-uuid="${entity.uuid}">
+								<img src="${entity.productImgurl}" width="249" height="238" alt="产品图片">
+							</div>
+							<p class="pro_price font14">￥${entity.price}</p>
+							<span  class="commonColor">产品名：${entity.namecn}</span>
+							<span class="commonColor">品牌：${entity.brandName}</span>
+							<p>
+								<a class="joinCheck js-addcar" uuid="${entity.uuid}">加入购物车</a>
+								<a class="checkDetail js-detail" data-uuid="${entity.uuid}">查看详情</a>
+							</p>
+						</li>
+					</#list>
+					</ul>
+				</div>
+				<div class="clear"></div>
+				<div class="pagination right">
+				    <a href="#" class="first" data-action="first">&laquo;</a>
+				    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				    <input type="text" readonly="readonly" data-max-page="${data.countpage}" />
+				    <a href="#" class="next" data-action="next">&rsaquo;</a>
+				    <a href="#" class="last" data-action="last">&raquo;</a>
+				</div>
+		</div>
+		
+		
+		</div>
+		
+		
+		</div>
+	<div class="clear"></div>
+	
+</@frame>
+<script type="text/javascript"
+	src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+<script type="text/javascript"
+	src="${base}/res/common/js/sobox/jquery.sobox.js"></script>
+<script type="text/javascript">
+//产品搜索/web/product/productSearch.html
+	$('.txtIndex').val("${title}")
+	$('.txtIndex01:first').val("${startprice}");
+	$('.txtIndex01:last').val("${endprice}");
+	
+	//加载关键字 
+	$.post("${base}/web/product/searchKeywords.html", function(data){
+		$('div.keywords').append("热门关键词：");
+		for (var i = 0; i < data.length; i++)
+			if (data[i].title == '${title}') {
+				$('div.keywords').append("<a class = 'spekeyWord' href='${base}/web/product/productSearch.html?title="+ data[i].title +"'>" + data[i].title + "</a>")
+			} else {
+				$('div.keywords').append("<a href='${base}/web/product/productSearch.html?title="+ data[i].title +"'>" + data[i].title + "</a>")
+			}
+	},"json");
+	
+	$('.btnIndexSearch').click(function(){
+		var title = $('.txtIndex').val();
+		var startprice = $('.txtIndex01:first').val();
+		var endprice = $('.txtIndex01:last').val();
+		var reg = /^[1-9]\d*$/;
+		var count = 0;
+		
+		if (!reg.test(startprice) && startprice != '') {
+			return false;
+		} 
+		
+		if (!reg.test(endprice) && endprice != '') {
+			return false;
+		}
+		if (parseInt(endprice) < parseInt(startprice)) {
+			return false;
+		}
+		
+		window.location.href = "${base}/web/product/productSearch.html?title="+title+"&startprice="+startprice+"&endprice="+endprice;
+ 	});
+ 	
+	//加载产品列表
+	$('.pagination').jqPagination({
+		current_page : '${data.pageindex???string(data.pageindex,1)}',
+		max_page : '${data.countpage???string(data.countpage,1)}',
+	    paged: function(page) {
+	    	var title = $('.txtIndex').val();
+			var startprice = $('.txtIndex01:first').val();
+			var endprice = $('.txtIndex01:last').val();
+			var reg = /^[1-9]\d*$/;
+			var count = 0;
+			
+			if (!reg.test(startprice) && startprice != '') {
+				return false;
+			} 
+			
+			if (!reg.test(endprice) && endprice != '') {
+				return false;
+			}
+			
+			if (parseInt(endprice) < parseInt(startprice)) {
+				return false;
+			}
+			window.location.href = "${base}/web/product/productSearch.html?title="+title
+				+"&startprice="+startprice+"&endprice="+endprice+"&pageIndex="+ page + "&pageSize=8";
+		    }
+	});
+	
+	$("a.js-addcar").click(function(){
+		$.ajax({
+			type:'post',
+			url:"addToCar.html",
+			async:false,
+			data:{"uuid":$(this).attr("uuid")},
+			dataType:"json",
+			success:function(data){
+				if(data.result==0){
+					$.sobox.confirm("温馨提示","您还未登陆，请先登陆后再添加，点击确定将跳转登陆页面",function(){
+						location.href="${base}/user/toLogin/loginPage.html";
+					},null); 
+				}else if(data.result==1){
+					$.sobox.pop({
+						  type : 'content', 
+						  content :'已经成功加入购物车',
+						  posType:'center',
+						  width:360,height:100,
+						  defaultShow:true,
+						  callback: function(){
+							 var time = 2;
+							 function task(){
+								 if(time>0){
+									 time=time-1;
+									 $("div.so-popbox-cont").html("已经成功加入购物车,"+time+"后自动关闭");
+									 setTimeout(task, 1000); 
+								 }else{
+									 $("span.s-sopop-close").click();
+								 }
+							 }
+							 task();
+						  }, 
+						
+					});
+				}else{
+					alert("添加失败");
+				}
+			}
+		});
+	});
+	
+	$(".js-detail").click(function(){
+		location.href="${base}/web/product/productDetail.html?uuid="+$(this).attr("data-uuid");
+	})
+</script>

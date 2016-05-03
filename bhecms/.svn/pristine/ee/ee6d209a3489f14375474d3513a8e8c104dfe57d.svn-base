@@ -1,0 +1,63 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css"
+	href="${base}/res/bhecms/css/admin/productManage.css">
+<@frame>
+	<div class="nav_position">您当前位置：<a href="${base}admin/product/toInquiriesManager.html">商品询价</a>>编辑</div>
+	<div class="welcom">
+	
+    	<div class="wel_content" >
+    		<p class="release">
+					<div style="float: left;">
+						<img src="${data.url}" width="235" height="275" alt="产品图片">
+					</div>
+					<div style="height: 275px">
+						<p class="pro_price font14">￥${data.product.price}</p>
+						<p class="pro_text font12">产品名：${data.product.namecn}</p>
+						<p class="pro_text font12">品牌：${data.product.brandname}</p>
+					</div>
+			</p>
+        	<form action="${base}/admin/product/addProductInquiries.html" method="post"  class="js_from_addBrand" > 
+                <input  type="hidden" name="id" value="${data.id}"/>    
+                <input  type="hidden" name="uuid" value="${data.uuid}"/>    
+             	<p class="release">
+                    <label>姓名：</label>
+                    <input  type="text" value="${data.username}" class="txtAddproduct txtAddproduct2" name="username"/>           
+                </p>
+                <p class="release">
+                   <label>性别：</label>
+                   <label for="man"><input name="sex" id="man" type="radio" value="1" <@sets.setRadio data.sex 1 0/>/> 男</label>
+                   <label for="woman"><input name="sex" id="woman" type="radio" value="0" <@sets.setRadio data.sex 0 0/>/> 女</label>
+                </p><br><br>
+                <p class="release">
+                    <label>联系电话：</label>
+                    <input  type="text" value="${data.tel}" class="txtAddproduct txtAddproduct2" name="tel" />           
+                </p>
+                <p class="release">
+                    <label>职务：</label>
+                    <input name="position" value="${data.position}" type="text" class="txtAddproduct txtAddproduct2"  />         
+                </p> 
+                <p class="release">
+                    <label>公司：</label>
+                   <input name="firmname" value="${data.firmname}" type="text" class="txtAddproduct txtAddproduct2" />         
+                </p>
+                <p class="release">
+                    <label>询价内容：</label>
+                    <textarea name="content" rows="10" cols="" class=" txtAddproduct2">${data.content}</textarea>
+                </p>
+                <p class="release">
+                    <label>备注：</label>
+                    <textarea name="remarks" rows="10" cols="" class=" txtAddproduct2">${data.remarks}</textarea>
+                </p>
+                <p class="release">
+                   <label>处理状态：</label>
+                   <label for="stateyes"><input name="state" id="stateyes" type="radio" value="1" <@sets.setRadio data.state 1 0/>/> 已处理</label> 
+                   <label for="stateno"><input name="state" id="stateno"type="radio" value="0"<@sets.setRadio data.state 0 0/> /> 暂不处理</label> 
+                </p>
+                 <div class="clear"></div> 
+                 <div style="margin-left:120px;">
+                 	<input class="js_submit btnsearch" type="submit" value="提交"/>
+                 </div>             
+            </form> 
+        </div>
+    </div>
+</@frame>

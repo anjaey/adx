@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bhe.dao.mybatis.mapper.OrderDetailEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.bhe.dao.mybatis.model.OrderDetailEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="orderCode" property="ordercode" jdbcType="VARCHAR" />
+    <result column="productId" property="productid" jdbcType="BIGINT" />
+    <result column="skuCode" property="skucode" jdbcType="VARCHAR" />
+    <result column="productName" property="productname" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="rentTime" property="renttime" jdbcType="INTEGER" />
+    <result column="rentUnit" property="rentunit" jdbcType="VARCHAR" />
+    <result column="userId" property="userid" jdbcType="BIGINT" />
+    <result column="fixedPrice" property="fixedprice" jdbcType="DECIMAL" />
+    <result column="salesPromotion" property="salespromotion" jdbcType="INTEGER" />
+    <result column="isSalesPromotion" property="issalespromotion" jdbcType="INTEGER" />
+    <result column="payAstrict" property="payastrict" jdbcType="INTEGER" />
+    <result column="collectionAccount" property="collectionaccount" jdbcType="VARCHAR" />
+    <result column="isIncludeRevenue" property="isincluderevenue" jdbcType="INTEGER" />
+    <result column="storeCount" property="storecount" jdbcType="INTEGER" />
+    <result column="isSubscribeCode" property="issubscribecode" jdbcType="INTEGER" />
+    <result column="warnNum" property="warnnum" jdbcType="INTEGER" />
+    <result column="minSaleNum" property="minsalenum" jdbcType="INTEGER" />
+    <result column="maxSaleNum" property="maxsalenum" jdbcType="INTEGER" />
+    <result column="presentExp" property="presentexp" jdbcType="INTEGER" />
+    <result column="isMoreSize" property="ismoresize" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, orderCode, productId, skuCode, productName, price, count, rentTime, rentUnit, 
+    userId, fixedPrice, salesPromotion, isSalesPromotion, payAstrict, collectionAccount, 
+    isIncludeRevenue, storeCount, isSubscribeCode, warnNum, minSaleNum, maxSaleNum, presentExp, 
+    isMoreSize
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bhe.dao.mybatis.model.OrderDetailEntityCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_order_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bhe.dao.mybatis.model.OrderDetailEntityCriteria" >
+    delete from t_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bhe.dao.mybatis.model.OrderDetailEntity" >
+    insert into t_order_detail (id, orderCode, productId, 
+      skuCode, productName, price, 
+      count, rentTime, rentUnit, 
+      userId, fixedPrice, salesPromotion, 
+      isSalesPromotion, payAstrict, collectionAccount, 
+      isIncludeRevenue, storeCount, isSubscribeCode, 
+      warnNum, minSaleNum, maxSaleNum, 
+      presentExp, isMoreSize)
+    values (#{id,jdbcType=BIGINT}, #{ordercode,jdbcType=VARCHAR}, #{productid,jdbcType=BIGINT}, 
+      #{skucode,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{count,jdbcType=INTEGER}, #{renttime,jdbcType=INTEGER}, #{rentunit,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=BIGINT}, #{fixedprice,jdbcType=DECIMAL}, #{salespromotion,jdbcType=INTEGER}, 
+      #{issalespromotion,jdbcType=INTEGER}, #{payastrict,jdbcType=INTEGER}, #{collectionaccount,jdbcType=VARCHAR}, 
+      #{isincluderevenue,jdbcType=INTEGER}, #{storecount,jdbcType=INTEGER}, #{issubscribecode,jdbcType=INTEGER}, 
+      #{warnnum,jdbcType=INTEGER}, #{minsalenum,jdbcType=INTEGER}, #{maxsalenum,jdbcType=INTEGER}, 
+      #{presentexp,jdbcType=INTEGER}, #{ismoresize,jdbcType=INTEGER})
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.bhe.dao.mybatis.model.OrderDetailEntity" >
+    insert into t_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ordercode != null" >
+        orderCode,
+      </if>
+      <if test="productid != null" >
+        productId,
+      </if>
+      <if test="skucode != null" >
+        skuCode,
+      </if>
+      <if test="productname != null" >
+        productName,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="renttime != null" >
+        rentTime,
+      </if>
+      <if test="rentunit != null" >
+        rentUnit,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="fixedprice != null" >
+        fixedPrice,
+      </if>
+      <if test="salespromotion != null" >
+        salesPromotion,
+      </if>
+      <if test="issalespromotion != null" >
+        isSalesPromotion,
+      </if>
+      <if test="payastrict != null" >
+        payAstrict,
+      </if>
+      <if test="collectionaccount != null" >
+        collectionAccount,
+      </if>
+      <if test="isincluderevenue != null" >
+        isIncludeRevenue,
+      </if>
+      <if test="storecount != null" >
+        storeCount,
+      </if>
+      <if test="issubscribecode != null" >
+        isSubscribeCode,
+      </if>
+      <if test="warnnum != null" >
+        warnNum,
+      </if>
+      <if test="minsalenum != null" >
+        minSaleNum,
+      </if>
+      <if test="maxsalenum != null" >
+        maxSaleNum,
+      </if>
+      <if test="presentexp != null" >
+        presentExp,
+      </if>
+      <if test="ismoresize != null" >
+        isMoreSize,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null" >
+        #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null" >
+        #{productid,jdbcType=BIGINT},
+      </if>
+      <if test="skucode != null" >
+        #{skucode,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="renttime != null" >
+        #{renttime,jdbcType=INTEGER},
+      </if>
+      <if test="rentunit != null" >
+        #{rentunit,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="fixedprice != null" >
+        #{fixedprice,jdbcType=DECIMAL},
+      </if>
+      <if test="salespromotion != null" >
+        #{salespromotion,jdbcType=INTEGER},
+      </if>
+      <if test="issalespromotion != null" >
+        #{issalespromotion,jdbcType=INTEGER},
+      </if>
+      <if test="payastrict != null" >
+        #{payastrict,jdbcType=INTEGER},
+      </if>
+      <if test="collectionaccount != null" >
+        #{collectionaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="isincluderevenue != null" >
+        #{isincluderevenue,jdbcType=INTEGER},
+      </if>
+      <if test="storecount != null" >
+        #{storecount,jdbcType=INTEGER},
+      </if>
+      <if test="issubscribecode != null" >
+        #{issubscribecode,jdbcType=INTEGER},
+      </if>
+      <if test="warnnum != null" >
+        #{warnnum,jdbcType=INTEGER},
+      </if>
+      <if test="minsalenum != null" >
+        #{minsalenum,jdbcType=INTEGER},
+      </if>
+      <if test="maxsalenum != null" >
+        #{maxsalenum,jdbcType=INTEGER},
+      </if>
+      <if test="presentexp != null" >
+        #{presentexp,jdbcType=INTEGER},
+      </if>
+      <if test="ismoresize != null" >
+        #{ismoresize,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterType="com.bhe.dao.mybatis.model.OrderDetailEntityCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_order_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.ordercode != null" >
+        orderCode = #{record.ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productid != null" >
+        productId = #{record.productid,jdbcType=BIGINT},
+      </if>
+      <if test="record.skucode != null" >
+        skuCode = #{record.skucode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productname != null" >
+        productName = #{record.productname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.renttime != null" >
+        rentTime = #{record.renttime,jdbcType=INTEGER},
+      </if>
+      <if test="record.rentunit != null" >
+        rentUnit = #{record.rentunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.fixedprice != null" >
+        fixedPrice = #{record.fixedprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salespromotion != null" >
+        salesPromotion = #{record.salespromotion,jdbcType=INTEGER},
+      </if>
+      <if test="record.issalespromotion != null" >
+        isSalesPromotion = #{record.issalespromotion,jdbcType=INTEGER},
+      </if>
+      <if test="record.payastrict != null" >
+        payAstrict = #{record.payastrict,jdbcType=INTEGER},
+      </if>
+      <if test="record.collectionaccount != null" >
+        collectionAccount = #{record.collectionaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isincluderevenue != null" >
+        isIncludeRevenue = #{record.isincluderevenue,jdbcType=INTEGER},
+      </if>
+      <if test="record.storecount != null" >
+        storeCount = #{record.storecount,jdbcType=INTEGER},
+      </if>
+      <if test="record.issubscribecode != null" >
+        isSubscribeCode = #{record.issubscribecode,jdbcType=INTEGER},
+      </if>
+      <if test="record.warnnum != null" >
+        warnNum = #{record.warnnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.minsalenum != null" >
+        minSaleNum = #{record.minsalenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxsalenum != null" >
+        maxSaleNum = #{record.maxsalenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.presentexp != null" >
+        presentExp = #{record.presentexp,jdbcType=INTEGER},
+      </if>
+      <if test="record.ismoresize != null" >
+        isMoreSize = #{record.ismoresize,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_order_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      orderCode = #{record.ordercode,jdbcType=VARCHAR},
+      productId = #{record.productid,jdbcType=BIGINT},
+      skuCode = #{record.skucode,jdbcType=VARCHAR},
+      productName = #{record.productname,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      count = #{record.count,jdbcType=INTEGER},
+      rentTime = #{record.renttime,jdbcType=INTEGER},
+      rentUnit = #{record.rentunit,jdbcType=VARCHAR},
+      userId = #{record.userid,jdbcType=BIGINT},
+      fixedPrice = #{record.fixedprice,jdbcType=DECIMAL},
+      salesPromotion = #{record.salespromotion,jdbcType=INTEGER},
+      isSalesPromotion = #{record.issalespromotion,jdbcType=INTEGER},
+      payAstrict = #{record.payastrict,jdbcType=INTEGER},
+      collectionAccount = #{record.collectionaccount,jdbcType=VARCHAR},
+      isIncludeRevenue = #{record.isincluderevenue,jdbcType=INTEGER},
+      storeCount = #{record.storecount,jdbcType=INTEGER},
+      isSubscribeCode = #{record.issubscribecode,jdbcType=INTEGER},
+      warnNum = #{record.warnnum,jdbcType=INTEGER},
+      minSaleNum = #{record.minsalenum,jdbcType=INTEGER},
+      maxSaleNum = #{record.maxsalenum,jdbcType=INTEGER},
+      presentExp = #{record.presentexp,jdbcType=INTEGER},
+      isMoreSize = #{record.ismoresize,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bhe.dao.mybatis.model.OrderDetailEntity" >
+    update t_order_detail
+    <set >
+      <if test="ordercode != null" >
+        orderCode = #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null" >
+        productId = #{productid,jdbcType=BIGINT},
+      </if>
+      <if test="skucode != null" >
+        skuCode = #{skucode,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        productName = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="renttime != null" >
+        rentTime = #{renttime,jdbcType=INTEGER},
+      </if>
+      <if test="rentunit != null" >
+        rentUnit = #{rentunit,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="fixedprice != null" >
+        fixedPrice = #{fixedprice,jdbcType=DECIMAL},
+      </if>
+      <if test="salespromotion != null" >
+        salesPromotion = #{salespromotion,jdbcType=INTEGER},
+      </if>
+      <if test="issalespromotion != null" >
+        isSalesPromotion = #{issalespromotion,jdbcType=INTEGER},
+      </if>
+      <if test="payastrict != null" >
+        payAstrict = #{payastrict,jdbcType=INTEGER},
+      </if>
+      <if test="collectionaccount != null" >
+        collectionAccount = #{collectionaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="isincluderevenue != null" >
+        isIncludeRevenue = #{isincluderevenue,jdbcType=INTEGER},
+      </if>
+      <if test="storecount != null" >
+        storeCount = #{storecount,jdbcType=INTEGER},
+      </if>
+      <if test="issubscribecode != null" >
+        isSubscribeCode = #{issubscribecode,jdbcType=INTEGER},
+      </if>
+      <if test="warnnum != null" >
+        warnNum = #{warnnum,jdbcType=INTEGER},
+      </if>
+      <if test="minsalenum != null" >
+        minSaleNum = #{minsalenum,jdbcType=INTEGER},
+      </if>
+      <if test="maxsalenum != null" >
+        maxSaleNum = #{maxsalenum,jdbcType=INTEGER},
+      </if>
+      <if test="presentexp != null" >
+        presentExp = #{presentexp,jdbcType=INTEGER},
+      </if>
+      <if test="ismoresize != null" >
+        isMoreSize = #{ismoresize,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bhe.dao.mybatis.model.OrderDetailEntity" >
+    update t_order_detail
+    set orderCode = #{ordercode,jdbcType=VARCHAR},
+      productId = #{productid,jdbcType=BIGINT},
+      skuCode = #{skucode,jdbcType=VARCHAR},
+      productName = #{productname,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      count = #{count,jdbcType=INTEGER},
+      rentTime = #{renttime,jdbcType=INTEGER},
+      rentUnit = #{rentunit,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=BIGINT},
+      fixedPrice = #{fixedprice,jdbcType=DECIMAL},
+      salesPromotion = #{salespromotion,jdbcType=INTEGER},
+      isSalesPromotion = #{issalespromotion,jdbcType=INTEGER},
+      payAstrict = #{payastrict,jdbcType=INTEGER},
+      collectionAccount = #{collectionaccount,jdbcType=VARCHAR},
+      isIncludeRevenue = #{isincluderevenue,jdbcType=INTEGER},
+      storeCount = #{storecount,jdbcType=INTEGER},
+      isSubscribeCode = #{issubscribecode,jdbcType=INTEGER},
+      warnNum = #{warnnum,jdbcType=INTEGER},
+      minSaleNum = #{minsalenum,jdbcType=INTEGER},
+      maxSaleNum = #{maxsalenum,jdbcType=INTEGER},
+      presentExp = #{presentexp,jdbcType=INTEGER},
+      isMoreSize = #{ismoresize,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

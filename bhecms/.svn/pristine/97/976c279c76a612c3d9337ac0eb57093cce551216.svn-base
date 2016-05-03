@@ -1,0 +1,14 @@
+<div class="menu">
+	<div class="product">
+		<div class="article_title">订单管理</div>
+		<div class="article_list" >
+			<div class="list01">
+				<a href="orderIndex.html" <@sets.setCurr currIndex 1 />>订购订单</a>
+			</div>
+			<div class="list01">
+				<a href="leaseOrderIndex.html" <@sets.setCurr currIndex 2 />>租赁订单</a>
+			</div>
+		</div>
+	</div>
+	
+</div>

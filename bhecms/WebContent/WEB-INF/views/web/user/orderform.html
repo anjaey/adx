@@ -1,0 +1,194 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/individualUser.css">
+
+<@frame>
+<div class="container" style="margin-top: 137px;">
+	<div class="content">
+		<div class="contentLeft">
+			<dl>
+				<dt>
+					<img src="${base}/res/web/images/user_center.png">
+				</dt>
+				<dd>
+					<span class="font14 red">${userentity.username}</span>
+				</dd>
+			</dl>
+			<h3 class="font18">帐号管理</h3>
+			<ul>
+				<li><a href="${base}/account/toAccountCenter.html" class="font14 gray"<@sets.setCurr currIndex 1 />>安全设置</a></li>
+				<li><a href="${base}/account/toOrderForm.html?orderType=0" class="font14 gray"<@sets.setCurr currIndex 2 />>订单详情</a></li>
+				<li><a href="${base}/account/toPersonalinfo.html" class="font14 gray"<@sets.setCurr currIndex 3 />>个人信息</a></li>
+				<li><a href="${base}/account/toShippingAddress.html" class="font14 gray"<@sets.setCurr currIndex 4 />>收货地址</a></li>
+<!-- 				<li><a href="${base}/account/toStationLetter.html" class="font14 gray"<@sets.setCurr currIndex 5 />>站内信息</a></li> -->
+			</ul>
+		</div>
+		<div class="contentRight">
+			 <#assign orderType_0 = orderType == 0>
+			 <#assign orderType_1 = orderType == 1>
+			<div><label><input type="radio" class="js_orderType" name="orderType" value="0" ${orderType_0 ? string("checked=checked","")} /><span>订购订单</span></label></div>
+			<div><label><input type="radio" class="js_orderType" name="orderType" value="1" ${orderType_1 ? string("checked=checked","")} /><span>租赁订单</span></label></div>
+			<table cellpadding="0" cellspacing="0" class="orderDetails">
+				<tr>
+					<th><input type="checkbox" /></th>
+					<th>订单号</th>
+					<th>商品信息</th>
+					<th>价格（元）</th>
+					<th>数量</th>
+					<#if orderType_0 >
+						<th>金额（元）</th>
+					</#if>
+					<#if orderType_1 >
+						<th>租赁时间</th>
+					</#if>
+					<th>下单时间</th>
+					<th>状态</th>
+					<#-- <th>操作</th> -->
+				</tr>
+				
+	          	<#list entityList as map>
+		    	 <#assign detailDataListMap=map['detailDataListMap']>
+			    	<#list detailDataListMap as detailMap>
+				    	<tr>
+					    	<#if (detailDataListMap?size>1)>
+					    		<#if (detailMap_index==0)>
+						    		<td class="tab_01" rowspan="${detailDataListMap?size}">
+						    			<input type="checkbox" class="js-chooseInput" orderId="${map['id']}" >
+						    		</td>
+						    		<td class="tab_02" rowspan="${detailDataListMap?size}">
+							    		<a href="javascript:void(0)">${map['orderno']}</a>
+						    		</td>
+					    		</#if>
+				    		<#else>
+				    			<td class="tab_01" >
+					    			<input type="checkbox" class="js-chooseInput" orderId="${map['id']}" >
+					    		</td>
+					    		<td class="tab_02" >
+						    		<a href="javascript:void(0)">${map['orderno']}</a>
+					    		</td>
+					    		
+				    		</#if>
+				    		<td class="tab_03">
+					            <div class="mul_prol">
+					               <div class="mul_img01"><img src="${detailMap['imgurl']}" width="100" height="100"></div>
+					                <li class="mul_name">${detailMap['productName']}</li>
+					                <li class="mul_name">型号：${detailMap['modelName']}</li>
+					            </div>
+				            </td>
+				            <td class="tab_02">${detailMap['price']}</td>
+						    <td class="tab_02">${detailMap['count']}</td>
+				            <#if (detailDataListMap?size>1)>
+			           		 <#if (detailMap_index==0)>
+			           			<#if orderType_0>
+						    		<td class="tab_03" rowspan="${detailDataListMap?size}">
+							            <div class="mul_pror">
+							            	<p>${map['totlePrice']}</p>
+							            </div>
+						            </td>
+					            </#if>
+			           			<#if orderType_1>
+						    		<td class="tab_03" rowspan="${detailDataListMap?size}">
+							            <div class="mul_pror">
+							            	<p>${detailMap['renttime']}${detailMap['rentunit']}</p>
+							            </div>
+						            </td>
+					            </#if>
+					    		<td class="tab_03" rowspan="${detailDataListMap?size}">
+						            <div class="mul_pror">
+						            	<p>${map['createtime']}</p>
+						            </div>
+					            </td>
+					    		<td class="tab_03" rowspan="${detailDataListMap?size}">
+					    			<#switch map['auditstatus']>
+					    				<#case 0>
+					    				待审核
+					    				<#break>
+					    				<#case 1>
+					    				已通过
+					    				<#break>
+					    				<#default>
+					    				已退回
+					    			</#switch>
+					    		</td>
+					    		<#-- 
+					    		<td class="tab_02" rowspan="${detailDataListMap?size}">
+			    					<#if map['auditstatus']==1>
+						    			<button orderId="${map['orderno']}" class="js-delete order_del">签收</button>
+			    						<button orderId="${map['orderno']}" class="js-checkOrder order_del">拒签</button>
+		    						<#elseif map['auditstatus']==3>
+			    						<button orderId="${map['orderno']}" class="order_del">评价</button>
+		    						<#elseif map['auditstatus']==4>
+			    						<button class="order_del">查看评价</button>
+		    						<#elseif map['auditstatus']==2>
+			    						<button class="order_del">已被退回</button>
+		    						<#else>
+			    						<button class="order_del">审核中</button>
+			    					</#if>
+		    					</td>
+		    					-->
+		    					</#if>
+					    		<#else>
+					            <#if orderType_0>
+					    		<td class="tab_03" >
+						            <div class="mul_pror">
+						            	<p>${map['totlePrice']}</p>
+						            </div>
+					            </td>
+					            </#if>
+					            <#if orderType_1>
+					    		<td class="tab_03" >
+						            <div class="mul_pror">
+						            	<p>${detailMap['renttime']}${detailMap['rentunit']}</p>
+						            </div>
+					            </td>
+					            </#if>
+					    		<td class="tab_03" rowspan="${detailDataListMap?size}">
+						            <div class="mul_pror">
+						            	<p>${map['createtime']}</p>
+						            </div>
+					            </td>
+					    		<td class="tab_03" >
+					    			<#switch map['auditstatus']>
+					    				<#case 0>
+					    				待审核
+					    				<#break>
+					    				<#case 1>
+					    				已通过
+					    				<#break>
+					    				<#default>
+					    				已退回
+					    			</#switch>
+					    		</td>
+					            <#-- 
+					    		<td class="tab_02" >
+		    					<#if map['auditstatus']==1>
+					    			<button orderId="${map['orderno']}" class="js-delete order_del">签收</button>
+		    						<button orderId="${map['orderno']}" class="js-checkOrder order_del">拒签</button>
+	    						<#elseif map['auditstatus']==3>
+		    						<button orderId="${map['orderno']}" class="order_del">评价</button>
+	    						<#elseif map['auditstatus']==4>
+		    						<button class="order_del">查看评价</button>
+	    						<#elseif map['auditstatus']==2>
+		    						<button class="order_del">已被退回</button>
+	    						<#else>
+		    						<button class="order_del">审核中</button>
+		    					</#if>
+		    					</td>
+		    					-->
+				            </#if>
+				    	</tr>
+				    </#list>
+		    	</#list>
+			</table>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+</@frame>
+<script>
+	$(".js_orderType").each(function(k,v){
+		$(this).click(function(){
+			window.location.href="${base}/account/toOrderForm.html?orderType="+$(this).val();
+		});
+	});
+</script>

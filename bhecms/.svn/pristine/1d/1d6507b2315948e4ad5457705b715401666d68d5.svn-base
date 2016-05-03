@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>维护类型</title>
+<link  href="css/adminIndex.css" rel="stylesheet" type="text/css"/>
+<link  href="css/articleManage.css" rel="stylesheet" type="text/css"/>
+<script src="js/jquery-1.8.3.min.js"></script>
+</head>
+<script>
+	$(document).ready(function(){
+							   //给标题加上背景色以及鼠标移动到某一行的事加上背景色
+							   $(".art_table tr:first-child").css("background-color","#f3f7fb");
+							   $(".art_table tr:not(:first-child)").hover(function(){
+															 $(this).css("background-color","#f3f7fb");
+															 },function(){
+																 $(this).css("background-color","#fff");
+															 });
+							   							   
+							   
+							   });
+
+</script>
+
+<body>
+	<div class="welcom">
+    	<div class="wel_content">
+        	<div class="art_list">          	
+              
+                	<div class="artListAll001">
+               			 <table width="100%" border="0"  cellspacing="0" cellpadding="0" class="art_table">
+                            <tr>
+                                <th width="35px" ><input  type="checkbox"/></th>                                
+                                <th>商品规格名称</th>
+                                <th>显示类型</th>
+                                <th>序号</th>
+                                <th>属性名称</th>
+                                 <th>操作</th>
+                            </tr>
+                            <tr>
+                                <td width="35"><input  type="checkbox"/></td>
+                                <td><a href="#">厨房电器</a></td>
+                                <td>文字</td>                                
+                                <td>15</td>
+                                <td>属性A</td>
+                                <td><a href="#">修改</a> | <a href="#">删除</a></td>
+                            </tr>
+                          <tr>
+                                <td width="35"><input  type="checkbox"/></td>
+                                <td><a href="#">厨房电器</a></td>
+                                <td>文字</td>                                
+                                <td>15</td>
+                                <td>属性A</td>
+                                <td><a href="#">修改</a> | <a href="#">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td width="35"><input  type="checkbox"/></td>
+                                <td><a href="#">厨房电器</a></td>
+                                <td>文字</td>                                
+                                <td>15</td>
+                                <td>属性A</td>
+                                <td><a href="#">修改</a> | <a href="#">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td width="35"><input  type="checkbox"/></td>
+                                <td><a href="#">厨房电器</a></td>
+                                <td>文字</td>                                
+                                <td>15</td>
+                                <td>属性A</td>
+                                <td><a href="#">修改</a> | <a href="#">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td width="35"><input  type="checkbox"/></td>
+                                <td><a href="#">厨房电器</a></td>
+                                <td>文字</td>                                
+                                <td>15</td>
+                                <td>属性A</td>
+                                <td><a href="#">修改</a> | <a href="#">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td width="35"><input  type="checkbox"/></td>
+                                <td><a href="#">厨房电器</a></td>
+                                <td>文字</td>                                
+                                <td>15</td>
+                                <td>属性A</td>
+                                <td><a href="#">修改</a> | <a href="#">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td width="35"><input  type="checkbox"/></td>
+                                <td><a href="#">厨房电器</a></td>
+                                <td>文字</td>                                
+                                <td>15</td>
+                                <td>属性A</td>
+                                <td><a href="#">修改</a> | <a href="#">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td width="35"><input  type="checkbox"/></td>
+                                <td><a href="#">厨房电器</a></td>
+                                <td>文字</td>                                
+                                <td>15</td>
+                                <td>属性A</td>
+                                <td><a href="#">修改</a> | <a href="#">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td width="35"><input  type="checkbox"/></td>
+                                <td><a href="#">厨房电器</a></td>
+                                <td>文字</td>                                
+                                <td>15</td>
+                                <td>属性A</td>
+                                <td><a href="#">修改</a> | <a href="#">删除</a></td>
+                            </tr>
+                        
+                        </table>
+                	</div>
+                   
+                   
+               
+                 <div class="paging"><button>首页</button><button>1</button><span>转到</span><input type="text"><button>GO</button></div>
+            
+            </div>
+        </div>
+    
+    
+    
+    
+    </div>
+
+
+
+
+
+</body>
+</html>

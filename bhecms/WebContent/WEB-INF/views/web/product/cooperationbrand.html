@@ -1,0 +1,26 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/productInformation.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/productSale.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/company.css">
+
+<@frame>
+<!-- <div class="topbg"></div> -->
+	<div class="SafetyProtectionBg" style="background:url(${picurl}) no-repeat center; width:100%; height:560px; z-index:1;"></div>   		
+
+<div class="wind1200">
+	<div class="left_title05  mart60">合作品牌</div>
+	<#list entityList as entity>
+		<div class="brand001">
+			<div class="brandImg left">
+				<img src="${base}/res/web/images/default.png" width="350" height="135">
+			</div>
+			<div class="brandRight right">
+				<span class="brandRightSpan">${entity.namecn}</span>
+				<span>${entity.description}</span>
+			</div>
+		</div>
+	</#list>
+	
+</div>
+</@frame>

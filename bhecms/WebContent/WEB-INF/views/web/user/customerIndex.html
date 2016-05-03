@@ -1,0 +1,26 @@
+<#include "web/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/web/css/index.css">
+<@frame>
+<!-- 	<div class="clientBg"></div> -->
+	<div class="SafetyProtectionBg" style="background:url(${picurl}) no-repeat center; width:100%;min-width:1200px; height:560px; z-index:1;"></div>   		
+
+	<div class="wind1200">
+		<div class="left_title05 mart60">客户名录</div>	
+		<div class="customerUl">
+			<ul>
+				<#list data as entity>
+				<li>
+					<img alt="" src="${realUrl}${entity.logo}" width="350" height="135"/>
+					<span class="mart15" style="display:block;">${entity.title}</span>
+				</li>
+				</#list>
+			</ul>
+		
+		</div>
+		
+		
+	</div> 
+	<div class="clear"></div>
+	  
+				
+</@frame>

@@ -1,0 +1,185 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/articleManage.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+<@frame> 
+ <div class="artLocation">您当前的位置：文章系统>回收站</div>
+ <div class="wel_content">
+    	<div class="art_list">
+            <div class="art_list_all">
+            	<div class="artListAll001">
+             <table width="98%" border="0"  cellspacing="0" cellpadding="0" class="art_table">
+             	<tr>
+                 	<th width="35px" ><input  type="checkbox" class="js-chooseAll"/></th>
+                     <th>ID</th>
+                     <th>标题</th>
+                     <th>固顶级</th>
+                     <th>发布者</th>
+                     <th>状态</th>
+                     <th>操作</th>
+                 </tr>
+                 <#if (pageInfoMap.count>0)>
+	       			<#assign entityList=pageInfoMap.list />                                              
+	            	<#list entityList as entity>
+	                 <tr>
+	                 	<td width="35"><input  type="checkbox" uid="${entity.uuid}" class="js-chooseInput"/></td>
+	                     <td><a href="#">${entity_index+1}</a></td>
+	                     <td>${entity.title}</td>
+	                     <td>${entity.toplevel}</td>
+	                     <td>${entity.author}</td>
+	                     <td>
+                     		<#switch entity.status>
+								<#case 0>
+								正常
+								<#break>
+								<#case 1>
+								删除
+								<#break>
+								<#case 2>
+								草稿
+								<#break>
+								<#default>
+								状态值为空
+							</#switch>
+	                     </td>
+	                     <td><a href="articleRelease.html?uuid=${entity.uuid}&type=rubbish">查看</a> | <a href="javascript:void(0)" class="js-updateStatus" uid="${entity.uuid}">恢复</a> | <a href="javascript:void(0)" class="js-delete" uid=${entity.uuid}>物理删除</a></td>
+	                 </tr>
+                 	</#list>
+           	 	  </#if>	
+             
+             </table>
+             	</div>
+             	
+             	<div class="suffix01 left">
+		        	<p class="user_content">&nbsp;&nbsp;操作：
+		        	<button class="operate js-deleteAll" >彻底删除</button>
+		        	<button class="operate js-recoverAll" >恢复</button>
+			        </p>
+			    </div>
+	       </div>  
+             
+            <#if (pageInfoMap.count>0)>
+             <div class="pagination right mart15">
+			    <a href="#" class="first" data-action="first">&laquo;</a>
+			    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+			    <input type="text" readonly="readonly" data-max-page="${pageInfoMap.countpage}" />
+			    <a href="#" class="next" data-action="next">&rsaquo;</a>
+			    <a href="#" class="last" data-action="last">&raquo;</a>
+			</div> 
+			 </#if>	
+      </div> 
+</div>       
+            
+             
+       
+  </@frame>      
+        <script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+        <script>
+        
+	$(document).ready(function(){
+		<#if (pageInfoMap.count>0)>
+		$('.pagination').jqPagination({
+			current_page:'${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+			max_page:'${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+		    paged: function(page) {
+			        window.location.href="${base}/admin/article/articleIndex.html?pageindex="+page;
+		    }
+		});
+		</#if>	
+		
+	
+		   //给标题加上背景色以及鼠标移动到某一行的事加上背景色
+		   $(".art_table tr:first-child").css("background-color","#f3f7fb");
+		   $(".art_table tr:not(:first-child)").hover(function(){
+										 $(this).css("background-color","#f3f7fb");
+										 },function(){
+											 $(this).css("background-color","#fff");
+										 });
+		   //切换选项卡							 
+			$(".art_list_all>.artListAll001:not(:first-child)").hide();
+			$('.art_header ul li').click(function(){										
+					$(this).addClass('art_on').siblings().removeClass('art_on');
+					$('.art_list_all>div:eq('+$(this).index()+')').show().siblings().hide();	
+				});
+		
+		   $(".art_header ul li:first-child").addClass("art_on");
+		   
+		   
+		   $(".js-updateStatus").click(function(){
+			   if(confirm("是否恢复？")){
+			    var uuid=$(this).attr("uid");
+				$.post("updateArtiStatus.html", {"uuid":uuid,"status":0},
+					function(data){
+						if(data.result){
+							alert("恢复成功");
+							window.location.reload(true);
+						}else{
+							alert("恢复失败");
+						}
+					},"json");
+			   }
+		   });
+		   
+		   $(".js-delete").click(function(){
+			   if(confirm("是否删除该文章？将不可恢复！")){
+			    var uuid=$(this).attr("uid");
+				$.post("deleteArticle.html", {"uuid":uuid},
+					function(data){
+						if(data.result){
+							alert("删除成功");
+							window.location.reload(true);
+						}else{
+							alert("共有："+data.count+"条数据删除失败");
+						}
+					},"json");
+			   }
+		   });
+
+		    $(".js-recoverAll").click(function(){
+			   if($("input:checked.js-chooseInput").length>0){
+			  	 if(confirm("是否全部恢复？")){
+					   var uuids="";
+					   $("input:checked.js-chooseInput").each(function (k,v) {
+						   uuids=$(v).attr("uid")+","+uuids;
+					   })
+					   uuids=uuids.substring(0,uuids.length-1);
+					   if(uuids!=undefined){
+						$.post("updateArtiStatus.html", {"uuids":uuids,"status":0},
+							function(data){
+								if(data.result){
+									alert("恢复成功");
+									window.location.reload(true);
+								}else{
+									alert("共有："+data.count+"条数据,恢复失败");
+								}
+							},"json");
+					   }
+				   }
+			   }
+		   });
+		    
+		    $(".js-deleteAll").click(function(){
+				   if($("input:checked.js-chooseInput").length>0){
+					   if(confirm("是否删除这些文章？将不可恢复！")){
+						   var uuids="";
+						   $("input:checked.js-chooseInput").each(function (k,v) {
+							   uuids=$(v).attr("uid")+","+uuids;
+						   })
+						   uuids=uuids.substring(0,uuids.length-1);
+							$.post("deleteArticle.html", {"uuids":uuids,"status":1},
+								function(data){
+									if(data.result){
+										alert("删除成功");
+										window.location.reload(true);
+									}else{
+										alert("共有："+data.count+"条数据,删除失败");
+									}
+								},"json");
+						   }
+					}
+			   });
+			  
+	
+	
+	
+	});
+</script>

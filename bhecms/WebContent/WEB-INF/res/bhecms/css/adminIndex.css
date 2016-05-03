@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+.wel_user{margin-top:20px;}
+.text03 p{font-size:12px;margin-left:20px;line-height:14px;}
+.text04{width:90%;min-width:780px;background-color:#EDF1F2;line-height:22px;height:50px;border:solid black 1px;padding:10px 10px;margin:20px 0;}
+.text05{width:92%;min-width:800px;margin-top:80px;}
+.text05_l,.text05_r{width:40%;min-width:340px;border:solid #9a9a9a 1px;padding-left:40px;}
+.title_l{font-size:18px;font-weight:bold;}
+.text05_r ul a{color:black;line-height:22px;text-decoration:underline;}
+.text05_r ul li{list-style:disc;}
+.title02{font-size:14px;font-weight:bold;}
+.last_news{width:90%;min-width:800px;border:solid 1px black;margin-top:20px;}
+.last_news_title{background-color:#EDF1F2;padding-left:40px;line-height:48px;border-bottom:solid 1px black;font-size:18px;font-weight:bold;}
+.last_news_title a{margin-right:40px;text-decoration:underline;color:black;}
+.last_news ul{margin-left:40px;}
+.last_news ul li{border-bottom:solid 1px black;line-height:28px;list-style:disc;}
+.last_news ul li a{color:black;margin-right:600px;}
+.more a{font-size:14px;margin-right:20px;color:#01747A;}
+
+

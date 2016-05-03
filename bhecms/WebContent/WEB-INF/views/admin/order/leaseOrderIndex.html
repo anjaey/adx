@@ -1,0 +1,257 @@
+<#include "admin/common/frame.html">
+
+
+
+<@frame> 
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemOrder.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/common/jqpagination/css/jqpagination.css">
+<div class="artLocation">您当前的位置：订单管理&nbsp;&gt;&nbsp;租赁订单</div>
+<div class="wel_content">
+ 	<div class="order_top">
+		<p>&nbsp;&nbsp;提示：此栏目是对前端提交的订单进行审核和查看</p>
+	</div>
+ 	<div class="user_top">
+    				<span>筛选：</span>
+    			<select class="js-select" id="statusselect">
+    			<option value="-1" >订单状态</option>
+    			<option value="0">未审核订单</option>
+    			<option value="1">已审核订单</option>
+    			<option value="2">已退回订单</option>
+    			</select>
+    			<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    			&nbsp;&nbsp; 时间: <input type="text" value="${beginDate}" id="birthday" name="birthday" class="js-beginDate" onfocus="SelectDate(this,'yyyy-MM-dd')" />
+    			- <input type="text" id="birthday" value="${endDate}" name="birthday" class="js-endDate" onfocus="SelectDate(this,'yyyy-MM-dd')" />
+    			<input type="hidden" value="${status}" id="js_checkTime"/>
+    			<span class="marl15">订单号：</span><input type="text" value="${orderCode}" class="js-search-data txtAddproduct txtAddproduct5">
+    			<button class="user_top_01 js-search">搜索</button>
+    	</div>	
+     <div class="basic">
+	        <div class="vip_title">
+            <table border="0" cellpadding="0px" cellspacing="0px" class="user_list">
+            	<tr class="user_list_nav">
+            		<td><input type="checkbox" class="js-chooseAll" ></td>
+            		<td>订单号/下单时间</td>
+            		<td>商品</td>
+            		<td>单价</td>
+            		<td>租赁数量</td>
+            	    <td>买家姓名</td>
+            	    <td>状态</td>
+            	    <td>操作</td>
+            	</tr>
+        
+	        <#if (pageInfoMap.count>0)>
+	          	<#list listMap as map>
+		    	 <#assign detailDataListMap=map['detailDataListMap']>
+			    	<#list detailDataListMap as detailMap>
+				    	<tr>
+					    	<#if (detailDataListMap?size>1)>
+					    		<#if (detailMap_index==0)>
+						    		<td class="tab_01" rowspan="${detailDataListMap?size}">
+						    			<input type="checkbox" class="js-chooseInput" orderId="${map['id']}" >
+						    		</td>
+						    		<td class="tab_02" rowspan="${detailDataListMap?size}">
+							    		<a href="javascript:void(0)">${map['orderno']}</a>&nbsp;/
+							    		${map['createtime']}
+						    		</td>
+					    		</#if>
+					    		<#else>
+					    			<td class="tab_01" >
+						    			<input type="checkbox" class="js-chooseInput" orderId="${map['id']}" >
+						    		</td>
+						    		<td class="tab_02" >
+							    		<a href="javascript:void(0)">${map['orderno']}</a>&nbsp;/
+							    		${map['createtime']}
+						    		</td>
+					    		
+				    		</#if>
+				    		<td class="tab_03">
+					            <div class="mul_prol">
+					               <div class="mul_img01"><img src="${detailMap['imgurl']}" width="100" height="100"></div>
+					                <li class="mul_name">${detailMap['productName']}</li>
+					                <li class="mul_name">型号：${detailMap['modelName']}</li>
+					            </div>
+				            </td>
+				            <td class="tab_02">${detailMap['price']}</td>
+						    <td class="tab_02">${detailMap['count']}</td>
+				            <#if (detailDataListMap?size>1)>
+			           		 <#if (detailMap_index==0)>
+					    		<td class="tab_03" rowspan="${detailDataListMap?size}">
+						            <div class="mul_pror">
+						            	<p>${map['userName']}</p>
+						            </div>
+					            </td>
+					    		<td class="tab_03" rowspan="${detailDataListMap?size}">
+					    			<#switch map['auditstatus']>
+					    				<#case 0>
+					    				待审核
+					    				<#break>
+					    				<#case 1>
+					    				已通过
+					    				<#break>
+					    				<#default>
+					    				已退回
+					    			</#switch>
+					    		</td>
+					    		<td class="tab_02" rowspan="${detailDataListMap?size}">
+						    		<button orderId="${map['orderno']}" class="js-delete order_del">删除</button>
+			    					<button orderId="${map['orderno']}" class="js-checkOrder order_del">
+			    					<#if map['auditstatus']==0>
+			    						审核
+			    						<#else>
+			    						查看
+			    					</#if>
+			    					</button>
+		    					</td>
+		    					</#if>
+					    		<#else>
+					    		<td class="tab_03" >
+						            <div class="mul_pror">
+						            	<p>${map['userName']}</p>
+						            </div>
+					            </td>
+					    		<td class="tab_03" >
+					    			<#switch map['auditstatus']>
+					    				<#case 0>
+					    				待审核
+					    				<#break>
+					    				<#case 1>
+					    				已通过
+					    				<#break>
+					    				<#default>
+					    				已退回
+					    			</#switch>
+					    		</td>
+					    		<td class="tab_02" >
+						    		<button orderId="${map['orderno']}" class="js-delete order_del">删除</button>
+			    					<button orderId="${map['orderno']}" class="js-checkOrder order_del">
+			    					<#if map['auditstatus']==0>
+			    						审核
+			    						<#else>
+			    						查看
+			    					</#if>
+			    					</button>
+		    					</td>
+					    		
+				            </#if>
+				    	</tr>
+				    </#list>
+		    	</#list>
+	        </#if>
+	    </table> 
+    
+        
+        
+        	<#if (pageInfoMap.count>0)>
+		        <div class="pagination right">
+				    <a href="#" class="first" data-action="first">&laquo;</a>
+				    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				    <input type="text" readonly="readonly" data-max-page="${pageInfoMap.countpage}" />
+				    <a href="#" class="next" data-action="next">&rsaquo;</a>
+				    <a href="#" class="last" data-action="last">&raquo;</a>
+				</div>
+			</#if>
+        
+    </div>		
+
+</div>
+</div>
+</@frame>
+<script type="text/javascript" src="${base}/res/bhecms/js/WebCalendar.js"></script>
+<script type="text/javascript" src="${base}/res/common/jqpagination/js/jquery.jqpagination.min.js"></script>
+<script>
+	$('.js-select').val('${auditStatus}' == '' ? -1 : '${auditStatus}');
+	$(function(){
+		 $("button.js-search").click(function(){
+				var order=$("input.js-search-data").val();
+				var auditStatus = $('#statusselect option:selected').val();
+				var begin = $('.js-beginDate').val();
+				var end = $('.js-endDate').val();
+				
+					$.ajax({
+						type:"post",
+						url:"${base}/admin/order/checkOrderTime.html",
+						data:{
+							beginDate:begin,
+							endDate:end
+						},
+						dataType:'json',
+						success:function(data){
+							if(data.status == 0){
+								alert("请输入正确的时间区间!");
+							}else{
+					 			window.location.href="leaseOrderIndex.html?orderCode="+order+'&auditStatus=' + auditStatus + '&beginDate=' + begin+"&endDate="+end;
+							}
+						}
+					});
+				 
+			 });
+		
+		<#if (pageInfoMap.count>0)>
+		var order=$("input.js-search-data").val();
+		var auditStatus = $('#statusselect option:selected').val();
+		var begin = $('.js-beginDate').val();
+		var end = $('.js-endDate').val();
+		$('div.pagination').jqPagination({
+			current_page:'${pageInfoMap.pageindex???string(pageInfoMap.pageindex,1)}',
+			max_page:'${pageInfoMap.countpage???string(pageInfoMap.countpage,1)}',
+		    paged: function(page) {
+			        window.location.href="${base}/admin/order/orderIndex.html?pageIndex="+page+"&pageSize=15&orderCode="+order+'&auditStatus=' + auditStatus + '&beginDate=' + begin+"&endDate="+end;
+		    }
+		});
+		</#if>
+		
+		$("button.js-checkOrder").click(function(){
+			window.location.href="checkLeaseOrder.html?orderCode="+$(this).attr("orderId");
+		});
+		
+		
+		$("button.js-delete").click(function(){
+			   if(confirm("是否删除该订单？")){
+			    var orderId=$(this).attr("orderId");
+				$.post("deleteOrder.html", {"id":orderId},
+					function(data){
+						if(data.result){
+							alert("删除成功");
+							window.location.reload(true);
+						}else{
+							alert("删除失败");
+						}
+					},"json");
+			   }
+		   });
+		
+		 $("button.js-deleteAll").click(function(){
+			   if($("input:checked.js-chooseInput").length>0){
+				   if(confirm("是否删除这些订单？")){
+					   var ids="";
+					   $("input:checked.js-chooseInput").each(function (k,v) {
+						   ids=$(v).attr("orderId")+","+ids;
+					   })
+					   ids=ids.substring(0,ids.length-1);
+						$.post("deleteOrder.html", {"ids":ids},
+							function(data){
+								if(data.result){
+									alert("删除成功");
+									window.location.reload(true);
+								}else{
+									alert("共有："+data.count+"条数据,删除失败");
+								}
+							},"json");
+					   }
+				}
+		   });
+		 
+		 /* $("button.js-search").click(function(){
+			 var val=$("input.js-search-data").val();
+			 if($.trim(val)!=""){
+				 window.location.href="leaseOrderIndex.html?orderCode="+val;
+			 }
+			 
+		 }); */
+		 
+	})
+
+</script>
+

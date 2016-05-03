@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bhe.dao.mybatis.mapper.ArticleEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.bhe.dao.mybatis.model.ArticleEntity" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="classId" property="classid" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="subTitle" property="subtitle" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="isShow" property="isshow" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="isExtraUrl" property="isextraurl" jdbcType="INTEGER" />
+    <result column="extralUrl" property="extralurl" jdbcType="VARCHAR" />
+    <result column="titleColor" property="titlecolor" jdbcType="VARCHAR" />
+    <result column="isBold" property="isbold" jdbcType="INTEGER" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="isAutoCreateSummary" property="isautocreatesummary" jdbcType="INTEGER" />
+    <result column="fromWhere" property="fromwhere" jdbcType="VARCHAR" />
+    <result column="readPermission" property="readpermission" jdbcType="INTEGER" />
+    <result column="topLevel" property="toplevel" jdbcType="INTEGER" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
+    <result column="articleType" property="articletype" jdbcType="VARCHAR" />
+    <result column="templateid" property="templateid" jdbcType="BIGINT" />
+    <result column="hasAtachment" property="hasatachment" jdbcType="INTEGER" />
+    <result column="hasMedia" property="hasmedia" jdbcType="INTEGER" />
+    <result column="isDownPic" property="isdownpic" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="hits" property="hits" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.bhe.dao.mybatis.model.ArticleEntity" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, classId, title, subTitle, author, isShow, createTime, isExtraUrl, extralUrl, 
+    titleColor, isBold, summary, isAutoCreateSummary, fromWhere, readPermission, topLevel, 
+    rank, articleType, templateid, hasAtachment, hasMedia, isDownPic, price, status, 
+    hits
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.bhe.dao.mybatis.model.ArticleEntityCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bhe.dao.mybatis.model.ArticleEntityCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_article
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_article
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bhe.dao.mybatis.model.ArticleEntityCriteria" >
+    delete from t_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bhe.dao.mybatis.model.ArticleEntity" >
+    insert into t_article (uuid, classId, title, 
+      subTitle, author, isShow, 
+      createTime, isExtraUrl, extralUrl, 
+      titleColor, isBold, summary, 
+      isAutoCreateSummary, fromWhere, readPermission, 
+      topLevel, rank, articleType, 
+      templateid, hasAtachment, hasMedia, 
+      isDownPic, price, status, 
+      hits, content)
+    values (#{uuid,jdbcType=VARCHAR}, #{classid,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      #{subtitle,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{isshow,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{isextraurl,jdbcType=INTEGER}, #{extralurl,jdbcType=VARCHAR}, 
+      #{titlecolor,jdbcType=VARCHAR}, #{isbold,jdbcType=INTEGER}, #{summary,jdbcType=VARCHAR}, 
+      #{isautocreatesummary,jdbcType=INTEGER}, #{fromwhere,jdbcType=VARCHAR}, #{readpermission,jdbcType=INTEGER}, 
+      #{toplevel,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, #{articletype,jdbcType=VARCHAR}, 
+      #{templateid,jdbcType=BIGINT}, #{hasatachment,jdbcType=INTEGER}, #{hasmedia,jdbcType=INTEGER}, 
+      #{isdownpic,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
+      #{hits,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bhe.dao.mybatis.model.ArticleEntity" >
+    insert into t_article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="classid != null" >
+        classId,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="subtitle != null" >
+        subTitle,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="isshow != null" >
+        isShow,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="isextraurl != null" >
+        isExtraUrl,
+      </if>
+      <if test="extralurl != null" >
+        extralUrl,
+      </if>
+      <if test="titlecolor != null" >
+        titleColor,
+      </if>
+      <if test="isbold != null" >
+        isBold,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="isautocreatesummary != null" >
+        isAutoCreateSummary,
+      </if>
+      <if test="fromwhere != null" >
+        fromWhere,
+      </if>
+      <if test="readpermission != null" >
+        readPermission,
+      </if>
+      <if test="toplevel != null" >
+        topLevel,
+      </if>
+      <if test="rank != null" >
+        rank,
+      </if>
+      <if test="articletype != null" >
+        articleType,
+      </if>
+      <if test="templateid != null" >
+        templateid,
+      </if>
+      <if test="hasatachment != null" >
+        hasAtachment,
+      </if>
+      <if test="hasmedia != null" >
+        hasMedia,
+      </if>
+      <if test="isdownpic != null" >
+        isDownPic,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="hits != null" >
+        hits,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null" >
+        #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isextraurl != null" >
+        #{isextraurl,jdbcType=INTEGER},
+      </if>
+      <if test="extralurl != null" >
+        #{extralurl,jdbcType=VARCHAR},
+      </if>
+      <if test="titlecolor != null" >
+        #{titlecolor,jdbcType=VARCHAR},
+      </if>
+      <if test="isbold != null" >
+        #{isbold,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="isautocreatesummary != null" >
+        #{isautocreatesummary,jdbcType=INTEGER},
+      </if>
+      <if test="fromwhere != null" >
+        #{fromwhere,jdbcType=VARCHAR},
+      </if>
+      <if test="readpermission != null" >
+        #{readpermission,jdbcType=INTEGER},
+      </if>
+      <if test="toplevel != null" >
+        #{toplevel,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null" >
+        #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="articletype != null" >
+        #{articletype,jdbcType=VARCHAR},
+      </if>
+      <if test="templateid != null" >
+        #{templateid,jdbcType=BIGINT},
+      </if>
+      <if test="hasatachment != null" >
+        #{hasatachment,jdbcType=INTEGER},
+      </if>
+      <if test="hasmedia != null" >
+        #{hasmedia,jdbcType=INTEGER},
+      </if>
+      <if test="isdownpic != null" >
+        #{isdownpic,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="hits != null" >
+        #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bhe.dao.mybatis.model.ArticleEntityCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_article
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classid != null" >
+        classId = #{record.classid,jdbcType=BIGINT},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subtitle != null" >
+        subTitle = #{record.subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null" >
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isshow != null" >
+        isShow = #{record.isshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isextraurl != null" >
+        isExtraUrl = #{record.isextraurl,jdbcType=INTEGER},
+      </if>
+      <if test="record.extralurl != null" >
+        extralUrl = #{record.extralurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titlecolor != null" >
+        titleColor = #{record.titlecolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isbold != null" >
+        isBold = #{record.isbold,jdbcType=INTEGER},
+      </if>
+      <if test="record.summary != null" >
+        summary = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isautocreatesummary != null" >
+        isAutoCreateSummary = #{record.isautocreatesummary,jdbcType=INTEGER},
+      </if>
+      <if test="record.fromwhere != null" >
+        fromWhere = #{record.fromwhere,jdbcType=VARCHAR},
+      </if>
+      <if test="record.readpermission != null" >
+        readPermission = #{record.readpermission,jdbcType=INTEGER},
+      </if>
+      <if test="record.toplevel != null" >
+        topLevel = #{record.toplevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.rank != null" >
+        rank = #{record.rank,jdbcType=INTEGER},
+      </if>
+      <if test="record.articletype != null" >
+        articleType = #{record.articletype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.templateid != null" >
+        templateid = #{record.templateid,jdbcType=BIGINT},
+      </if>
+      <if test="record.hasatachment != null" >
+        hasAtachment = #{record.hasatachment,jdbcType=INTEGER},
+      </if>
+      <if test="record.hasmedia != null" >
+        hasMedia = #{record.hasmedia,jdbcType=INTEGER},
+      </if>
+      <if test="record.isdownpic != null" >
+        isDownPic = #{record.isdownpic,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.hits != null" >
+        hits = #{record.hits,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_article
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      classId = #{record.classid,jdbcType=BIGINT},
+      title = #{record.title,jdbcType=VARCHAR},
+      subTitle = #{record.subtitle,jdbcType=VARCHAR},
+      author = #{record.author,jdbcType=VARCHAR},
+      isShow = #{record.isshow,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      isExtraUrl = #{record.isextraurl,jdbcType=INTEGER},
+      extralUrl = #{record.extralurl,jdbcType=VARCHAR},
+      titleColor = #{record.titlecolor,jdbcType=VARCHAR},
+      isBold = #{record.isbold,jdbcType=INTEGER},
+      summary = #{record.summary,jdbcType=VARCHAR},
+      isAutoCreateSummary = #{record.isautocreatesummary,jdbcType=INTEGER},
+      fromWhere = #{record.fromwhere,jdbcType=VARCHAR},
+      readPermission = #{record.readpermission,jdbcType=INTEGER},
+      topLevel = #{record.toplevel,jdbcType=INTEGER},
+      rank = #{record.rank,jdbcType=INTEGER},
+      articleType = #{record.articletype,jdbcType=VARCHAR},
+      templateid = #{record.templateid,jdbcType=BIGINT},
+      hasAtachment = #{record.hasatachment,jdbcType=INTEGER},
+      hasMedia = #{record.hasmedia,jdbcType=INTEGER},
+      isDownPic = #{record.isdownpic,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DECIMAL},
+      status = #{record.status,jdbcType=INTEGER},
+      hits = #{record.hits,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_article
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      classId = #{record.classid,jdbcType=BIGINT},
+      title = #{record.title,jdbcType=VARCHAR},
+      subTitle = #{record.subtitle,jdbcType=VARCHAR},
+      author = #{record.author,jdbcType=VARCHAR},
+      isShow = #{record.isshow,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      isExtraUrl = #{record.isextraurl,jdbcType=INTEGER},
+      extralUrl = #{record.extralurl,jdbcType=VARCHAR},
+      titleColor = #{record.titlecolor,jdbcType=VARCHAR},
+      isBold = #{record.isbold,jdbcType=INTEGER},
+      summary = #{record.summary,jdbcType=VARCHAR},
+      isAutoCreateSummary = #{record.isautocreatesummary,jdbcType=INTEGER},
+      fromWhere = #{record.fromwhere,jdbcType=VARCHAR},
+      readPermission = #{record.readpermission,jdbcType=INTEGER},
+      topLevel = #{record.toplevel,jdbcType=INTEGER},
+      rank = #{record.rank,jdbcType=INTEGER},
+      articleType = #{record.articletype,jdbcType=VARCHAR},
+      templateid = #{record.templateid,jdbcType=BIGINT},
+      hasAtachment = #{record.hasatachment,jdbcType=INTEGER},
+      hasMedia = #{record.hasmedia,jdbcType=INTEGER},
+      isDownPic = #{record.isdownpic,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DECIMAL},
+      status = #{record.status,jdbcType=INTEGER},
+      hits = #{record.hits,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bhe.dao.mybatis.model.ArticleEntity" >
+    update t_article
+    <set >
+      <if test="classid != null" >
+        classId = #{classid,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        subTitle = #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null" >
+        isShow = #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isextraurl != null" >
+        isExtraUrl = #{isextraurl,jdbcType=INTEGER},
+      </if>
+      <if test="extralurl != null" >
+        extralUrl = #{extralurl,jdbcType=VARCHAR},
+      </if>
+      <if test="titlecolor != null" >
+        titleColor = #{titlecolor,jdbcType=VARCHAR},
+      </if>
+      <if test="isbold != null" >
+        isBold = #{isbold,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="isautocreatesummary != null" >
+        isAutoCreateSummary = #{isautocreatesummary,jdbcType=INTEGER},
+      </if>
+      <if test="fromwhere != null" >
+        fromWhere = #{fromwhere,jdbcType=VARCHAR},
+      </if>
+      <if test="readpermission != null" >
+        readPermission = #{readpermission,jdbcType=INTEGER},
+      </if>
+      <if test="toplevel != null" >
+        topLevel = #{toplevel,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null" >
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="articletype != null" >
+        articleType = #{articletype,jdbcType=VARCHAR},
+      </if>
+      <if test="templateid != null" >
+        templateid = #{templateid,jdbcType=BIGINT},
+      </if>
+      <if test="hasatachment != null" >
+        hasAtachment = #{hasatachment,jdbcType=INTEGER},
+      </if>
+      <if test="hasmedia != null" >
+        hasMedia = #{hasmedia,jdbcType=INTEGER},
+      </if>
+      <if test="isdownpic != null" >
+        isDownPic = #{isdownpic,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="hits != null" >
+        hits = #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bhe.dao.mybatis.model.ArticleEntity" >
+    update t_article
+    set classId = #{classid,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      subTitle = #{subtitle,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      isShow = #{isshow,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      isExtraUrl = #{isextraurl,jdbcType=INTEGER},
+      extralUrl = #{extralurl,jdbcType=VARCHAR},
+      titleColor = #{titlecolor,jdbcType=VARCHAR},
+      isBold = #{isbold,jdbcType=INTEGER},
+      summary = #{summary,jdbcType=VARCHAR},
+      isAutoCreateSummary = #{isautocreatesummary,jdbcType=INTEGER},
+      fromWhere = #{fromwhere,jdbcType=VARCHAR},
+      readPermission = #{readpermission,jdbcType=INTEGER},
+      topLevel = #{toplevel,jdbcType=INTEGER},
+      rank = #{rank,jdbcType=INTEGER},
+      articleType = #{articletype,jdbcType=VARCHAR},
+      templateid = #{templateid,jdbcType=BIGINT},
+      hasAtachment = #{hasatachment,jdbcType=INTEGER},
+      hasMedia = #{hasmedia,jdbcType=INTEGER},
+      isDownPic = #{isdownpic,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      hits = #{hits,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bhe.dao.mybatis.model.ArticleEntity" >
+    update t_article
+    set classId = #{classid,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      subTitle = #{subtitle,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      isShow = #{isshow,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      isExtraUrl = #{isextraurl,jdbcType=INTEGER},
+      extralUrl = #{extralurl,jdbcType=VARCHAR},
+      titleColor = #{titlecolor,jdbcType=VARCHAR},
+      isBold = #{isbold,jdbcType=INTEGER},
+      summary = #{summary,jdbcType=VARCHAR},
+      isAutoCreateSummary = #{isautocreatesummary,jdbcType=INTEGER},
+      fromWhere = #{fromwhere,jdbcType=VARCHAR},
+      readPermission = #{readpermission,jdbcType=INTEGER},
+      topLevel = #{toplevel,jdbcType=INTEGER},
+      rank = #{rank,jdbcType=INTEGER},
+      articleType = #{articletype,jdbcType=VARCHAR},
+      templateid = #{templateid,jdbcType=BIGINT},
+      hasAtachment = #{hasatachment,jdbcType=INTEGER},
+      hasMedia = #{hasmedia,jdbcType=INTEGER},
+      isDownPic = #{isdownpic,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      hits = #{hits,jdbcType=INTEGER}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByExampleForOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

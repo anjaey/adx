@@ -1,0 +1,90 @@
+<#include "admin/common/frame.html">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/systemUser.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/bhecms/css/system.css">
+<@frame> 
+<div class="artLocation">
+	您当前的位置：系统设置>站内信>发送站内信
+</div>
+
+	<div class="wel_content">
+	       <div class="name">	  
+	       		<label>收件人：</label>
+	       		<#if toUserEntity??>
+	       			${toUserEntity.username}
+	       			<#else>
+		       		<select class="js-toUserId">
+		       			<option value="">选择管理员</option>
+		       			<#list adminList as ent>
+		       			<option value="${ent.uuid}">${ent.username}</option>
+		       			</#list>
+		       		</select>		       		
+	       		</#if>
+	       		<input type="hidden" value="${toUserEntity.uuid}" name="uid" class="txtAddproduct">
+	       		</p>
+	     
+	      <div class="name">	       	
+	       		<label>标题：</label>
+	       		<input type="text" value="${entity.title}" class="txtAddproduct6  js-title">
+	       		<span class="gray">（字数限制在50字以内）</span>
+	      </div>
+	      <div class="name">	      	
+	      		<label>正文：</label>	      	
+	      	<textarea class="sys_input02 js-content">${entity.content}</textarea>
+	      	
+	     </div>
+	     <div class="clear"></div>
+		     <div class="email_btn">
+		     	<button class="js-send btnsearch" style="border:none;">发送</button>
+		     	<button class="js-reset">取消</button>
+		     	
+		     </div>
+	</div>
+</@frame> 
+
+<script>
+$(function(){
+	
+	$("select.js-toUserId").change(function(){
+		$("input[name=uid]").val($(this).val());
+	});
+	
+	$("button.js-send").click(function(){
+		var uid=$("input[name=uid]").val();
+		if($.trim(uid)!=""){
+			if($.trim($(".sys_input01").val())!= ""&&$(".email").val() != ""){
+				if($.trim($(".sys_input01").val()).length>50){
+					alert("标题限制在50字之内!");
+					return;
+				}
+				if(confirm("确定发送？")){
+					$.post("sendMsg.html",
+						{"toUserId":uid,
+						"title":$("input.js-title").val(),
+						"content":$("textarea.js-content").val(),
+						"lastId":"${lastId}"},
+					function(data){
+						if(data.result){
+							alert("发送成功");
+							window.location.href="mySendMsges.html";
+						}else{
+							alert("发送失败");
+						}
+					},"json");
+				}
+			}else{
+				alert("请输入内容!");
+			}
+		}else{
+			alert("请选择管理员!");
+		}
+	});
+
+	$("button.js-reset").click(function(){
+		$(".sys_input01").val("");
+		$(".email").val("");
+		
+	});
+	
+	
+});
+</script>
