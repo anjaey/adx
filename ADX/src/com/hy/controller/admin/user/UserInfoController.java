@@ -1,5 +1,6 @@
 package com.hy.controller.admin.user;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,17 @@ import com.hy.controller.common.BaseController;
  * @author hy
  *
  */
-@Controller
+@Controller("adminUser")
 public class UserInfoController extends BaseController{
 	
 	@Autowired
 	IUserBusiness userBusiness;
 	
-	@RequestMapping("/view/user/login")
+	@RequestMapping("/admin/user/login")
 	public void login(@RequestParam Map<String, Object> map) {
+		map = new HashMap<String, Object>();
+		map.put("username", "zhangsan");
+		map.put("pwd", "123456");
 		Map<String, Object> userMap = userBusiness.login(map, this.request);
 		this.writeJson(userMap);
 	}

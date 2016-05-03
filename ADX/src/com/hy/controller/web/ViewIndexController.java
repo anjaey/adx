@@ -7,7 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hy.controller.common.BaseController;
 
 @Controller
-public class IndexController extends BaseController{
+@RequestMapping ( "/view" )
+public class ViewIndexController extends BaseController{
 	
 	/**
 	 * 跳转主页
