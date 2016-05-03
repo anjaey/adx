@@ -1,0 +1,29 @@
+/*---------------登录开始---------------*/
+.login_container{width:100%;min-height:800px;min-width:100px;height:auto;overflow:hidden;}
+.login_top{position:relative;min-width:1000px;width:100%;height:482px;background:url(../img/login_top_bg.jpg) center top no-repeat;}
+.login{position:absolute;top:342px;left:50%;margin-left:-308px;width:596px;height:60px;padding:0 20px;background:url(../img/loginLogo.png) center center no-repeat #1972d6;}
+.Login_Main{background:url(../img/Bg.jpg) repeat;padding:40px 0;min-height:360px;}
+.Form_Box{width:330px;margin:0 auto;}
+.Form_Txt{position:relative;width:330px;height:60px;background:url(../img/Form_text_bg.png) no-repeat;margin-bottom:20px;}
+.Form_Txt .Icon{position:absolute;top:5px;left:5px;width:50px;height:50px;}
+.Form_Txt .ico_name{background:url(../img/name.png) no-repeat;}
+.Form_Txt .ico_pass{background:url(../img/pass.png) no-repeat;}
+.Form_Txt .ico_yan{background:url(../img/yan.png) no-repeat;}
+.Form_Txt .YanTxt{position:absolute;right:25px;top:10px;width:116px;height:39px;padding-left:10px;border-left:2px solid #282d30;}
+.Form_Txt input{padding-left:60px;padding-right:20px;width:250px;height:50px;margin-top:5px;background:none;border:none;color:#808080;font-size:30px;font-family:Arial, Helvetica, sans-serif;}
+.Form_Txt input.YanCon{width:110px;padding-right:140px;}
+.Form_Txt button{display:block;width:330px;height:60px;border:none;background:url(../img/Form_Btn.png) no-repeat; cursor:pointer;}
+.Form_Txt button:hover{background:url(../img/Form_BtnFocus.png) no-repeat;}
+.Login_Foot{height:70px;background:#141819;color:#808080;text-align:center;font-size:14px;line-height:70px;}
+/*---------------登录结束---------------*/
+/*---------------index开始---------------*/
+.navCn{width: 600px; height: 300px; left: 50%; margin-left: -300px; top: 50%; margin-top: -150px; overflow: hidden;}
+.nav{color: #FFFFFF!important; float: left; width: 33.33%; height: 50%; line-height: 150px; font-size: 20px; overflow: hidden;}
+/*---------------index结束---------------*/
+
+/*---------------统计报表开始---------------*/
+.tab{margin-top: 10px; overflow: hidden;}
+.tab_menuWrapper{margin: 0px; padding: 0px; border-left: solid 1px #42a0d6; overflow: hidden;}
+.tab_menu{color: #898989; height: 30px; line-height: 30px; padding: 0px 20px; border: solid 1px #42a0d6; cursor: pointer; border-left: none;}
+.tab_menuWrapper .focus{color: #FFFFFF; background-color: #42a0d6;}
+/*---------------统计报表结束---------------*/

@@ -1,11 +1,11 @@
-package com.hy.controller.admin.user;
+package com.hy.controller.web.user;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hy.business.user.IUserBusiness;
@@ -17,15 +17,23 @@ import com.hy.controller.common.BaseController;
  * @author hy
  *
  */
-@Controller("adminUser")
+@Controller("viewUser")
+@RequestMapping ("/view")
 public class UserInfoController extends BaseController{
 	
 	@Autowired
 	IUserBusiness userBusiness;
 	
-	@RequestMapping("/admin/user/login")
+	/**
+	 * 登录
+	 * @author hy
+	 * @date 2016年5月3日下午5:06:20
+	 * @param map
+	 * @update
+	 * @date
+	 */
+	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	public void login(@RequestParam Map<String, Object> map) {
-		map = new HashMap<String, Object>();
 		Map<String, Object> userMap = userBusiness.login(map, this.request);
 		this.writeJson(userMap);
 	}
